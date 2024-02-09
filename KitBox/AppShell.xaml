@@ -4,12 +4,19 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:KitBox"
+    xmlns:views="clr-namespace:KitBox.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="KitBox">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <TabBar> 
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent
+                Title="Home"
+                ContentTemplate="{DataTemplate local:MainPage}"/>
+        </Tab>
+        <Tab Title="Customer Catalog">
+            <ShellContent
+                Title="Customer_catalog"
+                ContentTemplate="{DataTemplate views:Customer_catalog}"/>
+        </Tab>
+    </TabBar>
 </Shell>
