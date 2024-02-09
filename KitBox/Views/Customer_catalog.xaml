@@ -5,8 +5,8 @@
              Title="Customer_catalog">
     <VerticalStackLayout>
         <Label 
-            Text="{Binding Title}"
-            VerticalOptions="CenterAndExpand" 
+            Text="Welcome to the Customer Catalog"
+            VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>
