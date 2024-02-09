@@ -8,5 +8,23 @@
             Text="Welcome to the Customer Catalog"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Entry 
+            x:Name="lengthEntry" 
+            Placeholder="Enter Length" 
+            Keyboard="Numeric" 
+            Margin="10,5,10,5"/>
+
+        <Entry 
+            x:Name="widthEntry" 
+            Placeholder="Enter Width" 
+            Keyboard="Numeric" 
+            Margin="10,5,10,5"/>
+
+        <Button 
+            Text="Create Casier" 
+            Clicked="OnCreateCasierClicked" 
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
