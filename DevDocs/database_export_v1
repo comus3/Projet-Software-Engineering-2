@@ -1,0 +1,163 @@
+CREATE DATABASE  IF NOT EXISTS `kitboxdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `kitboxdb`;
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+--
+-- Host: localhost    Database: kitboxdb
+-- ------------------------------------------------------
+-- Server version	8.0.35
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `armoire`
+--
+
+DROP TABLE IF EXISTS `armoire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `armoire` (
+  `index` int NOT NULL AUTO_INCREMENT,
+  `longueur` int NOT NULL,
+  `largeur` int NOT NULL,
+  `price` int DEFAULT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `armoire`
+--
+
+LOCK TABLES `armoire` WRITE;
+/*!40000 ALTER TABLE `armoire` DISABLE KEYS */;
+INSERT INTO `armoire` VALUES (1,10,5,NULL),(2,5,10,NULL);
+/*!40000 ALTER TABLE `armoire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `casier`
+--
+
+DROP TABLE IF EXISTS `casier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `casier` (
+  `index` int NOT NULL AUTO_INCREMENT,
+  `couleur` char(30) NOT NULL,
+  `h` int NOT NULL,
+  `porte` tinyint(1) NOT NULL,
+  `price` int DEFAULT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `casier`
+--
+
+LOCK TABLES `casier` WRITE;
+/*!40000 ALTER TABLE `casier` DISABLE KEYS */;
+INSERT INTO `casier` VALUES (1,'rouge',3,1,10),(2,'bleu',5,0,NULL),(3,'vert',10,1,5);
+/*!40000 ALTER TABLE `casier` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commande`
+--
+
+DROP TABLE IF EXISTS `commande`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commande` (
+  `index` int NOT NULL AUTO_INCREMENT,
+  `date` int NOT NULL,
+  `tel` bigint DEFAULT NULL,
+  `nom` varchar(45) DEFAULT NULL,
+  `prenom` varchar(45) DEFAULT NULL,
+  `price` int NOT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commande`
+--
+
+LOCK TABLES `commande` WRITE;
+/*!40000 ALTER TABLE `commande` DISABLE KEYS */;
+INSERT INTO `commande` VALUES (1,20708,477233498,'olait','henri',10),(3,51224,498030732,'pont','thon',5);
+/*!40000 ALTER TABLE `commande` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `piecearmoire`
+--
+
+DROP TABLE IF EXISTS `piecearmoire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `piecearmoire` (
+  `index` int NOT NULL AUTO_INCREMENT,
+  `prix` int NOT NULL,
+  `stock` int NOT NULL,
+  `nom` varchar(45) NOT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `piecearmoire`
+--
+
+LOCK TABLES `piecearmoire` WRITE;
+/*!40000 ALTER TABLE `piecearmoire` DISABLE KEYS */;
+INSERT INTO `piecearmoire` VALUES (1,5,4,'charniere'),(2,1,5,'verrou');
+/*!40000 ALTER TABLE `piecearmoire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `piececasier`
+--
+
+DROP TABLE IF EXISTS `piececasier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `piececasier` (
+  `index` int NOT NULL AUTO_INCREMENT,
+  `prix` int NOT NULL,
+  `stock` int NOT NULL,
+  `nom` varchar(45) NOT NULL,
+  PRIMARY KEY (`index`),
+  CONSTRAINT `id_casier` FOREIGN KEY (`index`) REFERENCES `casier` (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `piececasier`
+--
+
+LOCK TABLES `piececasier` WRITE;
+/*!40000 ALTER TABLE `piececasier` DISABLE KEYS */;
+INSERT INTO `piececasier` VALUES (1,2,5,'charniere');
+/*!40000 ALTER TABLE `piececasier` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-02-12 13:06:12
