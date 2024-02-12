@@ -5,9 +5,7 @@ namespace DAL;
 
 public static class Connection
 {
-    private static readonly string Server="localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=password;Charset=utf8;SslMode=Preferred;";
-
-    private static readonly string connectionString = Server;
+    private static readonly string connectionString = "Server=localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=password;Charset=utf8;SslMode=Preferred;";
 
     public static MySqlConnection GetConnection()
     {
