@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.Form"
+             Title="Form">
+    <VerticalStackLayout>
+        <Label 
+            Text="Casier number 1"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Entry 
+            x:Name="heightEntry" 
+            Placeholder="Enter Height" 
+            Keyboard="Numeric" 
+            Margin="10,5,10,5"/>
+          
+       
+        <Label Text="Choisissez une couleur :" VerticalOptions="Center" HorizontalOptions="Start" />
+        <Picker x:Name="OptionsPicker" SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" Margin="10,5,10,5">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Option 1</x:String>
+                    <x:String>Option 2</x:String>
+                    <x:String>Option 3</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Label x:Name="ResultLabel" FontSize="15" Margin="10,5,10,5" />
+        
+        
+    </VerticalStackLayout>
+</ContentPage>
