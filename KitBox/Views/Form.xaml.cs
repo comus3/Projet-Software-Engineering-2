@@ -24,7 +24,7 @@ public partial class Form : ContentPage
 	private void OnFinishClicked(object sender, EventArgs e)
 	{
 
-		Navigation.PushAsync(new Customer_catalog());
+		Navigation.PushAsync(new FinishPage());
 	}
 
 	private void OnCreateNewCasierClicked(object sender, EventArgs e)
