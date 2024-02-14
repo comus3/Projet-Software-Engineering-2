@@ -14,5 +14,23 @@ public partial class Form : ContentPage
             var selectedOption = (string)OptionsPicker.SelectedItem;
             ResultLabel.Text = $"Vous avez choisi l'option : {selectedOption}";
         }
+	
+	private void OptionsDoorPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedOption = (string)OptionsDoorPicker.SelectedItem;
+            ResultDoorLabel.Text = $"Vous avez choisi l'option : {selectedOption}";
+        }
+
+	private void OnFinishClicked(object sender, EventArgs e)
+	{
+
+		Navigation.PushAsync(new Customer_catalog());
+	}
+
+	private void OnCreateNewCasierClicked(object sender, EventArgs e)
+	{
+		
+	}
+	
 
 }

@@ -16,7 +16,7 @@
             Margin="10,5,10,5"/>
           
        
-        <Label Text="Choisissez une couleur :" VerticalOptions="Center" HorizontalOptions="Start" />
+        <Label Text="Choose a color :" VerticalOptions="Center" HorizontalOptions="Start" />
         <Picker x:Name="OptionsPicker" SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" Margin="10,5,10,5">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
@@ -27,7 +27,26 @@
             </Picker.ItemsSource>
         </Picker>
         <Label x:Name="ResultLabel" FontSize="15" Margin="10,5,10,5" />
+
+        <Label Text="Choose a door color :" VerticalOptions="Center" HorizontalOptions="Start" />
+        <Picker x:Name="OptionsDoorPicker" SelectedIndexChanged="OptionsDoorPicker_SelectedIndexChanged" Margin="10,5,10,5">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Bleu Turquoise</x:String>
+                    <x:String>Mauve</x:String>
+                    <x:String>Rouge sang</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Label x:Name="ResultDoorLabel" FontSize="15" Margin="10,5,10,5" />
         
         
+        <Button Text="Create a new Casier" 
+            Clicked="OnCreateNewCasierClicked" 
+            Margin="10,5,10,5"/>
+        <Button Text="Finish" 
+            Clicked="OnFinishClicked" 
+            Margin="10,5,10,5"/>
+    
     </VerticalStackLayout>
 </ContentPage>
