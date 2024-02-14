@@ -15,5 +15,6 @@ public partial class Customer_catalog : ContentPage
 		double width = Convert.ToDouble(widthEntry.Text);
 
 		DisplayAlert("Casier Created", $"Length: {length}, Width: {width}", "OK");
+		Navigation.PushAsync(new Form());
 	}
 }
