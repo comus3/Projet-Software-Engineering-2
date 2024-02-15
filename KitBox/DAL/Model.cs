@@ -28,7 +28,7 @@ public abstract class Model
         string query = $"SELECT * FROM {tableName} WHERE {this.primaryKey} = {primaryKey}";
         //return la datatable
         DataTable result = this.connection.ExecuteQuery(query);
-        this.attributes["primaryKey"] = primaryKey;
+        this.attributes[this.primaryKey] = primaryKey;
         return result;
     }
 
