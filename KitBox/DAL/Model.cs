@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+namespace DAL;
 
 public abstract class Model
 {
@@ -16,10 +17,16 @@ public abstract class Model
         this.connection = connection;
     }
 
-    public void Load(object id)
+    public DataTable Load(int primaryKey)
     {
         // Query la base de données pour récupérer les données correspondant à l'ID donné
         // et les charge dans les attributs de l'objet
+
+
+        // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
+        string query = $"SELECT * FROM {tableName} WHERE {primaryKey} = {primaryKey}";
+        //return la datatable
+        return this.connection.ExecuteQuery(query);
      }
 
     public void LoadAll()
