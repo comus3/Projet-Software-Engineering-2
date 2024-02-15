@@ -32,9 +32,9 @@
         <Picker x:Name="OptionsDoorPicker" SelectedIndexChanged="OptionsDoorPicker_SelectedIndexChanged" Margin="10,5,10,5">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
-                    <x:String>Bleu Turquoise</x:String>
-                    <x:String>Mauve</x:String>
-                    <x:String>Rouge sang</x:String>
+                    <x:String>Blue Turquoise</x:String>
+                    <x:String>Purple</x:String>
+                    <x:String>Red</x:String>
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
