@@ -99,56 +99,38 @@ INSERT INTO `commande` VALUES (1,20708,477233498,'olait','henri',10),(3,51224,49
 UNLOCK TABLES;
 
 --
--- Table structure for table `piecearmoire`
+-- Table structure for table `piece_sup`
 --
 
-DROP TABLE IF EXISTS `piecearmoire`;
+DROP TABLE IF EXISTS `piece_sup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `piecearmoire` (
-  `index` int NOT NULL AUTO_INCREMENT,
-  `prix` int NOT NULL,
-  `stock` int NOT NULL,
-  `nom` varchar(45) NOT NULL,
-  PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `piece_sup` (
+  `reference` varchar(30) NOT NULL,
+  `code` varchar(15) NOT NULL,
+  `dimension_hauteur` int DEFAULT NULL,
+  `dimension_Largeur` int DEFAULT NULL,
+  `dimension_client` varchar(5) DEFAULT NULL,
+  `dimension_profondeur` int DEFAULT NULL,
+  `dimension_Diametre` int DEFAULT NULL,
+  `dimension_longueur` int DEFAULT NULL,
+  `price_supplier_1` double NOT NULL,
+  `delay_supplier_1` int NOT NULL,
+  `price_supplier_2` double NOT NULL,
+  `delay_supplier_2` int NOT NULL,
+  `stock` int DEFAULT '0',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `piecearmoire`
+-- Dumping data for table `piece_sup`
 --
 
-LOCK TABLES `piecearmoire` WRITE;
-/*!40000 ALTER TABLE `piecearmoire` DISABLE KEYS */;
-INSERT INTO `piecearmoire` VALUES (1,5,4,'charniere'),(2,1,5,'verrou');
-/*!40000 ALTER TABLE `piecearmoire` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `piececasier`
---
-
-DROP TABLE IF EXISTS `piececasier`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `piececasier` (
-  `index` int NOT NULL AUTO_INCREMENT,
-  `prix` int NOT NULL,
-  `stock` int NOT NULL,
-  `nom` varchar(45) NOT NULL,
-  PRIMARY KEY (`index`),
-  CONSTRAINT `id_casier` FOREIGN KEY (`index`) REFERENCES `casier` (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `piececasier`
---
-
-LOCK TABLES `piececasier` WRITE;
-/*!40000 ALTER TABLE `piececasier` DISABLE KEYS */;
-INSERT INTO `piececasier` VALUES (1,2,5,'charniere');
-/*!40000 ALTER TABLE `piececasier` ENABLE KEYS */;
+LOCK TABLES `piece_sup` WRITE;
+/*!40000 ALTER TABLE `piece_sup` DISABLE KEYS */;
+INSERT INTO `piece_sup` VALUES ('Panel back White','PAR3232BL',32,32,NULL,NULL,NULL,NULL,4.24,10,3.34,14,NULL),('Vertical batten','TAS27',27,NULL,'h32',NULL,NULL,NULL,0.13,10,0.17,14,NULL),('Vertical batten','TAS37',37,NULL,'h42',NULL,NULL,NULL,0.25,4,0.19,8,NULL),('Crossbar front','TRF32',NULL,32,NULL,NULL,NULL,NULL,1.32,8,1.05,16,NULL),('Crossbar left or right','TRG32',NULL,NULL,NULL,32,NULL,NULL,0.9,9,0.63,11,NULL),('Crossbar back','TRR32',NULL,32,NULL,NULL,NULL,NULL,0.89,8,0.69,10,NULL),('Crossbar back','TRR42',NULL,42,NULL,NULL,NULL,NULL,0.98,10,0.75,10,NULL);
+/*!40000 ALTER TABLE `piece_sup` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -160,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-12 13:06:12
+-- Dump completed on 2024-02-15 15:40:45
