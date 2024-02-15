@@ -36,9 +36,9 @@ public abstract class Model
 /// goodeuh leuk
 /// </summary>
 /// <param name="where"></param>
-    public void LoadAll(Dictionary<string, object> where)
+    public DataTable LoadAll(Dictionary<string, object> where)
     {
-        string query = $"SELECT * FROM {tableName}";
+        string query = $"SELECT * FROM {this.tableName}";
         if (where != null && where.Count > 0)
         {
             query += " WHERE";
