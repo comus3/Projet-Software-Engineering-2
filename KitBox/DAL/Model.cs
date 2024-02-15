@@ -22,7 +22,7 @@ public abstract class Model
     /// </summary>
     /// <param name="primaryKey"></param>
     /// <returns></returns>
-    public DataTable Load(int primaryKey)
+    public DataTable Load(object primaryKey)
     {
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
         string query = $"SELECT * FROM {this.tableName} WHERE {this.primaryKey} = {primaryKey}";
@@ -32,42 +32,6 @@ public abstract class Model
         return result;
     }
 
-    /// <summary>
-    /// Charge toutes les lignes de la table qui correspondent aux valeurs value des values et aux colones des keys
-    /// where est un dictionnaire
-    /// goodeuh leuk
-    /// </summary>
-    /// <param name="where"></param>
-    public DataTable LoadAll(Dictionary<string, object> where)
-    {
-        string query = $"SELECT * FROM {this.tableName}";
-        if (where != null && where.Count > 0)
-        {
-            query += " WHERE";
-        
-
-        // Ajouter chaque condition du dictionnaire à la requête SQL
-        foreach (var condition in where)
-        {
-            //methodepour fverifier que les donnees de where sont correctement formatees avant de lajouter au string
-            string formattedValue;
-            if (condition.Value is string)
-            {
-                formattedValue = $"'{condition.Value}'";
-            }
-            else
-            {
-                formattedValue = condition.Value.ToString();
-            }
-
-            // Ajouter la condition à la requête SQL
-            query += $" {condition.Key} = {formattedValue} AND";
-        }
-        }
-        // Supprimer le dernier 'AND' intulie de la requête SQL
-        query = query.Remove(query.Length - 4);
-        return this.connection.ExecuteQuery(query);
-    }
     /// <summary>
     /// Met à jour les attributs de l'objet avec les nouvelles valeurs fournies
     /// attention, cette methode ne va pas modifier la db!
@@ -133,7 +97,7 @@ public abstract class Model
         this.connection.ExecuteQuery(query);
 
     }
-    public List<object> getPrimaryKey(Dictionary<string,object> where)
+    public List<object> getPrimaryKey(Dictionary<string, object> where)
     {
         List<object> primaryKeys = new List<object>();
 
@@ -167,8 +131,45 @@ public abstract class Model
             query = query.Remove(query.Length - 4);
             //recupere la primary key de la ligne dont la colonne colomn vaut value
         }
-    
-    return this.connection.ExecuteQuery(query);
+
+        return this.connection.ExecuteQuery(query);
+    }
+
+    /// <summary>
+    /// Charge toutes les lignes de la table qui correspondent aux valeurs value des values et aux colones des keys
+    /// where est un dictionnaire
+    /// goodeuh leuk
+    /// </summary>
+    /// <param name="where"></param>
+    public DataTable LoadAll(Dictionary<string, object> where)
+    {
+        string query = $"SELECT * FROM {this.tableName}";
+        if (where != null && where.Count > 0)
+        {
+            query += " WHERE";
+
+
+            // Ajouter chaque condition du dictionnaire à la requête SQL
+            foreach (var condition in where)
+            {
+                //methodepour fverifier que les donnees de where sont correctement formatees avant de lajouter au string
+                string formattedValue;
+                if (condition.Value is string)
+                {
+                    formattedValue = $"'{condition.Value}'";
+                }
+                else
+                {
+                    formattedValue = condition.Value.ToString();
+                }
+
+                // Ajouter la condition à la requête SQL
+                query += $" {condition.Key} = {formattedValue} AND";
+            }
+        }
+        // Supprimer le dernier 'AND' intulie de la requête SQL
+        query = query.Remove(query.Length - 4);
+        return this.connection.ExecuteQuery(query);
     }
 
 }
