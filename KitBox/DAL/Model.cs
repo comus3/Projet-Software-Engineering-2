@@ -82,10 +82,42 @@ public abstract class Model
             this.attributes[kvp.Key] = kvp.Value;
         }
     }
-
+/// <summary>
+/// Aucun param en entree et aucune sortie. 
+/// execute une query qui va modifier la colone
+/// ou creer une colone dont les attributs
+/// sont les attribs du dico attributs.
+/// </summary>
     public void Save()
     {
-        // Effectue la requête SQL appropriée pour sauvegarder les modifications dans la base de données
+        string query = $"UPDATE {tableName} SET";
+
+        // Ajouter chaque colonne et sa valeur à mettre à jour à la requête SQL
+        foreach (var kvp in attributes)
+        {
+            // s'assurer que la clé n'est pas la clé primaire
+            if (kvp.Key != this.primaryKey)
+            {
+                // methode pr verif que la valeur est correctement formatée dans la requête SQL en fonction de son type
+                string formattedValue;
+                if (kvp.Value is string)
+                {
+                    formattedValue = $"'{kvp.Value}'";
+                }
+                else
+                {
+                    formattedValue = kvp.Value.ToString();
+                }
+
+                // Ajouter la colonne et sa valeur à mettre à jour à la requête SQL
+                query += $" {kvp.Key} = {formattedValue},";
+            }
+        }
+
+        // Supprimer la virgule finale de la requête SQL
+        //rahouter le primary key pour designer la ligne quon veut
+        query = query.TrimEnd(',') + $" WHERE {this.primaryKey} = {attributes[this.primaryKey]}";
+
     }
 
     public void Delete()
