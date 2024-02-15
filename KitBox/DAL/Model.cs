@@ -44,7 +44,7 @@ public abstract class Model
         if (where != null && where.Count > 0)
         {
             query += " WHERE";
-        }
+        
 
         // Ajouter chaque condition du dictionnaire à la requête SQL
         foreach (var condition in where)
@@ -62,6 +62,7 @@ public abstract class Model
 
             // Ajouter la condition à la requête SQL
             query += $" {condition.Key} = {formattedValue} AND";
+        }
         }
         // Supprimer le dernier 'AND' intulie de la requête SQL
         query = query.Remove(query.Length - 4);
@@ -82,12 +83,12 @@ public abstract class Model
             this.attributes[kvp.Key] = kvp.Value;
         }
     }
-/// <summary>
-/// Aucun param en entree et aucune sortie. 
-/// execute une query qui va modifier la colone
-/// ou creer une colone dont les attributs
-/// sont les attribs du dico attributs.
-/// </summary>
+    /// <summary>
+    /// Aucun param en entree et aucune sortie. 
+    /// execute une query qui va modifier la colone
+    /// ou creer une colone dont les attributs
+    /// sont les attribs du dico attributs.
+    /// </summary>
     public void Save()
     {
         string query = $"UPDATE {tableName} SET";
@@ -117,23 +118,59 @@ public abstract class Model
         // Supprimer la virgule finale de la requête SQL
         //rahouter le primary key pour designer la ligne quon veut
         query = query.TrimEnd(',') + $" WHERE {this.primaryKey} = {attributes[this.primaryKey]}";
+        this.connection.ExecuteQuery(query);
 
     }
-/// <summary>
-/// Supprime la ligne correspondant à l'objet dans la base de données
-/// utilise le pk donc si vous voulexz lutiliser faire un load puis delete
-/// ca va delete celui du load.
-/// TODO (MAYBE) vous pouvez specifier le delete? a voir si cest vrmt utile
-/// </summary>
+    /// <summary>
+    /// Supprime la ligne correspondant à l'objet dans la base de données
+    /// utilise le pk donc si vous voulexz lutiliser faire un load puis delete
+    /// ca va delete celui du load.
+    /// TODO (MAYBE) vous pouvez specifier le delete? a voir si cest vrmt utile
+    /// </summary>
     public void Delete()
     {
         string query = $"DELETE FROM {this.tableName} WHERE {this.primaryKey} = {this.attributes[primaryKey]}";
+        this.connection.ExecuteQuery(query);
 
     }
-    public void getPrimaryKey(string colomn, object value)
+    public List<object> getPrimaryKey(Dictionary<string,object> where)
     {
-        //recupere la primary key de la ligne dont la colonne colomn vaut value
+        List<object> primaryKeys = new List<object>();
+
+        // Construire la requête SQL pour sélectionner les clés primaires en fonction des conditions spécifiées
+        string query = $"SELECT {primaryKey} FROM {tableName}";
+        //si where ne contient rien alonrs on return toutes les pk du tableau
+        // Si le dictionnaire 'where' contient des conditions, les ajouter à la requête SQL
+        if (where != null && where.Count > 0)
+        {
+            query += " WHERE";
+
+            // Ajouter chaque condition du dictionnaire à la requête SQL
+            foreach (var condition in where)
+            {
+                // comme dhab correctement formatée dans la requête SQL en fonction de son type
+                string formattedValue;
+                if (condition.Value is string)
+                {
+                    formattedValue = $"'{condition.Value}'";
+                }
+                else
+                {
+                    formattedValue = condition.Value.ToString();
+                }
+
+                // Ajouter la condition à la requête SQL
+                query += $" {condition.Key} = {formattedValue} AND";
+            }
+
+            // Supprimer le dernier 'AND' superflu de la requête SQL
+            query = query.Remove(query.Length - 4);
+            //recupere la primary key de la ligne dont la colonne colomn vaut value
+        }
+    
+    return this.connection.ExecuteQuery(query);
     }
+
 }
 //EXEMPLE
 /*
