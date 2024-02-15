@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
-using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
-using System;
-using System.Data;
+
+
 namespace DAL;
 
 public abstract class Model
