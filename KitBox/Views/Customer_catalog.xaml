@@ -2,29 +2,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Customer_catalog"
-             Title="Customer_catalog">
-    <VerticalStackLayout>
+             Title="Customer Catalog">
+    <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
         <Label 
             Text="Welcome to the Customer Catalog"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+            FontSize="24" />
 
         <Entry 
             x:Name="lengthEntry" 
             Placeholder="Enter Length" 
-            Keyboard="Numeric" 
-            Margin="10,5,10,5"/>
+            Keyboard="Numeric" />
 
         <Entry 
             x:Name="widthEntry" 
             Placeholder="Enter Width" 
-            Keyboard="Numeric" 
-            Margin="10,5,10,5"/>
+            Keyboard="Numeric" />
 
         <Button 
             Text="Create Casier" 
             Clicked="OnCreateCasierClicked" 
-            VerticalOptions="CenterAndExpand" 
-            HorizontalOptions="Center"/>
+            BackgroundColor="#3498db"
+            TextColor="White"
+            CornerRadius="8"
+            FontSize="20"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand"/>
     </VerticalStackLayout>
 </ContentPage>
