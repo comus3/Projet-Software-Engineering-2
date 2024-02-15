@@ -25,9 +25,11 @@ public abstract class Model
     public DataTable Load(int primaryKey)
     {
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
-        string query = $"SELECT * FROM {tableName} WHERE {primaryKey} = {primaryKey}";
+        string query = $"SELECT * FROM {tableName} WHERE {this.primaryKey} = {primaryKey}";
         //return la datatable
-        return this.connection.ExecuteQuery(query);
+        DataTable result = this.connection.ExecuteQuery(query);
+        this.attributes["primaryKey"] = primaryKey;
+        return result;
     }
 
     /// <summary>
@@ -77,12 +79,7 @@ public abstract class Model
     {
         foreach (var kvp in values)
         {
-            // Assurez-vous que la clé existe dans les attributs de l'objet avant d'assigner la valeur
-            if (attributes.ContainsKey(kvp.Key))
-            {
-                // Accédez à attributes via l'objet lui-même et assignez la valeur
-                this.attributes[kvp.Key] = kvp.Value;
-            }
+            this.attributes[kvp.Key] = kvp.Value;
         }
     }
 
