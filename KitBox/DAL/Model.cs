@@ -119,10 +119,16 @@ public abstract class Model
         query = query.TrimEnd(',') + $" WHERE {this.primaryKey} = {attributes[this.primaryKey]}";
 
     }
-
+/// <summary>
+/// Supprime la ligne correspondant à l'objet dans la base de données
+/// utilise le pk donc si vous voulexz lutiliser faire un load puis delete
+/// ca va delete celui du load.
+/// TODO (MAYBE) vous pouvez specifier le delete? a voir si cest vrmt utile
+/// </summary>
     public void Delete()
     {
-        // Supprime la ligne correspondant à l'objet dans la base de données
+        string query = $"DELETE FROM {this.tableName} WHERE {this.primaryKey} = {this.attributes[primaryKey]}";
+
     }
     public void getPrimaryKey(string colomn, object value)
     {
