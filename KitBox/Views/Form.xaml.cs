@@ -32,5 +32,10 @@ public partial class Form : ContentPage
 		
 	}
 	
-
+	private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
+{
+    bool isChecked = e.Value; // 'Value' is a property of CheckedChangedEventArgs indicating the new checked state.
+    doorColorLabel.IsVisible = isChecked;
+    OptionsDoorPicker.IsVisible = isChecked;
+}
 }
