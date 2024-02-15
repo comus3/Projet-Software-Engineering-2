@@ -16,22 +16,54 @@ public abstract class Model
     {
         this.connection = connection;
     }
-
+    /// <summary>
+    /// Query la base de données pour récupérer les données correspondant à l'ID donné
+    /// et les charge dans les attributs de l'objet
+    /// </summary>
+    /// <param name="primaryKey"></param>
+    /// <returns></returns>
     public DataTable Load(int primaryKey)
     {
-        // Query la base de données pour récupérer les données correspondant à l'ID donné
-        // et les charge dans les attributs de l'objet
-
-
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
         string query = $"SELECT * FROM {tableName} WHERE {primaryKey} = {primaryKey}";
         //return la datatable
         return this.connection.ExecuteQuery(query);
-     }
+    }
 
-    public void LoadAll()
+/// <summary>
+/// Charge toutes les lignes de la table qui correspondent aux valeurs value des values et aux colones des keys
+/// where est un dictionnaire
+/// goodeuh leuk
+/// </summary>
+/// <param name="where"></param>
+    public void LoadAll(Dictionary<string, object> where)
     {
-        // Charge toutes les lignes de la table dans une liste d'objets
+        string query = $"SELECT * FROM {tableName}";
+        if (where != null && where.Count > 0)
+        {
+            query += " WHERE";
+        }
+
+        // Ajouter chaque condition du dictionnaire à la requête SQL
+        foreach (var condition in where)
+        {
+            //methodepour fverifier que les donnees de where sont correctement formatees avant de lajouter au string
+            string formattedValue;
+            if (condition.Value is string)
+            {
+                formattedValue = $"'{condition.Value}'";
+            }
+            else
+            {
+                formattedValue = condition.Value.ToString();
+            }
+
+            // Ajouter la condition à la requête SQL
+            query += $" {condition.Key} = {formattedValue} AND";
+        }
+        // Supprimer le dernier 'AND' intulie de la requête SQL
+        query = query.Remove(query.Length - 4);
+        return this.connection.ExecuteQuery(query);
     }
 
     public void Update(Dictionary<string, object> values)
