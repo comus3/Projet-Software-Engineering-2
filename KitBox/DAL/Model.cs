@@ -30,12 +30,12 @@ public abstract class Model
         return this.connection.ExecuteQuery(query);
     }
 
-/// <summary>
-/// Charge toutes les lignes de la table qui correspondent aux valeurs value des values et aux colones des keys
-/// where est un dictionnaire
-/// goodeuh leuk
-/// </summary>
-/// <param name="where"></param>
+    /// <summary>
+    /// Charge toutes les lignes de la table qui correspondent aux valeurs value des values et aux colones des keys
+    /// where est un dictionnaire
+    /// goodeuh leuk
+    /// </summary>
+    /// <param name="where"></param>
     public DataTable LoadAll(Dictionary<string, object> where)
     {
         string query = $"SELECT * FROM {this.tableName}";
@@ -65,10 +65,25 @@ public abstract class Model
         query = query.Remove(query.Length - 4);
         return this.connection.ExecuteQuery(query);
     }
+    /// <summary>
+    /// Met à jour les attributs de l'objet avec les nouvelles valeurs fournies
+    /// attention, cette methode ne va pas modifier la db!
+    /// elle va juste changer la variable attributs de lobjet
+    /// pour appliquer les modifs il faut utiliser save
+    /// </summary>
+    /// <param name="values"></param>
 
     public void Update(Dictionary<string, object> values)
     {
-        // Met à jour les attributs de l'objet avec les nouvelles valeurs fournies
+        foreach (var kvp in values)
+        {
+            // Assurez-vous que la clé existe dans les attributs de l'objet avant d'assigner la valeur
+            if (attributes.ContainsKey(kvp.Key))
+            {
+                // Accédez à attributes via l'objet lui-même et assignez la valeur
+                this.attributes[kvp.Key] = kvp.Value;
+            }
+        }
     }
 
     public void Save()
