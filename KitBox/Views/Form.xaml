@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Form"
              Title="Form">
-    <VerticalStackLayout>
+    <ScrollView>
+    <StackLayout>
         <Label 
             Text="Casier number 1"
             VerticalOptions="Center" 
@@ -40,13 +41,19 @@
         </Picker>
         <Label x:Name="ResultDoorLabel" FontSize="15" Margin="10,5,10,5" />
         
-        
-        <Button Text="Create a new Casier" 
-            Clicked="OnCreateNewCasierClicked" 
-            Margin="10,5,10,5"/>
+
+        <StackLayout>
+            <StackLayout x:Name="labelContainer" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>    
+            <Button Text="Create a new Casier" 
+                Clicked="OnCreateNewCasierClicked" 
+                Margin="10,5,10,5"/>
+        </StackLayout>
+
+
         <Button Text="Finish" 
             Clicked="OnFinishClicked" 
             Margin="10,5,10,5"/>
     
-    </VerticalStackLayout>
+    </StackLayout>
+    </ScrollView>
 </ContentPage>
