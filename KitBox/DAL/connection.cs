@@ -45,6 +45,8 @@ public static class Connection
                 Console.WriteLine($"Error executing query: {ex.Message}");
             }
         }
+        string successMsg = $"executed query {query} successfuly";
+        Console.WriteLine(successMsg);
         return dataTable;
     }
 }
