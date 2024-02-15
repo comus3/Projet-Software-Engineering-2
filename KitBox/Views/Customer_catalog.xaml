@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Customer_catalog"
              Title="Customer_catalog">
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="0,80,0,0" Spacing = "10">
         <Label 
             Text="Welcome to the Customer Catalog"
             VerticalOptions="Center" 
@@ -24,7 +24,8 @@
         <Button 
             Text="Create Casier" 
             Clicked="OnCreateCasierClicked" 
-            VerticalOptions="CenterAndExpand" 
+            VerticalOptions="CenterAndExpand"
+            BackgroundColor="#3498db"
             HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
