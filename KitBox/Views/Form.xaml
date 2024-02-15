@@ -7,6 +7,7 @@
     <StackLayout>
         <Label 
             Text="Casier number 1"
+            FontAttributes="Bold"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
@@ -17,7 +18,7 @@
             Margin="10,5,10,5"/>
           
        
-        <Label Text="Choose a color :" VerticalOptions="Center" HorizontalOptions="Start" />
+        <Label Text="Choose a color :"  Margin="10,5,10,5"/>
         <Picker x:Name="OptionsPicker" SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" Margin="10,5,10,5">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
@@ -27,14 +28,14 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Label x:Name="ResultLabel" FontSize="15" Margin="10,5,10,5" />
+        <!--Label x:Name="ResultLabel" FontSize="15" Margin="10,5,10,5" /-->
 
         <HorizontalStackLayout Margin="10,5,10,5" VerticalOptions="Center" HorizontalOptions="Start">
-            <CheckBox x:Name="doorCheckbox"
-                    CheckedChanged="OnDoorCheckboxCheckedChanged"/>
             <Label Text="Include a door" 
                 FontSize="15" 
                 VerticalOptions="Center"/>
+            <CheckBox x:Name="doorCheckbox"
+                    CheckedChanged="OnDoorCheckboxCheckedChanged"/>
         </HorizontalStackLayout>
 
 
@@ -48,11 +49,11 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Label x:Name="ResultDoorLabel" FontSize="15" Margin="10,5,10,5" />
+        <!--Label x:Name="ResultDoorLabel" FontSize="15" Margin="10,5,10,5" /-->
         
 
         <StackLayout>
-            <StackLayout x:Name="labelContainer" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>    
+            <StackLayout x:Name="labelContainer" Margin="10,5,10,5" />    
             <Button Text="Create a new Casier" 
                 Clicked="OnCreateNewCasierClicked" 
                 Margin="10,5,10,5"/>
