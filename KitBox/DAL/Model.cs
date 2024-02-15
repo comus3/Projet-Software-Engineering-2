@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using System;
+using System.Data;
 namespace DAL;
 
 public abstract class Model
@@ -10,9 +15,9 @@ public abstract class Model
     protected string primaryKey;
     protected Dictionary<string, object> attributes = new Dictionary<string, object>();
 
-    protected SqlConnection connection;
+    protected Connection connection;
 
-    public Model(SqlConnection connection)
+    public Model(Connection connection)
     {
         this.connection = connection;
     }
@@ -97,7 +102,7 @@ public abstract class Model
         this.connection.ExecuteQuery(query);
 
     }
-    public List<object> getPrimaryKey(Dictionary<string, object> where)
+    public DataTable getPrimaryKey(Dictionary<string, object> where)
     {
         List<object> primaryKeys = new List<object>();
 

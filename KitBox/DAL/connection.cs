@@ -3,7 +3,7 @@ using System;
 using System.Data;
 namespace DAL;
 
-public static class Connection
+public class Connection
 {
     private static readonly string connectionString = "Server=localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=boubababou;Charset=utf8;SslMode=Preferred;";
 
@@ -28,7 +28,7 @@ public static class Connection
             }
         }
     }
-    public static DataTable ExecuteQuery(string query)
+    public DataTable ExecuteQuery(string query)
     {
         DataTable dataTable = new DataTable();
         using (MySqlConnection connection = GetConnection())
