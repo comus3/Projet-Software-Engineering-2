@@ -25,7 +25,7 @@ public abstract class Model
     public DataTable Load(int primaryKey)
     {
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
-        string query = $"SELECT * FROM {tableName} WHERE {this.primaryKey} = {primaryKey}";
+        string query = $"SELECT * FROM {this.tableName} WHERE {this.primaryKey} = {primaryKey}";
         //return la datatable
         DataTable result = this.connection.ExecuteQuery(query);
         this.attributes[this.primaryKey] = primaryKey;
