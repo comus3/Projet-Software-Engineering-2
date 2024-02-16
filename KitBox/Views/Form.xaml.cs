@@ -67,7 +67,7 @@ public partial class Form : ContentPage
 
 
 		Label colorDoor = new Label();
-		colorDoor.Text = "Choose a door color : ";
+		colorDoor.Text = "Choose a color for the door number " + count.ToString() + " :";
 		Picker colorDoorPicker = new Picker();
 		foreach (string option in doorOptions)
 		{
@@ -78,19 +78,15 @@ public partial class Form : ContentPage
 			bool isChecked = ((CheckBox)sender).IsChecked;
 			if (isChecked)
 			{
-				pickerContainer.Children.Add(colorDoor);
-				pickerContainer.Children.Add(colorDoorPicker);
-				labelContainer.IsVisible = true;
+				labelContainer.Children.Add(colorDoor);
+				labelContainer.Children.Add(colorDoorPicker);
 			}
 			else
 			{
-				pickerContainer.Children.Remove(colorDoor);
-				pickerContainer.Children.Remove(colorDoorPicker);
-				pickerContainer.IsVisible = true;
+				labelContainer.Children.Remove(colorDoor);
+				labelContainer.Children.Remove(colorDoorPicker);
 			}
-		
 		};
-
 		
 		labelContainer.Children.Add(newLabel);
 		labelContainer.Children.Add(entry);
@@ -101,9 +97,7 @@ public partial class Form : ContentPage
 			// labelContainer.Children.Add(checkBox);
 		//labelContainer.Children.Add(colorDoor);
 		//labelContainer.Children.Add(colorDoorPicker);
-		
 	}
-	
 	private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
 {
     bool isChecked = e.Value; // 'Value' is a property of CheckedChangedEventArgs indicating the new checked state.

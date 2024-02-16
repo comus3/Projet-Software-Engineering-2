@@ -5,18 +5,8 @@
              Title="Form">
     <ScrollView>
     <StackLayout>
-        <Label 
-            Text="Casier number 1"
-            FontAttributes="Bold"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-        <Entry 
-            x:Name="heightEntry" 
-            Placeholder="Enter Height" 
-            Keyboard="Numeric" 
-            Margin="10,5,10,5"/>
-          
+        <Label Text="Casier number 1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Entry x:Name="heightEntry" Placeholder="Enter Height" Keyboard="Numeric" Margin="10,5,10,5"/>
        
         <Label Text="Choose a color :"  Margin="10,5,10,5"/>
         <Picker x:Name="OptionsPicker" SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" Margin="10,5,10,5">
@@ -28,7 +18,6 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <!--Label x:Name="ResultLabel" FontSize="15" Margin="10,5,10,5" /-->
 
         <HorizontalStackLayout Margin="10,5,10,5" VerticalOptions="Center" HorizontalOptions="Start">
             <Label Text="Include a door" 
@@ -37,7 +26,6 @@
             <CheckBox x:Name="doorCheckbox"
                     CheckedChanged="OnDoorCheckboxCheckedChanged"/>
         </HorizontalStackLayout>
-
 
         <Label x:Name="doorColorLabel" Text="Choose a door color :" VerticalOptions="Center" HorizontalOptions="Start" IsVisible="False" />
         <Picker x:Name="OptionsDoorPicker" SelectedIndexChanged="OptionsDoorPicker_SelectedIndexChanged" Margin="10,5,10,5" IsVisible="False">
@@ -49,23 +37,14 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <!--Label x:Name="ResultDoorLabel" FontSize="15" Margin="10,5,10,5" /-->
-        
-
+    
         <StackLayout>
-            <StackLayout x:Name="labelContainer" Margin="10,5,10,5" />
-            <StackLayout x:Name="pickerContainer" Margin="10,5,10,5"/> 
+            <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
             <Button Text="Create a new Casier" 
                 Clicked="OnCreateNewCasierClicked" 
                 Margin="10,5,10,5"/>
         </StackLayout>
-
-
-        <Button Text="Finish" 
-            Clicked="OnFinishClicked" 
-           
-            Margin="10,5,10,5"/>
-            
+        <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5"/>            
     </StackLayout>
     </ScrollView>
 </ContentPage>
