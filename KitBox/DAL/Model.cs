@@ -178,16 +178,22 @@ public abstract class Model
 }
 //EXEMPLE
 /*
-public class User : Model
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+namespace DAL ; 
 
-    public User(SqlConnection connection) : base(connection)
+public class Piece : Model
+{
+
+    public Piece(Connection connection) : base(connection)
     {
-        tableName = "Users";
-        primaryKey = "Id";
+        tableName = "piece";
+        primaryKey = "code";
     }
 }
 */
 //fin exemple 
+
+
+//code ecrit par come
+//nhesitez paas a me poser
+//toute question sur comment il
+//marche
