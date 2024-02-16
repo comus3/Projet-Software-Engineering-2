@@ -53,7 +53,8 @@
         
 
         <StackLayout>
-            <StackLayout x:Name="labelContainer" Margin="10,5,10,5" />    
+            <StackLayout x:Name="labelContainer" Margin="10,5,10,5" />
+            <StackLayout x:Name="pickerContainer" Margin="10,5,10,5"/> 
             <Button Text="Create a new Casier" 
                 Clicked="OnCreateNewCasierClicked" 
                 Margin="10,5,10,5"/>

@@ -60,7 +60,7 @@ public partial class Form : ContentPage
 		Door.Text = "Include a door";
 		Door.VerticalOptions = LayoutOptions.Center;
 		CheckBox checkBox = new CheckBox();
-
+		
 		HorizontalStackLayout stackPanel = new HorizontalStackLayout();
 		stackPanel.Children.Add(Door);
 		stackPanel.Children.Add(checkBox);
@@ -74,16 +74,34 @@ public partial class Form : ContentPage
 			colorDoorPicker.Items.Add(option);
 		}
 
+		checkBox.CheckedChanged += (sender, e)=> {
+			bool isChecked = ((CheckBox)sender).IsChecked;
+			if (isChecked)
+			{
+				pickerContainer.Children.Add(colorDoor);
+				pickerContainer.Children.Add(colorDoorPicker);
+				labelContainer.IsVisible = true;
+			}
+			else
+			{
+				pickerContainer.Children.Remove(colorDoor);
+				pickerContainer.Children.Remove(colorDoorPicker);
+				pickerContainer.IsVisible = true;
+			}
+		
+		};
+
 		
 		labelContainer.Children.Add(newLabel);
 		labelContainer.Children.Add(entry);
 		labelContainer.Children.Add(Color);
 		labelContainer.Children.Add(colorPicker);
 		labelContainer.Children.Add(stackPanel);
-		// labelContainer.Children.Add(Door);
-		// labelContainer.Children.Add(checkBox);
-		labelContainer.Children.Add(colorDoor);
-		labelContainer.Children.Add(colorDoorPicker);
+			// labelContainer.Children.Add(Door);
+			// labelContainer.Children.Add(checkBox);
+		//labelContainer.Children.Add(colorDoor);
+		//labelContainer.Children.Add(colorDoorPicker);
+		
 	}
 	
 	private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
