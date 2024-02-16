@@ -3,6 +3,17 @@ using System;
 using System.Data;
 namespace DAL;
 
+
+/// <summary>
+/// Pour setup la connection et la passer aux 
+/// modeles il faut changer les parametres dans
+/// le connection string
+/// 
+/// en suite vous pouvez tester la connection avec Test connection.
+/// 
+/// si tout est bon vous pouvez utiliser execute query pour les custom query et
+/// les methodes des modeles en leur passsant les connections
+/// </summary>
 public class Connection
 {
     private static readonly string connectionString = "Server=193.191.240.67;Port=63301;Database=KITBOX;Uid=newuser;Pwd=password;Charset=utf8;SslMode=Preferred;";
