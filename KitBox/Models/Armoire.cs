@@ -18,5 +18,23 @@ namespace KitBox
             Prix = prix;
             PiecesArmoire = piecesArmoire;
         }
+
+        // Méthode pour calculer le prix total de l'armoire
+        public int CalculateTotalPrice()
+        {
+            int totalPrice = Prix; // Prix de base de l'armoire
+
+            // Ajoute le prix de chaque casier à celui de l'armoire
+            foreach (var casier in Casiers)
+            {
+                int casierPrice;
+                if (int.TryParse(casier.Prix, out casierPrice))
+                {
+                    totalPrice += casierPrice;
+                }
+            }
+
+            return totalPrice;
+        }
     }
 }
