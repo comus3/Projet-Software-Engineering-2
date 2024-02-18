@@ -169,9 +169,9 @@ public abstract class Model
                 // Ajouter la condition à la requête SQL
                 query += $" {condition.Key} = {formattedValue} AND";
             }
-        }
         // Supprimer le dernier 'AND' intulie de la requête SQL
         query = query.Remove(query.Length - 4);
+        }
         return this.connection.ExecuteQuery(query);
     }
 
