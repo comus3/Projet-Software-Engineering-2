@@ -5,12 +5,12 @@ namespace KitBox
     public class Armoire
     {
         private List<Casier> Casiers { get; set; }
-        private int Longueur { get; set; }
-        private int Largeur { get; set; }
-        private int Prix { get; set; }
+        private double Longueur { get; set; }
+        private double Largeur { get; set; }
+        private double Prix { get; set; }
         private List<Armoire> PiecesArmoire { get; set; }
 
-        public Armoire(List<Casier> casiers, int longueur, int largeur, int prix, List<Armoire> piecesArmoire)
+        public Armoire(List<Casier> casiers, double longueur, double largeur, double prix, List<Armoire> piecesArmoire)
         {
             Casiers = casiers;
             Longueur = longueur;
@@ -20,15 +20,15 @@ namespace KitBox
         }
 
         // Méthode pour calculer le prix total de l'armoire
-        public int CalculateTotalPrice()
+        public double CalculateTotalPrice()
         {
-            int totalPrice = Prix; // Prix de base de l'armoire
+            double totalPrice = Prix; // Prix de base de l'armoire
 
             // Ajoute le prix de chaque casier à celui de l'armoire
             foreach (var casier in Casiers)
             {
-                int casierPrice;
-                if (int.TryParse(casier.Prix, out casierPrice))
+                double casierPrice;
+                if (double.TryParse(casier.Prix, out casierPrice))
                 {
                     totalPrice += casierPrice;
                 }
