@@ -4,10 +4,10 @@
 
 public class Piece_casier
     {
-    public string Type { get; set; }
-    public double Longueur { get; set; }
-    public double Largeur { get; set; }
-    public double Prix { get; set; }
+    private string Type { get; set; }
+    private double Longueur { get; set; }
+    private double Largeur { get; set; }
+    private double Prix { get; set; }
 
     public Piece_casier(string type, double longueur, double largeur, double prix)
     {
