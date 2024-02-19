@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using DAL;
 namespace KitBox;
+
 
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
+		//FOR DEBUGGING DELETE BEFORE MERGE
+		Connection.TestConnection();
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()

@@ -1,0 +1,1 @@
+dotnet add package MySql.Data --version 8.3.0
