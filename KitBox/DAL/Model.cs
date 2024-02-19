@@ -28,7 +28,7 @@ public abstract class Model
     public DataTable Load(object primaryKey)
     {
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
-        string query = $"SELECT * FROM {this.tableName} WHERE {this.primaryKey} = {primaryKey}";
+        string query = $"SELECT * FROM {this.tableName} WHERE '{this.primaryKey}' = {primaryKey}";
         //return la datatable
         DataTable result = this.connection.ExecuteQuery(query);
         this.attributes[this.primaryKey] = primaryKey;
@@ -78,7 +78,7 @@ public abstract class Model
                 }
 
                 // Ajouter la colonne et sa valeur à mettre à jour à la requête SQL
-                query += $" {kvp.Key} = {formattedValue},";
+                query += $" '{kvp.Key}' = {formattedValue},";
             }
         }
 
@@ -96,7 +96,7 @@ public abstract class Model
     /// </summary>
     public void Delete()
     {
-        string query = $"DELETE FROM {this.tableName} WHERE {this.primaryKey} = {this.attributes[primaryKey]}";
+        string query = $"DELETE FROM {this.tableName} WHERE '{this.primaryKey}' = {this.attributes[primaryKey]}";
         this.connection.ExecuteQuery(query);
 
     }
@@ -127,7 +127,7 @@ public abstract class Model
                 }
 
                 // Ajouter la condition à la requête SQL
-                query += $" {condition.Key} = {formattedValue} AND";
+                query += $" '{condition.Key}' = {formattedValue} AND";
             }
 
             // Supprimer le dernier 'AND' superflu de la requête SQL
@@ -167,7 +167,7 @@ public abstract class Model
                 }
 
                 // Ajouter la condition à la requête SQL
-                query += $" {condition.Key} = {formattedValue} AND";
+                query += $" '{condition.Key}' = {formattedValue} AND";
             }
         // Supprimer le dernier 'AND' intulie de la requête SQL
         query = query.Remove(query.Length - 4);
