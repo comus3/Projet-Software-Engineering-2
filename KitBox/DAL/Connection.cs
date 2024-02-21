@@ -1,6 +1,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using DevTools;
 namespace DAL;
 
 
@@ -16,7 +17,7 @@ namespace DAL;
 /// </summary>
 public class Connection
 {
-    private static readonly string connectionString = "Server=193.191.240.67;Port=63301;Database=KITBOX;Uid=newuser;Pwd=password;Charset=utf8;SslMode=Preferred;";
+    private static readonly string connectionString = "Server=localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=password;Charset=utf8;SslMode=Preferred;";
 
     public static MySqlConnection GetConnection()
     {
@@ -31,11 +32,11 @@ public class Connection
             try
             {
                 connection.Open();
-                Console.WriteLine("Connection successful!");
+                Logger.WriteToFile("Connection successful!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error connecting to database: {ex.Message}");
+                Logger.WriteToFile($"Error connecting to database: {ex.Message}");
             }
         }
     }
@@ -53,11 +54,11 @@ public class Connection
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error executing query: {ex.Message}");
+                Logger.WriteToFile($"Error executing query: {ex.Message}");
             }
         }
         string successMsg = $"executed query {query} successfuly";
-        Console.WriteLine(successMsg);
+        Logger.WriteToFile(successMsg);
         return dataTable;
     }
 }
