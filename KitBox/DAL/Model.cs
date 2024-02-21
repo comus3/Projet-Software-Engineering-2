@@ -100,6 +100,25 @@ public abstract class Model
         this.connection.ExecuteQuery(query);
 
     }
+    /// <summary>
+    /// cree la ligne dans la base de donnees 
+    /// si vous avez load une ligne sur cet objet
+    /// et que vous faite un update
+    /// puis insert dessus cest pas grave
+    /// on ne tiendra pas compte du pk
+    /// de la ligne loadee
+    /// </summary>
+    public DataTable Insert()
+    {
+
+        // Get keys and values excluding the primary key
+        var keys = this.attributes.Keys.Where(k => k != primaryKey);
+        var values = keys.Select(k => this.attributes[k]);
+
+        // Construct the SQL query
+        string query = $"INSERT INTO {tableName} ({string.Join(", ", keys.Select(k => $"`{k}`"))}) VALUES ({string.Join(", ", values.Select(v => GetSqlValue(v)))});";
+        return this.connection.ExecuteQuery(query);
+    }
     public DataTable getPrimaryKey(Dictionary<string, object> where)
     {
         List<object> primaryKeys = new List<object>();
@@ -159,7 +178,7 @@ public abstract class Model
                 string formattedValue;
                 if (condition.Value is string)
                 {
-                    formattedValue = $"`{condition.Value}`";
+                    formattedValue = $"'{condition.Value}'";
                 }
                 else
                 {
@@ -173,6 +192,26 @@ public abstract class Model
         query = query.Remove(query.Length - 4);
         }
         return this.connection.ExecuteQuery(query);
+    }
+    /// <summary>
+    /// shhhhhhh vous pouvew pas touchew a caw
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    private string GetSqlValue(object value)
+    {
+        if (value is string || value is DateTime)
+        {
+            return $"'{value}'";
+        }
+        else if (value is bool)
+        {
+            return ((bool)value) ? "1" : "0";
+        }
+        else
+        {
+            return value.ToString();
+        }
     }
 
 }
