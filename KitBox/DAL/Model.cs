@@ -28,7 +28,7 @@ public abstract class Model
     public DataTable Load(object primaryKey)
     {
         // Construire la requête SQL pour charger la note avec la clé primaire spécifiée
-        string query = $"SELECT * FROM {this.tableName} WHERE '{this.primaryKey}' = {primaryKey}";
+        string query = $"SELECT * FROM {this.tableName} WHERE `{this.primaryKey}` = {primaryKey}";
         //return la datatable
         DataTable result = this.connection.ExecuteQuery(query);
         this.attributes[this.primaryKey] = primaryKey;
@@ -63,14 +63,14 @@ public abstract class Model
         // Ajouter chaque colonne et sa valeur à mettre à jour à la requête SQL
         foreach (var kvp in attributes)
         {
-            // s'assurer que la clé n'est pas la clé primaire
+            // s`assurer que la clé n'est pas la clé primaire
             if (kvp.Key != this.primaryKey)
             {
                 // methode pr verif que la valeur est correctement formatée dans la requête SQL en fonction de son type
                 string formattedValue;
                 if (kvp.Value is string)
                 {
-                    formattedValue = $"'{kvp.Value}'";
+                    formattedValue = $"`{kvp.Value}`";
                 }
                 else
                 {
@@ -78,7 +78,7 @@ public abstract class Model
                 }
 
                 // Ajouter la colonne et sa valeur à mettre à jour à la requête SQL
-                query += $" '{kvp.Key}' = {formattedValue},";
+                query += $" `{kvp.Key}` = {formattedValue},";
             }
         }
 
@@ -96,7 +96,7 @@ public abstract class Model
     /// </summary>
     public void Delete()
     {
-        string query = $"DELETE FROM {this.tableName} WHERE '{this.primaryKey}' = {this.attributes[primaryKey]}";
+        string query = $"DELETE FROM {this.tableName} WHERE `{this.primaryKey}` = {this.attributes[primaryKey]}";
         this.connection.ExecuteQuery(query);
 
     }
@@ -107,7 +107,7 @@ public abstract class Model
         // Construire la requête SQL pour sélectionner les clés primaires en fonction des conditions spécifiées
         string query = $"SELECT {primaryKey} FROM {tableName}";
         //si where ne contient rien alonrs on return toutes les pk du tableau
-        // Si le dictionnaire 'where' contient des conditions, les ajouter à la requête SQL
+        // Si le dictionnaire `where` contient des conditions, les ajouter à la requête SQL
         if (where != null && where.Count > 0)
         {
             query += " WHERE";
@@ -119,7 +119,7 @@ public abstract class Model
                 string formattedValue;
                 if (condition.Value is string)
                 {
-                    formattedValue = $"'{condition.Value}'";
+                    formattedValue = $"`{condition.Value}`";
                 }
                 else
                 {
@@ -127,7 +127,7 @@ public abstract class Model
                 }
 
                 // Ajouter la condition à la requête SQL
-                query += $" '{condition.Key}' = {formattedValue} AND";
+                query += $" `{condition.Key}` = {formattedValue} AND";
             }
 
             // Supprimer le dernier 'AND' superflu de la requête SQL
@@ -159,7 +159,7 @@ public abstract class Model
                 string formattedValue;
                 if (condition.Value is string)
                 {
-                    formattedValue = $"'{condition.Value}'";
+                    formattedValue = $"`{condition.Value}`";
                 }
                 else
                 {
@@ -167,7 +167,7 @@ public abstract class Model
                 }
 
                 // Ajouter la condition à la requête SQL
-                query += $" '{condition.Key}' = {formattedValue} AND";
+                query += $" `{condition.Key}` = {formattedValue} AND";
             }
         // Supprimer le dernier 'AND' intulie de la requête SQL
         query = query.Remove(query.Length - 4);
