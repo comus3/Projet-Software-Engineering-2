@@ -159,7 +159,7 @@ public abstract class Model
                 string formattedValue;
                 if (condition.Value is string)
                 {
-                    formattedValue = $"`{condition.Value}`";
+                    formattedValue = $"'{condition.Value}'";
                 }
                 else
                 {
