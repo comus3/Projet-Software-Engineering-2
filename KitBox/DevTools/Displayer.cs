@@ -11,7 +11,7 @@ public class Displayer
         {
             Console.Write($"{column.ColumnName,-20}");
         }
-        Console.WriteLine();
+        Logger.WriteToFile("");
 
         // Display data rows
         foreach (DataRow row in dataTable.Rows)
@@ -20,7 +20,7 @@ public class Displayer
             {
                 Console.Write($"{row[column],-20}");
             }
-            Console.WriteLine();
+            Logger.WriteToFile("");
         }
     }
 }
