@@ -9,7 +9,7 @@ public class Displayer
         // Display column headers
         foreach (DataColumn column in dataTable.Columns)
         {
-            Console.Write($"{column.ColumnName,-20}");
+            Logger.WriteToFile($"{column.ColumnName,-20}");
         }
         Logger.WriteToFile("");
 
@@ -18,7 +18,7 @@ public class Displayer
         {
             foreach (DataColumn column in dataTable.Columns)
             {
-                Console.Write($"{row[column],-20}");
+                Logger.WriteToFile($"{row[column],-20}");
             }
             Logger.WriteToFile("");
         }
