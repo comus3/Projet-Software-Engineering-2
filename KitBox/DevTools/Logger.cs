@@ -4,7 +4,7 @@ namespace DevTools;
 
 public static class Logger
 {
-    private static string filename;
+    private static string? filename = null;
 
     public static void CreateLogFile()
     {
