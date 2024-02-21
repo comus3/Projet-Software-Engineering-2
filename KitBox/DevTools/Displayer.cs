@@ -4,7 +4,7 @@ namespace DevTools;
 
 public class Displayer
 {
-     public static void DisplayData(DataTable dataTable)
+    public static void DisplayData(DataTable dataTable)
     {
         // Display column headers
         foreach (DataColumn column in dataTable.Columns)
@@ -18,9 +18,20 @@ public class Displayer
         {
             foreach (DataColumn column in dataTable.Columns)
             {
-                Logger.WriteToFile($"{row[column],-20}");
+                string value;
+                if (row[column] != DBNull.Value) // Check for DBNull value if needed
+                {
+                    value = row[column].ToString(); // Convert value to string explicitly
+                }
+                else
+                {
+                    value = ""; // Handle DBNull value as needed
+                }
+                Logger.WriteToFile($"{value,-20}");
             }
             Logger.WriteToFile("");
         }
+
+
     }
 }
