@@ -67,41 +67,60 @@ public partial class Form : ContentPage
 
 
 		Label colorDoor = new Label();
-		colorDoor.Text = "Choose a color for the door number " + count.ToString() + " :";
+		colorDoor.Text = "Choose a color for the door number " + count.ToString() + " : ";
+		colorDoor.VerticalOptions=LayoutOptions.Center;
 		Picker colorDoorPicker = new Picker();
 		foreach (string option in doorOptions)
 		{
 			colorDoorPicker.Items.Add(option);
 		}
 
-		checkBox.CheckedChanged += (sender, e)=> {
-			bool isChecked = ((CheckBox)sender).IsChecked;
-			if (isChecked)
-			{
-				labelContainer.Children.Add(colorDoor);
-				labelContainer.Children.Add(colorDoorPicker);
+		 checkBox.CheckedChanged += (sender, e)=> {
+		 	bool isChecked = ((CheckBox)sender).IsChecked;
+		 	if (isChecked)
+		 	{
+		 		stackPanel.Children.Add(colorDoor);
+		 		stackPanel.Children.Add(colorDoorPicker);
 			}
 			else
 			{
-				labelContainer.Children.Remove(colorDoor);
-				labelContainer.Children.Remove(colorDoorPicker);
+				stackPanel.Children.Remove(colorDoor);
+				stackPanel.Children.Remove(colorDoorPicker);
 			}
 		};
+
+		// checkBox.CheckedChanged += (sender, e) => {
+		// 	bool isChecked = ((CheckBox)sender).IsChecked;
+		// 	if (isChecked)
+		// 	{
+		// 		StackLayout doorStack = new StackLayout();
+		// 		doorStack.Children.Add(colorDoor);
+		// 		doorStack.Children.Add(colorDoorPicker);
+		// 		labelContainer.Children.Insert(labelContainer.Children.IndexOf(stackPanel) + 1, doorStack);
+		// 	}
+		// 	else
+		// 	{
+		// 		foreach (View item in labelContainer.Children)
+		// 		{
+		// 			if (item is StackLayout && ((StackLayout)item).Children.Contains(colorDoor) && ((StackLayout)item).Children.Contains(colorDoorPicker))
+		// 			{
+		// 				labelContainer.Children.Remove(item);
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// };
 		
 		labelContainer.Children.Add(newLabel);
 		labelContainer.Children.Add(entry);
 		labelContainer.Children.Add(Color);
 		labelContainer.Children.Add(colorPicker);
 		labelContainer.Children.Add(stackPanel);
-			// labelContainer.Children.Add(Door);
-			// labelContainer.Children.Add(checkBox);
-		//labelContainer.Children.Add(colorDoor);
-		//labelContainer.Children.Add(colorDoorPicker);
 	}
 	private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
-{
-    bool isChecked = e.Value; // 'Value' is a property of CheckedChangedEventArgs indicating the new checked state.
-    doorColorLabel.IsVisible = isChecked;
-    OptionsDoorPicker.IsVisible = isChecked;
-}
+	{
+		bool isChecked = e.Value; // 'Value' is a property of CheckedChangedEventArgs indicating the new checked state.
+		doorColorLabel.IsVisible = isChecked;
+		OptionsDoorPicker.IsVisible = isChecked;
+	}
 }

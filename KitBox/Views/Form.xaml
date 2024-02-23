@@ -25,9 +25,8 @@
                 VerticalOptions="Center"/>
             <CheckBox x:Name="doorCheckbox"
                     CheckedChanged="OnDoorCheckboxCheckedChanged"/>
-        </HorizontalStackLayout>
 
-        <Label x:Name="doorColorLabel" Text="Choose a door color :" VerticalOptions="Center" HorizontalOptions="Start" IsVisible="False" />
+        <Label x:Name="doorColorLabel" Text="Choose a color for the door number 1: " VerticalOptions="Center" HorizontalOptions="Start" IsVisible="False"  Margin="10,5,10,5"/>
         <Picker x:Name="OptionsDoorPicker" SelectedIndexChanged="OptionsDoorPicker_SelectedIndexChanged" Margin="10,5,10,5" IsVisible="False">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
@@ -37,6 +36,7 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
+        </HorizontalStackLayout>
     
         <StackLayout>
             <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
