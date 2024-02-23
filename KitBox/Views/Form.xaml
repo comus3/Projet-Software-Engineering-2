@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Form"
-             Title="Form">
+             Title="Set up your locker">
     <ScrollView>
     <StackLayout>
-        <Label Text="Casier number 1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Label Text="Locker number 1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
         <Entry x:Name="heightEntry" Placeholder="Enter Height" Keyboard="Numeric" Margin="10,5,10,5"/>
        
         <Label Text="Choose a color :"  Margin="10,5,10,5"/>
@@ -40,7 +40,7 @@
     
         <StackLayout>
             <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
-            <Button Text="Create a new Casier" 
+            <Button Text="Create a new Locker" 
                 Clicked="OnCreateNewCasierClicked" 
                 Margin="10,5,10,5"/>
         </StackLayout>

@@ -40,7 +40,7 @@ public partial class Form : ContentPage
 	{
 		count++;
 		Label newLabel = new Label();
-		newLabel.Text = "Casier number " + count.ToString();
+		newLabel.Text = "Locker number " + count.ToString();
 		newLabel.FontAttributes = FontAttributes.Bold;
 		newLabel.HorizontalOptions = LayoutOptions.Center;
 

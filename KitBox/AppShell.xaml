@@ -8,15 +8,15 @@
     Shell.FlyoutBehavior="Disabled"
     Title="KitBox">
     <TabBar> 
+        <Tab Title="Cabinet Order">
+            <ShellContent
+                Title="Cabinet Order"
+                ContentTemplate="{DataTemplate views:Customer_catalog}"/>
+        </Tab>
         <Tab Title="Home" Icon="home.png">
             <ShellContent
                 Title="Home"
                 ContentTemplate="{DataTemplate local:MainPage}"/>
-        </Tab>
-        <Tab Title="Customer Catalog">
-            <ShellContent
-                Title="Customer_catalog"
-                ContentTemplate="{DataTemplate views:Customer_catalog}"/>
         </Tab>
     </TabBar>
 </Shell>

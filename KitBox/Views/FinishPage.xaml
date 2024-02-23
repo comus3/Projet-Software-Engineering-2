@@ -6,7 +6,7 @@
     <VerticalStackLayout>
         <Label Text="Your order has been registered" VerticalOptions="Center" 
             HorizontalOptions="Center" Margin="10,20,10,80"/>
-        <Button Text="Go back to Customer Catalogue" Clicked="OnClicked" 
+        <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
             Margin="10,5,10,5"/>
     </VerticalStackLayout>
 </ContentPage>
