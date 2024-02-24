@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using MySql.Data.MySqlClient;
 
 
@@ -191,6 +192,18 @@ public abstract class Model
         // Supprimer le dernier 'AND' intulie de la requête SQL
         query = query.Remove(query.Length - 4);
         }
+        return this.connection.ExecuteQuery(query);
+    }
+
+
+    /// <summary>
+    /// retourne la pk
+    /// de la derniere ligne inseree
+    /// </summary>
+    /// <returns>DataTable containing desired primary key</returns>
+    public DataTable getLastPk()
+    {
+        string query = "SELECT LAST_INSERT_ID();";
         return this.connection.ExecuteQuery(query);
     }
     /// <summary>
