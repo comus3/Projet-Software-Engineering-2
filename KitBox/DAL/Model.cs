@@ -109,6 +109,9 @@ public abstract class Model
     /// on ne tiendra pas compte du pk
     /// de la ligne loadee
     /// </summary>
+    /// <returns>
+    /// retourne la pk de lóbjet insere
+    /// </returns>
     public DataTable Insert()
     {
 
@@ -118,7 +121,8 @@ public abstract class Model
 
         // Construct the SQL query
         string query = $"INSERT INTO {tableName} ({string.Join(", ", keys.Select(k => $"`{k}`"))}) VALUES ({string.Join(", ", values.Select(v => GetSqlValue(v)))});";
-        return this.connection.ExecuteQuery(query);
+        this.connection.ExecuteQuery(query);
+        return getLastPk();
     }
     public DataTable getPrimaryKey(Dictionary<string, object> where)
     {
