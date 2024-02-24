@@ -1,6 +1,9 @@
 using Microsoft.UI.Xaml;
 using DAL;
 
+
+// tetst
+
 namespace KitBox.Views
 {
     public partial class Form : ContentPage
@@ -33,6 +36,7 @@ namespace KitBox.Views
         {
             var selectedOption = (string)OptionsDoorPicker.SelectedItem;
             //ResultDoorLabel.Text = $"Vous avez choisi l'option : {selectedOption}";
+            
         }
 
         private void OnFinishClicked(object sender, EventArgs e)
