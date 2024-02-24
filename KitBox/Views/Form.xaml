@@ -39,12 +39,12 @@
         
             <StackLayout>
                 <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
-                <!-- Utilisez l'événement Clicked pour appeler une méthode dans le code-behind lorsqu'un bouton est cliqué -->
+                
                 <Button Text="Create a new Locker" 
                         Clicked="OnCreateNewCasierClicked" 
                         Margin="10,5,10,5"/>
             </StackLayout>
-            <!-- Utilisez l'événement Clicked pour appeler une méthode dans le code-behind lorsqu'un bouton est cliqué -->
+            
             <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5"/>            
         </StackLayout>
     </ScrollView>
