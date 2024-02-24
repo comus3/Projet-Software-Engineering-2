@@ -2,8 +2,6 @@ using Microsoft.UI.Xaml;
 using DAL;
 
 
-// tetst
-
 namespace KitBox.Views
 {
     public partial class Form : ContentPage
