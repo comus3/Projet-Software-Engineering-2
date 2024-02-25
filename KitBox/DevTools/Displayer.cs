@@ -35,3 +35,8 @@ public class Displayer
 
     }
 }
+
+//code ecrit par comus3
+//nhesitez paas a me poser
+//toute question sur comment il
+//marche
