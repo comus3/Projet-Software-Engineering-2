@@ -97,17 +97,37 @@ static class FetchingServices
     /// <summary>
     /// return toutes les pieces assossiees a la constructiono
     /// dune commande entiere
-    /// a voir comment je vais structurer tout ca
+    /// !! ATTENTION A LA STRUCTURE DU RETURN !!
+    /// 
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="commandePk"></param>
     /// <returns></returns>
-    public static DataTable FetchCommandePieces(Connection connection,object commandePk)
+    public static Dictionary<string,object> FetchCommandePieces(Connection connection,object commandePk)
     {
         string executionMessage = $"fetching pieces for {commandePk}";
-        DataTable result = new DataTable();
+        Armoire armoire = new Armoire(connection);
+        Dictionary<string, object> caracteristic = new Dictionary<string, object>();
+        caracteristic["commande"] = commandePk;
+        DataTable armoires = armoire.LoadAll(caracteristic);
+        Dictionary<string,object> result = new Dictionary<string, object>();
+        foreach (DataRow rowArm in armoires.Rows)
+        {
+            string ArmoireIndex = $"ArmoireOfPk{rowArm[0]}";
+            result[ArmoireIndex] = FetchArmoirePieces(connection,rowArm[0]);
+            foreach (DataRow rowCas in FetchCasierAssociatedToArmoire(connection, rowArm[0]).Rows)
+            {
+                string CasierIndex = $"CasierOfPk{rowCas[0]}OfArm{rowArm[0]}";
+                result[CasierIndex] = FetchCasierPieces(connection, rowCas[0]);
+            }
+        }
         Logger.WriteToFile(executionMessage);
-        Displayer.DisplayData(result);
+        return result;
+    }
+
+    private static DataTable FetchCasierAssociatedToArmoire(Connection connection, object armoirePk)
+    {
+        DataTable result = connection.ExecuteQuery($"SELECT index FROM casier WHERE `armoire` = {armoirePk}");
         return result;
     }
 }
@@ -117,3 +137,5 @@ static class FetchingServices
 //toute question sur comment il
 //marche
 
+
+//vivement le stage quand les gens seront vrmt motives a coder avec moi (moi lol)
