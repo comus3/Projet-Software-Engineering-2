@@ -45,7 +45,7 @@ static class FetchingServices
     /// <returns></returns>
     public static DataTable FetchArmoirePieces(Connection connection,object armoirePk)
     {
-        string getPiecePkQuery = $"SELECT id_piece FROM rt_armoire WHERE `id_armoire` = {armoirePk}";
+        string getPiecePkQuery = $"SELECT `id_piece` FROM rt_armoire WHERE `id_armoire` = {armoirePk}";
         DataTable piecesPk = connection.ExecuteQuery(getPiecePkQuery);
         Displayer.DisplayData(piecesPk);
         string getPieceQuery = "SELECT * FROM piece WHERE `code` IN (";
@@ -59,7 +59,7 @@ static class FetchingServices
 
         getPieceQuery = getPieceQuery.Substring(0, getPieceQuery.Length - 2);
         getPieceQuery += ");";
-        string executionMessage = $"fetching pieces for {armoirePk}";
+        string executionMessage = $"fetching pieces for armoire {armoirePk}";
         DataTable result = connection.ExecuteQuery(getPieceQuery);
         Logger.WriteToFile(executionMessage);
         Displayer.DisplayData(result);
@@ -73,7 +73,7 @@ static class FetchingServices
     /// <returns></returns>
     public static DataTable FetchCasierPieces(Connection connection,object casierPk)
     {
-        string getPiecePkQuery = $"SELECT id_piece FROM rt_casier WHERE `id_casier` = {casierPk}";
+        string getPiecePkQuery = $"SELECT `id_piece` FROM rt_casier WHERE `id_casier` = {casierPk}";
         DataTable piecesPk = connection.ExecuteQuery(getPiecePkQuery);
         Displayer.DisplayData(piecesPk);
         string getPieceQuery = "SELECT * FROM piece WHERE `code` IN (";
@@ -87,7 +87,7 @@ static class FetchingServices
 
         getPieceQuery = getPieceQuery.Substring(0, getPieceQuery.Length - 2);
         getPieceQuery += ");";
-        string executionMessage = $"fetching pieces for {casierPk}";
+        string executionMessage = $"fetching pieces for casier {casierPk}";
         DataTable result = connection.ExecuteQuery(getPieceQuery);
         Logger.WriteToFile(executionMessage);
         Displayer.DisplayData(result);
@@ -102,7 +102,12 @@ static class FetchingServices
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="commandePk"></param>
-    /// <returns></returns>
+    /// <returns>return un dictionnaire avec comme cle les
+    /// noms des armoires et casier qui appartiennent
+    /// aux dites armoires
+    /// attention a ne pas executer ca si larmoire
+    /// ne contient aucune piece -- > erreur
+    /// </returns>
     public static Dictionary<string,object> FetchCommandePieces(Connection connection,object commandePk)
     {
         string executionMessage = $"fetching pieces for {commandePk}";
@@ -127,7 +132,7 @@ static class FetchingServices
 
     private static DataTable FetchCasierAssociatedToArmoire(Connection connection, object armoirePk)
     {
-        DataTable result = connection.ExecuteQuery($"SELECT index FROM casier WHERE `armoire` = {armoirePk}");
+        DataTable result = connection.ExecuteQuery($"SELECT `index` FROM casier WHERE `armoire` = {armoirePk}");
         return result;
     }
 }
