@@ -4,8 +4,12 @@ using DAL;
 
 namespace KitBox.Views
 {
+    
     public partial class Form : ContentPage
     {
+        private Object armoirePk;
+        private Connection con;
+
         int count = 1;
         string[] options = { "Option 1", "Option 2", "Option 3" };
         List<string> doorOptions = new List<string>
@@ -17,11 +21,16 @@ namespace KitBox.Views
 
         Connection connection; // Déclaration de la connexion à la base de données
 
-        public Form()
+        public Form( Object armoirePk)
         {
+            this.armoirePk = armoirePk;
             InitializeComponent();
-            connection = new Connection(); // Initialisation de la connexion
-            //BindingContext = this;
+            //connection = new Connection(); // Initialisation de la connexion
+            BindingContext = this;
+            // Testez la connexion
+            Connection.TestConnection();
+            // Initialisez la connexion
+            con = new Connection();
         }
 
         private void OptionsPicker_SelectedIndexChanged(object sender, EventArgs e)
@@ -124,8 +133,16 @@ namespace KitBox.Views
             labelContainer.Children.Add(stackPanel);
 
             // Création d'un nouvel objet Casier et insertion dans la base de données
-            Casier casier = new Casier(connection);
-            casier.Insert();
+            Casier cas = new Casier(con);
+            Dictionary<string, object> infoCasier = new Dictionary<string, object>();
+            
+            infoCasier["couleur"] = colorPicker.SelectedItem.ToString();
+            infoCasier["h"] = entry.Text; 
+            infoCasier["porte"] = checkBox.IsChecked ? colorDoorPicker.SelectedItem.ToString() : ""; // Si la case est cochée, sinon une chaîne vide
+            
+            infoCasier["armoire"] = this.armoirePk;
+            cas.Update(infoCasier);
+            cas.Insert();
         }
 
         private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
