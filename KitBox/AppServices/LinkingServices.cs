@@ -36,6 +36,12 @@ static class LinkingServices
             primaryKey = "id_relation";
         }
     }
+    /// <summary>
+    /// lie un casier a une piece
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="pkPiece"></param>
+    /// <param name="pkCasier"></param>
     public static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
     {
         RtCasier coucou = new RtCasier(connection);
@@ -48,7 +54,12 @@ static class LinkingServices
         Logger.WriteToFile(executionMessage);
         Displayer.DisplayData(result);
     }
-
+    /// <summary>
+    /// lie une armoire a une piece
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="pkPiece"></param>
+    /// <param name="pkArmoire"></param>
     public static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
     {
         RtArmoire coucou = new RtArmoire(connection);
@@ -61,7 +72,13 @@ static class LinkingServices
         Logger.WriteToFile(executionMessage);
         Displayer.DisplayData(result);
     }
-
+    /// <summary>
+    /// lie automatiquement,
+    /// en fonction de ses caracteristiques un casier a toutes
+    /// les pieces necessaires a sa construction
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="casier"></param>
     public static void CreateAllCasierLinks(Connection connection, Casier casier)
     {
         //todo 
@@ -69,7 +86,13 @@ static class LinkingServices
         //  pour lier toutes les pk des pieces correspondantes
         //   utilisrer le .gettype fdams la methode insert du modele pour calll cette methode
     }
-
+    /// <summary>
+    /// lie automatiquement une armoire a
+    /// toutes les pieces necessaires a sa construction
+    /// toutes les pieces necessaires a sa construction
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="armoire"></param>
     public static void CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
         //todo 
