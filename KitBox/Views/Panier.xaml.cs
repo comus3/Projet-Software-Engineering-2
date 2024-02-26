@@ -7,24 +7,36 @@ namespace KitBox.Views
         public Panier()
         {
             InitializeComponent();
+
+            // Je test pour l'instant quelques trucs pour voir si ça marche
+            lstPhrases.ItemsSource = new string[]
+            {
+                "Armoire 1",
+                "Armoire 2",
+                "Armoire 3",
+                "Armoire 4",
+                "Armoire 5"
+            };
         }
 
-        private void Acheter_Click(object sender, System.EventArgs e)
+        private void Acheter_Clicked(object sender, EventArgs e)
         {
-            // Méthode pour confirmer l'achat via le panier
-            DisplayAlert("Message", "Votre commande a été effectuée", "OK");
+            // Méthode pour gérer le clic sur le bouton "Acheter"
+            // Récupérer l'armoire sélectionnée
+            string phrase = (sender as Button).CommandParameter as string;
+
+            // Ajoutez ici le code pour acheter la phrase
+            DisplayAlert("Acheter", $"La phrase '{phrase}' a été achetée avec succès.", "OK");
         }
 
-        private void Supprimer_Click(object sender, System.EventArgs e)
+        private void Supprimer_Clicked(object sender, EventArgs e)
         {
-            // Méthode pour supprimer totalement une commande
-            DisplayAlert("Message", "Suppression de la commande effectuée", "OK");
-        }
+            // Méthode pour gérer le clic sur le bouton "Supprimer"
+            // Récupérer l'armoire sélectionnée
+            string phrase = (sender as Button).CommandParameter as string;
 
-        private void Modifier_Click(object sender, System.EventArgs e)
-        {
-            // Méthode pour modifier une commande
-            DisplayAlert("Message", "Modification effectuée", "OK");
+            // Ajoutez ici le code pour supprimer l'armoire
+            DisplayAlert("Supprimer", $"La phrase '{phrase}' a été supprimée avec succès.", "OK");
         }
     }
 }

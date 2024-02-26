@@ -3,18 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Panier"
              Title="Panier">
-    <VerticalStackLayout>
-        <Label Text="Votre commande a été enregistrée" VerticalOptions="Center" 
-            HorizontalOptions="Center" Margin="10,20,10,80"/>
-        <Button Text="Retour au menu de commande de meuble" Clicked="OnClicked" 
-            Margin="10,5,10,5"/>
-        <StackLayout>
-            <Label Text="Contenu du panier" Margin="10" FontSize="Large"/>
+    <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+        <Label 
+            Text="Panier"
+            HorizontalOptions="Center" 
+            FontSize="24" />
 
-            <ListView x:Name="lstItems" Margin="10" HeightRequest="300"/>
-            <Button Text="Acheter" Clicked="Acheter_Click" Margin="10"/>
-            <Button Text="Supprimer" Clicked="Supprimer_Click" Margin="10"/>
-            <Button Text="Modifier" Clicked="Modifier_Click" Margin="10"/>
-        </StackLayout>
-    </VerticalStackLayout>
+        <!-- Liste des phrases numérotées -->
+        <ListView x:Name="lstPhrases" VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Label Text="{Binding}" VerticalOptions="Center"/>
+                            <Button Text="Acheter" Clicked="Acheter_Clicked" CommandParameter="{Binding .}" HorizontalOptions="EndAndExpand"/>
+                            <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
+

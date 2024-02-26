@@ -13,6 +13,11 @@
                 Title="Cabinet Order"
                 ContentTemplate="{DataTemplate views:Customer_catalog}"/>
         </Tab>
+        <Tab Title="Panier">
+            <ShellContent
+                Title="Panier"
+                ContentTemplate="{DataTemplate views:Panier}"/>
+        </Tab>
         <Tab Title="Home" Icon="home.png">
             <ShellContent
                 Title="Home"
