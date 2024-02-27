@@ -26,7 +26,7 @@ namespace KitBox.Views
             string phrase = (sender as Button).CommandParameter as string;
 
             // Ajoutez ici le code pour acheter la phrase
-            DisplayAlert("Acheter", $"La phrase '{phrase}' a été achetée avec succès.", "OK");
+            DisplayAlert("Acheter", $"L'armoire'{phrase}' a été achetée avec succès.", "OK");
         }
 
         private void Supprimer_Clicked(object sender, EventArgs e)
@@ -36,7 +36,7 @@ namespace KitBox.Views
             string phrase = (sender as Button).CommandParameter as string;
 
             // Ajoutez ici le code pour supprimer l'armoire
-            DisplayAlert("Supprimer", $"La phrase '{phrase}' a été supprimée avec succès.", "OK");
+            DisplayAlert("Supprimer", $"L'armoire '{phrase}' a été supprimée avec succès.", "OK");
         }
     }
 }
