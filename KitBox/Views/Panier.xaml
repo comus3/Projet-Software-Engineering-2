@@ -10,19 +10,20 @@
             FontSize="24" />
 
         <!-- Liste des phrases numérotées -->
-        <ListView x:Name="lstPhrases" VerticalOptions="FillAndExpand">
+        <ListView x:Name="lstPhrases" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Label Text="{Binding}" VerticalOptions="Center"/>
-                            <Button Text="Acheter" Clicked="Acheter_Clicked" CommandParameter="{Binding .}" HorizontalOptions="EndAndExpand"/>
-                            <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
-                        </StackLayout>
+                        <Frame Padding="10" BackgroundColor="White" CornerRadius="5" Margin="5">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="{Binding}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Acheter" Clicked="Acheter_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                                <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
 </ContentPage>
-
