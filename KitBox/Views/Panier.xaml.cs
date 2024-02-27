@@ -9,7 +9,7 @@ namespace KitBox.Views
             InitializeComponent();
 
             // Je test pour l'instant quelques trucs pour voir si ça marche
-            lstPhrases.ItemsSource = new string[]
+            lstArmoire.ItemsSource = new string[]
             {
                 "Armoire 1",
                 "Armoire 2",

@@ -10,7 +10,7 @@
             FontSize="24" />
 
         <!-- Liste des phrases numérotées -->
-        <ListView x:Name="lstPhrases" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
+        <ListView x:Name="lstArmoire" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
