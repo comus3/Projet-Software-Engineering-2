@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Customer_catalog"
@@ -8,16 +7,43 @@
             Text="Cabinet Order Menu"
             HorizontalOptions="Center" 
             FontSize="24" />
+        <Label 
+            Text="Make sure to choose a width smaller than the length or at least equal"
+            HorizontalOptions="Center"
+            TextColor="Red"
+            FontSize="14" />
+        
 
-        <Entry 
-            x:Name="lengthEntry" 
-            Placeholder="Enter Length" 
-            Keyboard="Numeric" />
+        <!-- Label et Picker pour la longueur -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Label Text="Choose the length:" VerticalOptions="Center" />
+            <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> <!-- Ajustez la largeur selon vos besoins -->
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int32}">
+                        <x:Int32>32</x:Int32>
+                        <x:Int32>42</x:Int32>
+                        <x:Int32>62</x:Int32>
+                        <x:Int32>80</x:Int32>
+                        <x:Int32>100</x:Int32>
+                        <x:Int32>120</x:Int32>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
 
-        <Entry 
-            x:Name="widthEntry" 
-            Placeholder="Enter Width" 
-            Keyboard="Numeric" />
+        <!-- Label et Picker pour la largeur -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Label Text="Choose the width:" VerticalOptions="Center" />
+            <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> <!-- Ajustez la largeur selon vos besoins -->
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int32}">
+                        <x:Int32>32</x:Int32>
+                        <x:Int32>42</x:Int32>
+                        <x:Int32>62</x:Int32>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
 
         <Button 
             Text="Create Casier" 
