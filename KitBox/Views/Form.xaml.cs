@@ -11,12 +11,10 @@ namespace KitBox.Views
         private Connection con;
 
         int count = 1;
-        string[] options = { "Option 1", "Option 2", "Option 3" };
+        string[] options = { "marron", "white"};
         List<string> doorOptions = new List<string>
         {
-            "Bleu Turquoise",
-            "Mauve",
-            "Rouge sang"
+            "marron", "white", "glass" 
         };
 
         Connection connection; // Déclaration de la connexion à la base de données
@@ -135,7 +133,7 @@ namespace KitBox.Views
             // Création d'un nouvel objet Casier et insertion dans la base de données
             Casier cas = new Casier(con);
             Dictionary<string, object> infoCasier = new Dictionary<string, object>();
-            
+
             infoCasier["couleur"] = colorPicker.SelectedItem.ToString();
             infoCasier["h"] = entry.Text; 
             infoCasier["porte"] = checkBox.IsChecked ? colorDoorPicker.SelectedItem.ToString() : ""; // Si la case est cochée, sinon une chaîne vide

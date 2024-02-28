@@ -13,7 +13,6 @@
                     <x:Array Type="{x:Type x:String}">
                         <x:String>marron</x:String>
                         <x:String>white</x:String>
-                        <x:String>glass</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
