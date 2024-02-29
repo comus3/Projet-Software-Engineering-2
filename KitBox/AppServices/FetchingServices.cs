@@ -22,7 +22,6 @@ static class FetchingServices
 { 
     private static string? _currentCommand;
     private static List<string> _oldCommands = new List<string>();
-
     public static string CurrentCommand
     {
         get { return _currentCommand; }
@@ -36,6 +35,7 @@ static class FetchingServices
             _currentCommand = value.ToString();
         }
     }
+    public static List<string> OldCommands {  get { return _oldCommands; } }
     
     /// <summary>
     /// return tout les dimentions possibles pour les plaques horizontales de casier
