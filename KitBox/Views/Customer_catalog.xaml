@@ -46,7 +46,7 @@
         </StackLayout>
 
         <Button 
-            Text="Create Casier" 
+            Text="Create a new cabinet" 
             Clicked="OnCreateCasierClicked" 
             TextColor="White"
             CornerRadius="8"
