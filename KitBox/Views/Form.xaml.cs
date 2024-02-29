@@ -119,20 +119,12 @@ namespace KitBox.Views
                     return;
                 }
 
-                Casier casier = new Casier(con);
-                Dictionary<string, object> infoCasier = new Dictionary<string, object>();
-
-                infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
-                infoCasier["h"] = casierData.Height.Text;
-                infoCasier["porte"] = casierData.CheckBox.IsChecked;
-
-                infoCasier["armoire"] = this.armoirePk;
-                casier.Update(infoCasier);
-                casier.Insert();
+                createCasier(casierData);
             }
 
             await Navigation.PushAsync(new FinishPage());
         }
+        
 
         private class CasierData
         {
@@ -140,6 +132,20 @@ namespace KitBox.Views
             public Picker DoorColor { get; set; }
             public Entry Height { get; set; }
             public CheckBox CheckBox { get; set; }
+        }
+
+        private void createCasier(CasierData casierData)
+        {
+            Casier casier = new Casier(con);
+            Dictionary<string, object> infoCasier = new Dictionary<string, object>();
+
+            infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
+            infoCasier["h"] = casierData.Height.Text;
+            infoCasier["porte"] = casierData.CheckBox.IsChecked;
+
+            infoCasier["armoire"] = this.armoirePk;
+            casier.Update(infoCasier);
+            casier.Insert();
         }
     }
 }
