@@ -17,7 +17,7 @@ namespace DAL;
 /// </summary>
 public class Connection
 {
-    private static readonly string connectionString = "Server=localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=password;Charset=utf8;SslMode=Preferred;";
+    private static readonly string connectionString = "Server=pat.infolab.ecam.be;Port=63408;Database=kitboxdb;Uid=newuser;Pwd=boubababou;Charset=utf8;SslMode=Preferred;";
 
 
     private static MySqlConnection GetConnection()
