@@ -20,10 +20,6 @@
                 Title="Panier"
                 ContentTemplate="{DataTemplate views:Panier}"/>
         </Tab>
-        <Tab Title="Home" Icon="home.png">
-            <ShellContent
-                Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}"/>
-        </Tab>
+       
     </TabBar>
 </Shell>
