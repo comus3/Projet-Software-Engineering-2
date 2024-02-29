@@ -16,8 +16,10 @@
                     <ViewCell>
                         <Frame Padding="10" BackgroundColor="White" CornerRadius="5" Margin="5">
                             <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Label Text="{Binding}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Acheter" Clicked="Acheter_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                                <Label Text="{Binding Longueur}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Profondeur}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Price}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                                
                                 <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                             </StackLayout>
                         </Frame>
@@ -26,4 +28,6 @@
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
+    <!-- Move the "Acheter" button outside of the ListView.ItemTemplate -->
+    <Button Text="Acheter" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
 </ContentPage>
