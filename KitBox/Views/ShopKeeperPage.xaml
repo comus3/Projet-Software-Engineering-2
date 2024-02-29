@@ -4,6 +4,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.ShopKeeperPage">
     <ContentPage.Content>
+        <VerticalStackLayout Padding="20" VerticalOptions="CenterAndExpand">
+            
+            <Label 
+                Text="There is nothing for you for the moment "
+                HorizontalOptions="Center" 
+                FontSize="24" />
+        </VerticalStackLayout>
         
     </ContentPage.Content>
 </ContentPage>
