@@ -4,37 +4,7 @@
              Title="Set up your locker">
     <ScrollView>
         <StackLayout>
-            <Label Text="Locker number 1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
-            <Entry x:Name="heightEntry" Placeholder="Enter Height" Keyboard="Numeric" Margin="10,5,10,5"/>
-           
-            <Label Text="Choose a color :"  Margin="10,5,10,5"/>
-            <Picker x:Name="OptionsPicker" SelectedIndexChanged="OptionsPicker_SelectedIndexChanged" Margin="10,5,10,5">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>marron</x:String>
-                        <x:String>white</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
 
-            <HorizontalStackLayout Margin="10,5,10,5" VerticalOptions="Center" HorizontalOptions="Start">
-                <Label Text="Include a door" 
-                    FontSize="15" 
-                    VerticalOptions="Center"/>
-                <CheckBox x:Name="doorCheckbox"
-                        CheckedChanged="OnDoorCheckboxCheckedChanged"/>
-
-                <Label x:Name="doorColorLabel" Text="Choose a color for the door number 1: " VerticalOptions="Center" HorizontalOptions="Start" IsVisible="False"  Margin="10,5,10,5"/>
-                <Picker x:Name="OptionsDoorPicker" SelectedIndexChanged="OptionsDoorPicker_SelectedIndexChanged" Margin="10,5,10,5" IsVisible="False">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>marron</x:String>
-                            <x:String>white</x:String>
-                            <x:String>glass</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </HorizontalStackLayout>
         
             <StackLayout>
                 <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />

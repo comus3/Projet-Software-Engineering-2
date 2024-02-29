@@ -22,23 +22,6 @@ namespace KitBox.Views
             con = new Connection();
         }
 
-        private void OptionsPicker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedOption = (string)OptionsPicker.SelectedItem;
-        }
-
-        private void OptionsDoorPicker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedOption = (string)OptionsDoorPicker.SelectedItem;
-        }
-
-        private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            bool isChecked = e.Value;
-            doorColorLabel.IsVisible = isChecked;
-            OptionsDoorPicker.IsVisible = isChecked;
-        }
-
         private void OnCreateNewLockerClicked(object sender, EventArgs e)
         {
             count++;
@@ -106,6 +89,7 @@ namespace KitBox.Views
                 Height = entry,
                 CheckBox = checkBox
             });
+            Console.WriteLine(casiersData.ToString());
         }
 
         private async void OnFinishClicked(object sender, EventArgs e)
