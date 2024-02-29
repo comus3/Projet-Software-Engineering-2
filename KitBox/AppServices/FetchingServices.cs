@@ -19,16 +19,24 @@ namespace KitBox.AppServices;
 /// pour une armoire une commande ou un casier
 /// </summary>
 static class FetchingServices
-{
-    public string CurrentCommand
+{ 
+    private static string? _currentCommand;
+    private static List<string> _oldCommands = new List<string>();
+
+    public static string CurrentCommand
     {
         get { return _currentCommand; }
         set
         {
-            _currentCommand = value;
-            AddOldCommand(value);
+            // If there's a previous command, add it to old commands
+            if (_currentCommand != null)
+            {
+                AddOldCommand(_currentCommand);
+            }
+            _currentCommand = value.ToString();
         }
     }
+    
     /// <summary>
     /// return tout les dimentions possibles pour les plaques horizontales de casier
     /// </summary>
@@ -143,6 +151,10 @@ static class FetchingServices
     {
         DataTable result = connection.ExecuteQuery($"SELECT `index` FROM casier WHERE `armoire` = {armoirePk}");
         return result;
+    }
+    private static void AddOldCommand(string currentCommand)
+    {
+        _oldCommands.Add(currentCommand);
     }
 }
 
