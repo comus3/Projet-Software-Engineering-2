@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.FinishPage"
+             Title="FinishPage">
+    <VerticalStackLayout>
+        <Label Text="Your order has been registered" VerticalOptions="Center" 
+            HorizontalOptions="Center" Margin="10,20,10,80"/>
+        <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
+            Margin="10,5,10,5"/>
+    </VerticalStackLayout>
+</ContentPage>
