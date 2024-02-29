@@ -1,4 +1,5 @@
 using DAL;
+using Org.BouncyCastle.Utilities;
 
 namespace KitBox.Views
 {
@@ -12,6 +13,7 @@ namespace KitBox.Views
 
         string[] options = { "marron", "white" };
         List<string> doorOptions = new List<string> { "marron", "white", "glass" };
+        List<int> heigth = new List<int> {32, 42, 52}; 
 
         public Form(Object armoirePk)
         {
@@ -30,8 +32,13 @@ namespace KitBox.Views
             newLabel.FontAttributes = FontAttributes.Bold;
             newLabel.HorizontalOptions = LayoutOptions.Center;
 
-            Entry entry = new Entry();
-            entry.Placeholder = "Height " + count;
+            Label heigthLabel = new Label();
+            heigthLabel.Text = "Height " + count;
+            Picker heightPicker = new Picker();
+            foreach (int elem in heigth)
+            {
+                heightPicker.Items.Add(elem.ToString());
+            }
 
             Label colorLabel = new Label();
             colorLabel.Text = "Choose a color : ";
@@ -76,7 +83,8 @@ namespace KitBox.Views
             };
 
             labelContainer.Children.Add(newLabel);
-            labelContainer.Children.Add(entry);
+            labelContainer.Children.Add(heigthLabel);
+            labelContainer.Children.Add(heightPicker);
             labelContainer.Children.Add(colorLabel);
             labelContainer.Children.Add(colorPicker);
             labelContainer.Children.Add(stackPanel);
@@ -86,7 +94,7 @@ namespace KitBox.Views
             {
                 Color = colorPicker,
                 DoorColor = colorDoorPicker,
-                Height = entry,
+                Height = heightPicker,
                 CheckBox = checkBox,
             });
             Console.WriteLine(casiersData.ToString());
@@ -97,7 +105,7 @@ namespace KitBox.Views
             // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
             foreach (var casierData in casiersData)
             {
-                if (casierData.Color.SelectedItem == null || casierData.Height.Text == null)
+                if (casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null)
                 {
                     await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
                     return;
@@ -114,7 +122,7 @@ namespace KitBox.Views
         {
             public Picker Color { get; set; }
             public Picker DoorColor { get; set; }
-            public Entry Height { get; set; }
+            public Picker Height { get; set; }
             public CheckBox CheckBox { get; set; }
         }
 
@@ -124,7 +132,7 @@ namespace KitBox.Views
             Dictionary<string, object> infoCasier = new Dictionary<string, object>();
 
             infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
-            infoCasier["h"] = casierData.Height.Text;
+            infoCasier["h"] = casierData.Height.SelectedItem.ToString();
             infoCasier["porte"] = casierData.CheckBox.IsChecked;
             if ((bool)infoCasier["porte"])
             {
