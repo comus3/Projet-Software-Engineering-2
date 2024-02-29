@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using MySql.Data.MySqlClient;
+using DevTools;
 
 
 namespace DAL;
@@ -43,7 +44,26 @@ public abstract class Model
     /// pour appliquer les modifs il faut utiliser save
     /// </summary>
     /// <param name="values"></param>
+    public DataTable LoadAllColomn(Dictionary<string, object> where, List<string> colomns)
+    {
+        string baseQuery = "SELECT ";
+        if (colomns != null & colomns.Count != 0)
+        {
+            foreach (string name in colomns)
+            {
+                baseQuery += $"{name}, ";
+            }
+            //retirer le dernier ,  qui nest pas neeceessaire
+            baseQuery = baseQuery.Substring(0, baseQuery.Length - 2) + " FROM ";
+            return LoadAll(where,baseQuery);
+        }
+        else
+        {
+            Logger.WriteToFile("Attentuin les gars vous avez call la methode load all colomn mais pas mis delement dans le le colomn object");
+            return LoadAll(where);
+        }
 
+    }
     public void Update(Dictionary<string, object> values)
     {
         foreach (var kvp in values)
@@ -168,9 +188,9 @@ public abstract class Model
     /// goodeuh leuk
     /// </summary>
     /// <param name="where"></param>
-    public DataTable LoadAll(Dictionary<string, object> where)
+    public DataTable LoadAll(Dictionary<string, object> where, string baseQuery = "SELECT * FROM ")
     {
-        string query = $"SELECT * FROM {this.tableName}";
+        string query = baseQuery + this.tableName.ToString();
         if (where != null && where.Count > 0)
         {
             query += " WHERE";
@@ -193,8 +213,8 @@ public abstract class Model
                 // Ajouter la condition à la requête SQL
                 query += $" `{condition.Key}` = {formattedValue} AND";
             }
-        // Supprimer le dernier 'AND' intulie de la requête SQL
-        query = query.Remove(query.Length - 4);
+            // Supprimer le dernier 'AND' intulie de la requête SQL
+            query = query.Remove(query.Length - 4);
         }
         return this.connection.ExecuteQuery(query);
     }
