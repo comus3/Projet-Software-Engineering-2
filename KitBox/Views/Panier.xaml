@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.Panier"
+             Title="Panier">
+    <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+        <Label 
+            Text="Panier"
+            HorizontalOptions="Center" 
+            FontSize="24" />
+
+        <!-- Liste des phrases numérotées -->
+        <ListView x:Name="lstArmoire" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="10" BackgroundColor="White" CornerRadius="5" Margin="5">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="{Binding}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Acheter" Clicked="Acheter_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                                <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

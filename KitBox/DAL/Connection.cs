@@ -19,6 +19,7 @@ public class Connection
 {
     private static readonly string connectionString = "Server=localhost;Port=3306;Database=kitboxdb;Uid=root;Pwd=password;Charset=utf8;SslMode=Preferred;";
 
+
     private static MySqlConnection GetConnection()
     {
         MySqlConnection connection = new MySqlConnection(connectionString);

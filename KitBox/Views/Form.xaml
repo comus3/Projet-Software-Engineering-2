@@ -1,0 +1,20 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.Form"
+             Title="Set up your locker">
+    <ScrollView>
+        <StackLayout>
+
+        
+            <StackLayout>
+                <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
+                
+                <Button Text="Create a new Locker" 
+                        Clicked="OnCreateNewLockerClicked" 
+                        Margin="10,5,10,5"/>
+            </StackLayout>
+            
+            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5"/>            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
