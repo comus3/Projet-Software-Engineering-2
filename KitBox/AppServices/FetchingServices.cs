@@ -20,6 +20,15 @@ namespace KitBox.AppServices;
 /// </summary>
 static class FetchingServices
 {
+    public string CurrentCommand
+    {
+        get { return _currentCommand; }
+        set
+        {
+            _currentCommand = value;
+            AddOldCommand(value);
+        }
+    }
     /// <summary>
     /// return tout les dimentions possibles pour les plaques horizontales de casier
     /// </summary>
