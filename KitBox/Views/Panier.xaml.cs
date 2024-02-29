@@ -2,6 +2,7 @@ using DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using DevTools;
 
 
 namespace KitBox.Views
@@ -33,14 +34,14 @@ namespace KitBox.Views
             con = new Connection();
 
             // Je teste pour l'instant quelques trucs pour voir si ça marche
-            /*lstArmoire.ItemsSource = new string[]
-            {
-                "Armoire 1",
-                "Armoire 2",
-                "Armoire 3",
-                "Armoire 4",
-                "Armoire 5"
-            };*/
+            // lstArmoire.ItemsSource = new string[]
+            // {
+            //     "Armoire 1",
+            //     "Armoire 2",
+            //     "Armoire 3",
+            //     "Armoire 4",
+            //     "Armoire 5"
+            // };
 
             // Chargez les armoires depuis la base de données
             Armoire armoire = new Armoire(con);
@@ -50,7 +51,13 @@ namespace KitBox.Views
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
             foreach (DataRow row in data.Rows)
             {
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(row["longueur"].ToString(), row["profondeur"].ToString(), row["price"].ToString());
+                string Longueur = row[1].ToString();
+                string Profondeur = row[2].ToString();
+                string Price = row[3].ToString();
+                Logger.WriteToFile(Longueur+ "  " + Profondeur + "  " + Price);
+
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur,Price);
+                Logger.WriteToFile(armoireAttributes);
                 lstArmoireItems.Add(armoireAttributes);
             }
             // Set the ItemsSource of the ListView to your list of ArmoireAttributes
