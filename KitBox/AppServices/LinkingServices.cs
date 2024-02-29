@@ -79,7 +79,7 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkCasier"></param>
-    public static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
+    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
     {
         RtCasier coucou = new RtCasier(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
@@ -97,7 +97,7 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkArmoire"></param>
-    public static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
+    private static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
     {
         RtArmoire coucou = new RtArmoire(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
