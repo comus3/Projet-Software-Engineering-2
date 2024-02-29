@@ -23,5 +23,10 @@
                 Title="Home"
                 ContentTemplate="{DataTemplate local:MainPage}"/>
         </Tab>
+                <Tab Title="CustomerRegisterForm">
+            <ShellContent
+                Title="Customer Registration"
+                ContentTemplate="{DataTemplate views:CustomerRegisterForm}"/>
+        </Tab>
     </TabBar>
 </Shell>
