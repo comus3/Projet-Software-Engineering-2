@@ -87,7 +87,7 @@ namespace KitBox.Views
                 Color = colorPicker,
                 DoorColor = colorDoorPicker,
                 Height = entry,
-                CheckBox = checkBox
+                CheckBox = checkBox,
             });
             Console.WriteLine(casiersData.ToString());
         }
@@ -126,7 +126,10 @@ namespace KitBox.Views
             infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
             infoCasier["h"] = casierData.Height.Text;
             infoCasier["porte"] = casierData.CheckBox.IsChecked;
-
+            if ((bool)infoCasier["porte"])
+            {
+                infoCasier["couleurPorte"] = casierData.DoorColor.SelectedItem.ToString();
+            }
             infoCasier["armoire"] = this.armoirePk;
             casier.Update(infoCasier);
             casier.Insert();
