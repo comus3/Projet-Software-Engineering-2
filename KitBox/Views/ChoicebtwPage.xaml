@@ -10,7 +10,7 @@
                 Text="Who are you ? "
                 HorizontalOptions="Center" 
                 FontSize="24" />
-            <HorizontalStackLayout Spacing="20" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            
             <Button   Text="Ordermaker/Shopkeeper" 
                       Clicked="OnredirectionOrdermaker" 
                       TextColor="White"
@@ -23,7 +23,7 @@
                     TextColor="White"
                     CornerRadius="8"
                     HeightRequest="50"
-                    HorizontalOptions="FillAndExpand"/></HorizontalStackLayout>
+                    HorizontalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>
