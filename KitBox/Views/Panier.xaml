@@ -9,17 +9,16 @@
             HorizontalOptions="Center" 
             FontSize="24" />
 
-        <!-- Liste des phrases numérotées -->
+        <!-- Liste des armoires -->
         <ListView x:Name="lstArmoire" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Frame Padding="10" BackgroundColor="White" CornerRadius="5" Margin="5">
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Label Text="{Binding Longueur}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Profondeur}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Price}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
-                                
+                            <StackLayout Orientation="Vertical" Spacing="10">
+                                <Label Text="{Binding Longueur}" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                <Label Text="{Binding Profondeur}" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                <Label Text="{Binding Price}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                             </StackLayout>
                         </Frame>
@@ -27,7 +26,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <!-- Bouton "Finalisation" -->
+        <Button Text="Finalisation" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
     </StackLayout>
-    <!-- Move the "Acheter" button outside of the ListView.ItemTemplate -->
-    <Button Text="Acheter" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
 </ContentPage>
