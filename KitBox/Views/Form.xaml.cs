@@ -1,55 +1,45 @@
-using Microsoft.UI.Xaml;
 using DAL;
-
 
 namespace KitBox.Views
 {
-    
     public partial class Form : ContentPage
     {
         private Object armoirePk;
         private Connection con;
+        private List<CasierData> casiersData = new List<CasierData>();
 
-        int count = 1;
-        string[] options = { "marron", "white"};
-        List<string> doorOptions = new List<string>
-        {
-            "marron", "white", "glass" 
-        };
+        int count = 0; // Compteur pour les casiers
 
-        Connection connection; // Déclaration de la connexion à la base de données
+        string[] options = { "marron", "white" };
+        List<string> doorOptions = new List<string> { "marron", "white", "glass" };
 
-        public Form( Object armoirePk)
+        public Form(Object armoirePk)
         {
             this.armoirePk = armoirePk;
             InitializeComponent();
-            //connection = new Connection(); // Initialisation de la connexion
             BindingContext = this;
-            // Testez la connexion
             Connection.TestConnection();
-            // Initialisez la connexion
             con = new Connection();
         }
 
         private void OptionsPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedOption = (string)OptionsPicker.SelectedItem;
-            //ResultLabel.Text = $"Vous avez choisi l'option : {selectedOption}";
         }
 
         private void OptionsDoorPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedOption = (string)OptionsDoorPicker.SelectedItem;
-            //ResultDoorLabel.Text = $"Vous avez choisi l'option : {selectedOption}";
-            
         }
 
-        private void OnFinishClicked(object sender, EventArgs e)
+        private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            Navigation.PushAsync(new FinishPage());
+            bool isChecked = e.Value;
+            doorColorLabel.IsVisible = isChecked;
+            OptionsDoorPicker.IsVisible = isChecked;
         }
 
-        private void OnCreateNewCasierClicked(object sender, EventArgs e)
+        private void OnCreateNewLockerClicked(object sender, EventArgs e)
         {
             count++;
             Label newLabel = new Label();
@@ -60,8 +50,8 @@ namespace KitBox.Views
             Entry entry = new Entry();
             entry.Placeholder = "Height " + count;
 
-            Label Color = new Label();
-            Color.Text = "Choose a color : ";
+            Label colorLabel = new Label();
+            colorLabel.Text = "Choose a color : ";
 
             Picker colorPicker = new Picker();
             foreach (string option in options)
@@ -69,40 +59,96 @@ namespace KitBox.Views
                 colorPicker.Items.Add(option);
             }
 
-            Label Door = new Label();
-            Door.Text = "Include a door";
-            Door.VerticalOptions = LayoutOptions.Center;
+            Label doorLabel = new Label();
+            doorLabel.Text = "Include a door";
+            doorLabel.VerticalOptions = LayoutOptions.Center;
             CheckBox checkBox = new CheckBox();
 
             HorizontalStackLayout stackPanel = new HorizontalStackLayout();
-            stackPanel.Children.Add(Door);
+            stackPanel.Children.Add(doorLabel);
             stackPanel.Children.Add(checkBox);
 
-            Label colorDoor = new Label();
-            colorDoor.Text = "Choose a color for the door number " + count.ToString() + " : ";
-            colorDoor.VerticalOptions = LayoutOptions.Center;
+            Label colorDoorLabel = new Label();
+            colorDoorLabel.Text = "Choose a color for the door number " + count.ToString() + " : ";
+            colorDoorLabel.VerticalOptions = LayoutOptions.Center;
             Picker colorDoorPicker = new Picker();
             foreach (string option in doorOptions)
             {
                 colorDoorPicker.Items.Add(option);
             }
 
-            checkBox.CheckedChanged += (sender, e) =>
+            checkBox.CheckedChanged += (sender, args) =>
             {
-                bool isChecked = ((CheckBox)sender).IsChecked;
+                bool isChecked = checkBox.IsChecked;
                 if (isChecked)
                 {
-                    stackPanel.Children.Add(colorDoor);
+                    stackPanel.Children.Add(colorDoorLabel);
                     stackPanel.Children.Add(colorDoorPicker);
                 }
                 else
                 {
-                    stackPanel.Children.Remove(colorDoor);
+                    stackPanel.Children.Remove(colorDoorLabel);
                     stackPanel.Children.Remove(colorDoorPicker);
                 }
             };
 
-		// checkBox.CheckedChanged += (sender, e) => {
+            labelContainer.Children.Add(newLabel);
+            labelContainer.Children.Add(entry);
+            labelContainer.Children.Add(colorLabel);
+            labelContainer.Children.Add(colorPicker);
+            labelContainer.Children.Add(stackPanel);
+
+            // Ajouter les données du casier actuel à la liste casiersData
+            casiersData.Add(new CasierData
+            {
+                Color = colorPicker,
+                DoorColor = colorDoorPicker,
+                Height = entry,
+                CheckBox = checkBox
+            });
+        }
+
+        private async void OnFinishClicked(object sender, EventArgs e)
+        {
+            // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
+            foreach (var casierData in casiersData)
+            {
+                if (casierData.Color.SelectedItem == null || casierData.Height.Text == null)
+                {
+                    await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
+                    return;
+                }
+
+                Casier casier = new Casier(con);
+                Dictionary<string, object> infoCasier = new Dictionary<string, object>();
+
+                infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
+                infoCasier["h"] = casierData.Height.Text;
+                infoCasier["porte"] = casierData.CheckBox.IsChecked;
+
+                infoCasier["armoire"] = this.armoirePk;
+                casier.Update(infoCasier);
+                casier.Insert();
+            }
+
+            await Navigation.PushAsync(new FinishPage());
+        }
+
+        private class CasierData
+        {
+            public Picker Color { get; set; }
+            public Picker DoorColor { get; set; }
+            public Entry Height { get; set; }
+            public CheckBox CheckBox { get; set; }
+        }
+    }
+}
+
+
+
+
+
+// checkBox.CheckedChanged += (sender, e) => {
 		// 	bool isChecked = ((CheckBox)sender).IsChecked;
 		// 	if (isChecked)
 		// 	{
@@ -123,31 +169,3 @@ namespace KitBox.Views
 		// 		}
 		// 	}
 		// };
-
-            labelContainer.Children.Add(newLabel);
-            labelContainer.Children.Add(entry);
-            labelContainer.Children.Add(Color);
-            labelContainer.Children.Add(colorPicker);
-            labelContainer.Children.Add(stackPanel);
-
-            // Création d'un nouvel objet Casier et insertion dans la base de données
-            Casier cas = new Casier(con);
-            Dictionary<string, object> infoCasier = new Dictionary<string, object>();
-
-            infoCasier["couleur"] = colorPicker.SelectedItem.ToString();
-            infoCasier["h"] = entry.Text; 
-            infoCasier["porte"] = checkBox.IsChecked ? colorDoorPicker.SelectedItem.ToString() : ""; // Si la case est cochée, sinon une chaîne vide
-            
-            infoCasier["armoire"] = this.armoirePk;
-            cas.Update(infoCasier);
-            cas.Insert();
-        }
-
-        private void OnDoorCheckboxCheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            bool isChecked = e.Value; // 'Value' is a property of CheckedChangedEventArgs indicating the new checked state.
-            doorColorLabel.IsVisible = isChecked;
-            OptionsDoorPicker.IsVisible = isChecked;
-        }
-    }
-}

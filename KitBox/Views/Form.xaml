@@ -40,7 +40,7 @@
                 <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
                 
                 <Button Text="Create a new Locker" 
-                        Clicked="OnCreateNewCasierClicked" 
+                        Clicked="OnCreateNewLockerClicked" 
                         Margin="10,5,10,5"/>
             </StackLayout>
             
