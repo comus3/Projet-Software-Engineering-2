@@ -131,8 +131,28 @@ static class LinkingServices
     public static void CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
         DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
-        string? color = armoireInfo.Rows[0]["couleur"].ToString();
+        string? couleur = armoireInfo.Rows[0]["couleur"].ToString();
+        //to code pour calculer la h tot si on a pas les memes l de casier 
+        Piece piece = new Piece(connection);
+        Dictionary<string, object> condition = new Dictionary<string, object>();
+        condition["armoire"]= armoire.PrimaryKey;
+        List<string> colomn = new List<string>();
+        colomn.Add("hauteur");
+        DataTable hauteurinfo = piece.LoadAll(condition,colomn);
         
+        //si meme l de casier alors on fait autre chose encore
+
+        //fin de autrechose avec un return dedans
+        if (couleur != null)
+        {
+            DataTable test = connection.ExecuteQuery($"SELECT code FROM piece WHERE type='{couleur}' AND REGEXP_REPLACE(code, '[^0-9]+', '')");
+                
+        }
+        else
+        {
+            Console.WriteLine("attention la piece ne possède pas de couleur");
+        }
+
     }
 }
 
