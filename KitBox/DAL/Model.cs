@@ -44,26 +44,6 @@ public abstract class Model
     /// pour appliquer les modifs il faut utiliser save
     /// </summary>
     /// <param name="values"></param>
-    public DataTable LoadAllColomn(Dictionary<string, object> where, List<string> colomns)
-    {
-        string baseQuery = "SELECT ";
-        if (colomns != null & colomns.Count != 0)
-        {
-            foreach (string name in colomns)
-            {
-                baseQuery += $"{name}, ";
-            }
-            //retirer le dernier ,  qui nest pas neeceessaire
-            baseQuery = baseQuery.Substring(0, baseQuery.Length - 2) + " FROM ";
-            return LoadAll(where,baseQuery);
-        }
-        else
-        {
-            Logger.WriteToFile("Attentuin les gars vous avez call la methode load all colomn mais pas mis delement dans le le colomn object");
-            return LoadAll(where);
-        }
-
-    }
     public void Update(Dictionary<string, object> values)
     {
         foreach (var kvp in values)
@@ -188,8 +168,13 @@ public abstract class Model
     /// goodeuh leuk
     /// </summary>
     /// <param name="where"></param>
-    public DataTable LoadAll(Dictionary<string, object> where, string baseQuery = "SELECT * FROM ")
+    public DataTable LoadAll(Dictionary<string, object> where, List<string>? colomns = null)
     {
+        if (colomns == null)
+        {
+            colomns = new List<string>();
+        }
+        string baseQuery = ColomnSelect(colomns);
         string query = baseQuery + this.tableName.ToString();
         if (where != null && where.Count > 0)
         {
@@ -225,7 +210,7 @@ public abstract class Model
     /// de la derniere ligne inseree
     /// </summary>
     /// <returns>DataTable containing desired primary key</returns>
-    public DataTable getLastPk()
+    private DataTable getLastPk()
     {
         string query = "SELECT LAST_INSERT_ID();";
         return this.connection.ExecuteQuery(query);
@@ -249,6 +234,32 @@ public abstract class Model
         {
             return value.ToString();
         }
+    }
+    /// <summary>
+    /// retourne la liste des colomnes
+    /// sous forme de basequery
+    /// </summary>
+    /// <param name="colomns"></param>
+    /// <returns></returns>
+    private string ColomnSelect(List<string> colomns)
+    {
+        string baseQuery = "SELECT ";
+        if (colomns != null & colomns.Count != 0)
+        {
+            foreach (string name in colomns)
+            {
+                baseQuery += $"{name}, ";
+            }
+            //retirer le dernier ,  qui nest pas neeceessaire
+            baseQuery = baseQuery.Substring(0, baseQuery.Length - 2) + " FROM ";
+            return baseQuery;
+        }
+        else
+        {
+            Logger.WriteToFile("No colomns specified, returning all colomns.");
+            return baseQuery+"* FROM ";
+        }
+
     }
 
 }
