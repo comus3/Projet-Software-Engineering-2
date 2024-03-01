@@ -12,40 +12,12 @@ public partial class CustomerRegisterForm : ContentPage
 	private Commande commande;
 	object date;
 	object price;
-	private Entry nom{
-		get{
-			Entry entry = new Entry();
-			entry.Placeholder = "Nom";
-			return entry;
-		}
-	}
-	private Entry prenom
-	{
-		get
-		{
-			Entry entry = new Entry();
-			entry.Placeholder = "Prenom";
-			return entry;
-		}
-	}
-	private Entry telephone
-	{
-		get
-		{
-			Entry entry = new Entry();
-			entry.Placeholder = "Telephone";
-			return entry;
-		}
-	}
-	private Entry email
-	{
-		get
-		{
-			Entry entry = new Entry();
-			entry.Placeholder = "Email";
-			return entry;
-		}
-	}
+	private CustomerData customerData = new CustomerData(){
+		Nom = new Entry(),
+		Prenom = new Entry(),
+		Telephone = new Entry(),
+		Email = new Entry()
+	};
 	public CustomerRegisterForm()
 	{
 		BindingContext = this;
@@ -55,11 +27,12 @@ public partial class CustomerRegisterForm : ContentPage
 		con = new Connection();
 		this.commande = new Commande(con);
 		DataTable res = this.commande.Load(commandePk);
+		Displayer.DisplayData(res);
 		this.date = res.Rows[0].ItemArray[1];
 		this.price = res.Rows[0].ItemArray[5];
 		BuildUI();
 	}
-	private class CustomerData
+	class CustomerData
 	{
 		public Entry Nom {get; set;}
 		public Entry Prenom {get; set;}
@@ -75,28 +48,28 @@ public partial class CustomerRegisterForm : ContentPage
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
-		stackLayout.Children.Add(nom);
+		stackLayout.Children.Add(customerData.Nom);
 		stackLayout.Children.Add(new Label
 		{
 			Text = "Prenom",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
-		stackLayout.Children.Add(prenom);
+		stackLayout.Children.Add(customerData.Prenom);
 		stackLayout.Children.Add(new Label
 		{
 			Text = "Telephone",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
-		stackLayout.Children.Add(telephone);
+		stackLayout.Children.Add(customerData.Telephone);
 		stackLayout.Children.Add(new Label
 		{
 			Text = "Email",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
-		stackLayout.Children.Add(email);
+		stackLayout.Children.Add(customerData.Email);
 		Button submit = new Button
 		{
 			Text = "Submit",
@@ -110,15 +83,9 @@ public partial class CustomerRegisterForm : ContentPage
 	private void OnSubmitClicked(object sender, EventArgs e)
 	{
 		Dictionary<string, object> infoClient = new Dictionary<string, object>();
-		CustomerData customerdata = new CustomerData(){
-			Nom = nom,
-			Prenom = prenom,
-			Telephone = telephone,
-			Email = email
-		};
-		infoClient.Add("nom", customerdata.Nom.Text);
-		infoClient.Add("prenom", customerdata.Prenom.Text);
-		infoClient.Add("tel", customerdata.Telephone.Text);
+		infoClient.Add("nom", customerData.Nom.Text);
+		infoClient.Add("prenom", customerData.Prenom.Text);
+		infoClient.Add("tel", customerData.Telephone.Text);
 		this.commande.Update(infoClient);
 		this.commande.Save();
 		DisplayAlert("Success", "Your order has been registered", "OK");

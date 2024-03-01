@@ -89,7 +89,6 @@ namespace KitBox.Views
                 Height = entry,
                 CheckBox = checkBox,
             });
-            Console.WriteLine(casiersData.ToString());
         }
 
         private async void OnFinishClicked(object sender, EventArgs e)
