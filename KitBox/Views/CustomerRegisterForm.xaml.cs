@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using DevTools;
+using KitBox.AppServices;
 
 namespace KitBox.Views;
-
+// A implémenter : Visibilité des données de la commande (Date de la commande; Prix de la commande)
 public partial class CustomerRegisterForm : ContentPage
 {
 	private Connection con;
@@ -22,7 +23,13 @@ public partial class CustomerRegisterForm : ContentPage
 	{
 		BindingContext = this;
 		InitializeComponent();
-		object commandePk = 1;
+		string commandePk = FetchingServices.CurrentCommand;
+		if (commandePk == "")
+		{
+			DisplayAlert("Error", "No order selected", "OK");
+			commandePk = "1";
+			return;
+		}
 		Connection.TestConnection();
 		con = new Connection();
 		this.commande = new Commande(con);
