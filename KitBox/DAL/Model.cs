@@ -14,9 +14,8 @@ public abstract class Model
     protected string tableName;
     protected string primaryKey;
     protected Dictionary<string, object> attributes = new Dictionary<string, object>();
-
     protected Connection connection;
-
+    public string PrimaryKey{get{return primaryKey;}}
     public Model(Connection connection)
     {
         this.connection = connection;
