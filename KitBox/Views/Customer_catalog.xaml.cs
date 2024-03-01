@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using DevTools;
+using AppServices;
+using KitBox.AppServices;
 
 namespace KitBox.Views
 {
@@ -32,7 +34,7 @@ namespace KitBox.Views
             com.Update(infoClient);
             DataTable data = com.Insert();
             Displayer.DisplayData(data);
-            comPk = data.Rows[0].ItemArray[0];
+            FetchingServices.CurrentCommand = data.Rows[0].ItemArray[0].ToString();
             listArmoirePk = new List<Object>();
         }
 
@@ -63,7 +65,7 @@ namespace KitBox.Views
                 Dictionary<string, object> values = new Dictionary<string, object>();
                 values["longueur"] = length;
                 values["largeur"] = width;
-                values["commande"] = comPk;
+                values["commande"] = FetchingServices.CurrentCommand;
                 armoire.Update(values);
 
                 listArmoirePk.Add(armoire.Insert().Rows[0].ItemArray[0]);
