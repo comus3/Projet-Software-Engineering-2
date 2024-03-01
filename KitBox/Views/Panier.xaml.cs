@@ -79,18 +79,21 @@ namespace KitBox.Views
             }
         }
 
-        private void Acheter_Clicked(object sender, EventArgs e)
+        private void Finish_Clicked(object sender, EventArgs e)
         {
             DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
         }
 
-        private void Supprimer_Clicked(object sender, EventArgs e)
+        private async void Delete_Clicked(object sender, EventArgs e)
         {
             var armoire = (sender as Button)?.CommandParameter as ArmoireAttributes;
 
             if (armoire != null)
             {
-                DisplayAlert("Supprimer", $"L'armoire {armoire.Numero}, longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
+                Armoire armoireToDelete = new Armoire(con);
+                armoireToDelete.Delete();                
+                ChargerDonnees();
+                await DisplayAlert("Supprimer", $"L'armoire {armoire.Numero}, longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
             }
         }
     }
