@@ -23,6 +23,7 @@
                                 <Label Text="{Binding Longueur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Profondeur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Price}" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                <Button Test="Détails" Clicked="Details_Clicked" CommandParameter="{Binding .}" HorizontalOptions="Start"/>
                                 <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                             </StackLayout>
                         </Frame>
@@ -32,6 +33,6 @@
         </ListView>
 
         <!-- Bouton "Finalisation" -->
-        <Button Text="Finalisation" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
+        <Button Text="Finalisation" Clicked="Finish_Clicked" HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
