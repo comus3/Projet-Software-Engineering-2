@@ -83,6 +83,16 @@ namespace KitBox.Views
         {
             DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
         }
+        
+        private void Details_Clicked(object sender, EventArgs e)
+        {
+            var armoire = (sender as Button)?.CommandParameter as ArmoireAttributes;
+
+            if (armoire != null)
+            {
+                DisplayAlert("Détails", $"L'armoire {armoire.Numero}, longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price}.", "OK");
+            }
+        }
 
         private async void Delete_Clicked(object sender, EventArgs e)
         {
