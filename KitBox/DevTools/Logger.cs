@@ -6,7 +6,7 @@ public static class Logger
 {
     private static string? filename = null;
 
-    public static void CreateLogFile()
+    private static void CreateLogFile()
     {
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string folderPath = Path.Combine(documentsPath, "execLogs");
