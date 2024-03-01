@@ -168,7 +168,7 @@ public abstract class Model
     /// goodeuh leuk
     /// </summary>
     /// <param name="where"></param>
-    public DataTable LoadAll(Dictionary<string, object> where, List<string> colomns = null)
+    public DataTable LoadAll(Dictionary<string, object> where, List<string>? colomns = null)
     {
         if (colomns == null)
         {
@@ -210,7 +210,7 @@ public abstract class Model
     /// de la derniere ligne inseree
     /// </summary>
     /// <returns>DataTable containing desired primary key</returns>
-    public DataTable getLastPk()
+    private DataTable getLastPk()
     {
         string query = "SELECT LAST_INSERT_ID();";
         return this.connection.ExecuteQuery(query);
