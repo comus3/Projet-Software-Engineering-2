@@ -27,6 +27,7 @@ public partial class ShopKeeperPage : ContentPage
         colomns.Add("id_commande");
         DataTable data = commande.LoadAll(com,colomns);
         //Displayer.DisplayData(data);
+
         foreach(DataRow row in data.Rows)
         {
             foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row.ItemArray[0]))
