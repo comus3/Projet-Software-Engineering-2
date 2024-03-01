@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 using DAL;
 using DevTools;
-using Microsoft.Maui.Controls;
-using MySqlX.XDevAPI.Common;
-using Mysqlx.Session;
 using static KitBox.AppServices.LinkingServices;
 
 
@@ -133,11 +130,9 @@ static class LinkingServices
     /// <param name="armoire"></param>
     public static void CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
-        //todo 
-        // une armoire est cree --> alors il va faloir call les methodes link casier une serie de fois
-        //  pour lier toutes les pk des pieces correspondantes
-        //   utilisrer le .gettype fdams la methode insert du modele pour calll cette methode
-
+        DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
+        string? color = armoireInfo.Rows[0]["couleur"].ToString();
+        
     }
 }
 
