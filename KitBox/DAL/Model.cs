@@ -70,7 +70,7 @@ public abstract class Model
                 string formattedValue;
                 if (kvp.Value is string)
                 {
-                    formattedValue = $"`{kvp.Value}`";
+                    formattedValue = $"'{kvp.Value}'";
                 }
                 else
                 {
