@@ -10,20 +10,61 @@ public partial class CustomerRegisterForm : ContentPage
 {
 	private Connection con;
 	private Commande commande;
-	private Entry nom;
-	private Entry prenom;
-	private Entry telephone;
-	private Entry email;
-	public CustomerRegisterForm(object commandePk)
+	object date;
+	object price;
+	private Entry nom{
+		get{
+			Entry entry = new Entry();
+			entry.Placeholder = "Nom";
+			return entry;
+		}
+	}
+	private Entry prenom
+	{
+		get
+		{
+			Entry entry = new Entry();
+			entry.Placeholder = "Prenom";
+			return entry;
+		}
+	}
+	private Entry telephone
+	{
+		get
+		{
+			Entry entry = new Entry();
+			entry.Placeholder = "Telephone";
+			return entry;
+		}
+	}
+	private Entry email
+	{
+		get
+		{
+			Entry entry = new Entry();
+			entry.Placeholder = "Email";
+			return entry;
+		}
+	}
+	public CustomerRegisterForm()
 	{
 		BindingContext = this;
+		InitializeComponent();
+		object commandePk = 1;
 		Connection.TestConnection();
 		con = new Connection();
-		commande = new Commande(con);
-		DataTable res = commande.Load(commandePk);
-		object date = res.Rows[0].ItemArray[1];
-		object price = res.Rows[0].ItemArray[5];
+		this.commande = new Commande(con);
+		DataTable res = this.commande.Load(commandePk);
+		this.date = res.Rows[0].ItemArray[1];
+		this.price = res.Rows[0].ItemArray[5];
 		BuildUI();
+	}
+	private class CustomerData
+	{
+		public Entry Nom {get; set;}
+		public Entry Prenom {get; set;}
+		public Entry Telephone {get; set;}
+		public Entry Email {get; set;}
 	}
 	private void BuildUI()
 	{
@@ -69,11 +110,17 @@ public partial class CustomerRegisterForm : ContentPage
 	private void OnSubmitClicked(object sender, EventArgs e)
 	{
 		Dictionary<string, object> infoClient = new Dictionary<string, object>();
-		infoClient.Add("nom", nom.Text);
-		infoClient.Add("prenom", prenom.Text);
-		infoClient.Add("telephone", telephone.Text);
-		infoClient.Add("email", email.Text);
-		commande.Update(infoClient);
+		CustomerData customerdata = new CustomerData(){
+			Nom = nom,
+			Prenom = prenom,
+			Telephone = telephone,
+			Email = email
+		};
+		infoClient.Add("nom", customerdata.Nom.Text);
+		infoClient.Add("prenom", customerdata.Prenom.Text);
+		infoClient.Add("tel", customerdata.Telephone.Text);
+		this.commande.Update(infoClient);
+		this.commande.Save();
 		DisplayAlert("Success", "Your order has been registered", "OK");
 	}
 }
