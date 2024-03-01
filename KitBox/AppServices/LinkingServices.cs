@@ -18,7 +18,7 @@ namespace KitBox.AppServices;
 
 static class LinkingServices
 {
-    public class RtCasier : Model
+    private class RtCasier : Model
     {
 
         public RtCasier(Connection connection) : base(connection)
@@ -27,7 +27,7 @@ static class LinkingServices
             primaryKey = "id_relation";
         }
     }
-    public class RtArmoire : Model
+    private class RtArmoire : Model
     {
 
         public RtArmoire(Connection connection) : base(connection)
@@ -36,13 +36,50 @@ static class LinkingServices
             primaryKey = "id_relation";
         }
     }
+    private class ArmoireAttributes
+    {
+        string PrimaryKey{get;set;}
+        string Longueur{get;set;}
+        string Largeur{get;set;}
+        string Price{get;set;}
+        string Commande{get;set;}
+        public ArmoireAttributes(string primaryKey, string longueur, string largeur, string price, string commande)
+        {
+            PrimaryKey = primaryKey;
+            Longueur = longueur;
+            Largeur = largeur;
+            Price = price;
+            Commande = commande;
+        }
+    }
+    private class CasierAttributes
+    {
+        string PrimaryKey{get;set;}
+        string Color{get;set;}
+        string Hauteur{get;set;}
+        string Porte{get;set;}
+        string Price{get;set;}
+        string Armoire{get;set;}
+        string CouleurPorte{get;set;}
+        public CasierAttributes(string primaryKey, string color, string hauteur, string porte, string price, string armoire, string couleurPorte)
+        {
+            PrimaryKey = primaryKey;
+            Color = color;
+            Hauteur = hauteur;
+            Porte = porte;
+            Price = price;
+            Armoire = armoire;
+            CouleurPorte = couleurPorte;
+        }
+    }
+
     /// <summary>
     /// lie un casier a une piece
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkCasier"></param>
-    public static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
+    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
     {
         RtCasier coucou = new RtCasier(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
@@ -60,7 +97,7 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkArmoire"></param>
-    public static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
+    private static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
     {
         RtArmoire coucou = new RtArmoire(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
@@ -81,6 +118,7 @@ static class LinkingServices
     /// <param name="casier"></param>
     public static void CreateAllCasierLinks(Connection connection, Casier casier)
     {
+        
         //todo 
         // un casier est cree --> alors il va faloir call les methodes link casier une serie de fois
         //  pour lier toutes les pk des pieces correspondantes
