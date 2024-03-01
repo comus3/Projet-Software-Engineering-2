@@ -1,110 +1,83 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 using DAL;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using DevTools;
+using KitBox.AppServices;
+
 
 namespace KitBox.Views
 {
     public partial class Panier : ContentPage
     {
+
         private Connection con;
         internal class ArmoireAttributes
         {
-            public string Numero { get; set; }
             public string Longueur { get; set; }
             public string Profondeur { get; set; }
             public string Price { get; set; }
-
-            public ArmoireAttributes(string numero, string longueur, string profondeur, string price)
+            public ArmoireAttributes(string longueur, string profondeur, string price)
             {
-                Numero = numero;
-                Longueur = longueur;
-                Profondeur = profondeur;
-                Price = price;
+                this.Longueur = longueur;
+                this.Profondeur = profondeur;
+                this.Price = price;
             }
         }
-
         public Panier()
         {
             InitializeComponent();
 
+            // Initialisez votre modèle avec une connexion à la base de données, par exemple
+            //Connection connection = new Connection("your_connection_string_here");
+            //model = new Model(connection);
             Connection.TestConnection();
             con = new Connection();
 
-            numeroCommandeEntry.TextChanged += NumeroCommandeEntry_TextChanged;
 
-            ChargerDonnees();
-        }
 
-        private void NumeroCommandeEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ChargerDonnees();
-        }
-
-        private void ChargerDonnees()
-        {
-            if (int.TryParse(numeroCommandeEntry.Text, out int numeroCommande))
+            // Chargez les armoires depuis la base de données
+            Armoire armoire = new Armoire(con);
+            Dictionary<string, object> arm = new Dictionary<string, object>();
+            arm["commande"] = FetchingServices.CurrentCommand ;
+            DataTable data = armoire.LoadAll(arm);
+            List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
+            foreach (DataRow row in data.Rows)
             {
-                Armoire armoire = new Armoire(con);
-                Dictionary<string, object> arm = new Dictionary<string, object>();
-                arm["commande"] = numeroCommande;
-                DataTable data = armoire.LoadAll(arm);
+                string Longueur = row[1].ToString();
+                string Profondeur = row[2].ToString();
+                string Price = row[3].ToString();
+                Logger.WriteToFile(Longueur+ "  " + Profondeur + "  " + Price);
 
-                List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
-                int numeroArmoire = 1;
-
-                foreach (DataRow row in data.Rows)
-                {
-                    string Numero = $"Armoire numéro: {numeroArmoire}";
-                    string Longueur = $"Longueur: {row[1]}";
-                    string Profondeur = $"Profondeur: {row[2]}";
-                    string Price = $"Prix: {row[3]} €";
-
-                    Logger.WriteToFile($"{Numero} {Longueur} {Profondeur} {Price}");
-
-                    ArmoireAttributes armoireAttributes = new ArmoireAttributes(Numero, Longueur, Profondeur, Price);
-                    Logger.WriteToFile(armoireAttributes);
-                    lstArmoireItems.Add(armoireAttributes);
-
-                    numeroArmoire++;
-                }
-
-                lstArmoire.ItemsSource = lstArmoireItems;
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur,Price);
+                Logger.WriteToFile(armoireAttributes);
+                lstArmoireItems.Add(armoireAttributes);
             }
-            else
-            {
-                lstArmoire.ItemsSource = null;
-            }
+            // Set the ItemsSource of the ListView to your list of ArmoireAttributes
+            this.lstArmoire.ItemsSource = lstArmoireItems;
+
+            //armoire.LoadAll();
+
         }
 
-        private void Finish_Clicked(object sender, EventArgs e)
+        private void Acheter_Clicked(object sender, EventArgs e)
         {
+            // Méthode pour gérer le clic sur le bouton "Acheter"
+            // Récupérer l'armoire sélectionnée
             DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
         }
-        
-        private void Details_Clicked(object sender, EventArgs e)
+
+        private void Supprimer_Clicked(object sender, EventArgs e)
         {
-            var armoire = (sender as Button)?.CommandParameter as ArmoireAttributes;
+            // Méthode pour gérer le clic sur le bouton "Supprimer"
+            // Récupérer l'armoire sélectionnée
+            var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            if (armoire != null)
-            {
-                DisplayAlert("Détails", $"L'armoire {armoire.Numero}, longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price}.", "OK");
-            }
-        }
+            //Ajoutez ici le code pour supprimer l'armoire
+            //Appelez la méthode Delete de votre modèle en utilisant l'ID de l'armoire (par exemple)
+            //model.Delete(armoire);
 
-        private async void Delete_Clicked(object sender, EventArgs e)
-        {
-            var armoire = (sender as Button)?.CommandParameter as ArmoireAttributes;
-
-            if (armoire != null)
-            {
-                Armoire armoireToDelete = new Armoire(con);
-                armoireToDelete.Delete();                
-                ChargerDonnees();
-                await DisplayAlert("Supprimer", $"L'armoire {armoire.Numero}, longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
-            }
+            DisplayAlert("Supprimer", $"L'armoire avec longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
         }
     }
 }

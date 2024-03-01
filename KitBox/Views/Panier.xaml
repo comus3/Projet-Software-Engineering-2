@@ -9,9 +9,6 @@
             HorizontalOptions="Center" 
             FontSize="24" />
 
-        <!-- Entry pour saisir le numéro de commande -->
-        <Entry x:Name="numeroCommandeEntry" Placeholder="Numéro de commande" Keyboard="Numeric" />
-
         <!-- Liste des armoires -->
         <ListView x:Name="lstArmoire" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
             <ListView.ItemTemplate>
@@ -19,11 +16,9 @@
                     <ViewCell>
                         <Frame Padding="10" BackgroundColor="White" CornerRadius="5" Margin="5">
                             <StackLayout Orientation="Vertical" Spacing="10">
-                                <Label Text="{Binding Numero}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Longueur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Profondeur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Price}" VerticalOptions="Start" HorizontalOptions="Start"/>
-                                <Button Test="Détails" Clicked="Details_Clicked" CommandParameter="{Binding .}" HorizontalOptions="Start"/>
                                 <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                             </StackLayout>
                         </Frame>
@@ -33,6 +28,6 @@
         </ListView>
 
         <!-- Bouton "Finalisation" -->
-        <Button Text="Finalisation" Clicked="Finish_Clicked" HorizontalOptions="End"/>
+        <Button Text="Finalisation" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
