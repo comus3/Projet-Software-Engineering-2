@@ -126,30 +126,70 @@ static class LinkingServices
     /// <param name="armoire"></param>
     public static void CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
+        //get couleur de l'armoire 
         DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
         string? couleur = armoireInfo.Rows[0]["couleur"].ToString();
-        //to code pour calculer la h tot si on a pas les memes l de casier 
+        int hauteurtot = GetHauteur(connection, armoire.PrimaryKey);    
+    }
+    public static int GetHauteur(Connection connection, string armoireId)
+    {
         Piece piece = new Piece(connection);
         Dictionary<string, object> condition = new Dictionary<string, object>();
-        condition["armoire"]= armoire.PrimaryKey;
-        List<string> colomn = new List<string>();
-        colomn.Add("hauteur");
-        DataTable hauteurinfo = piece.LoadAll(condition,colomn);
-        
+        condition["armoire"] = armoireId;
+        List<string> column = new List<string>();
+        column.Add("hauteur");
+        //get toutes les hauteurs existantes dans l'armoire
+        DataTable hauteurinfo = piece.LoadAll(condition, column);
+
+        int hauteurtot = 0;
+        int countIdenticalRows = 0;
+        DataRow firstRow = hauteurinfo.Rows[0];
+
+        foreach (DataRow row in hauteurinfo.Rows)
+        {
+            bool identical = true;
+
+            for (int i = 0; i < hauteurinfo.Columns.Count; i++)
+            {
+                if (!row[i].Equals(firstRow[i]))
+                {
+                    // Si les lignes sont différentes, incrémenter hauteurtot et sortir de la boucle
+                    hauteurtot += Convert.ToInt32(row["hauteur"]);
+                    identical = false;
+                    break;
+                }
+            }
+
+            if (identical)
+            {
+                countIdenticalRows++;
+            }
+        }
+
+        // Si toutes les lignes sont identiques, retourner le nombre de fois où la valeur est apparue fois la valeur
+        if (countIdenticalRows == hauteurinfo.Rows.Count)
+        {
+            hauteurtot = Convert.ToInt32(firstRow["hauteur"]) * countIdenticalRows;
+        }
+
+        return hauteurtot;
+    }
         //si meme l de casier alors on fait autre chose encore
 
         //fin de autrechose avec un return dedans
-        if (couleur != null)
-        {
-            DataTable test = connection.ExecuteQuery($"SELECT code FROM piece WHERE type='{couleur}' AND REGEXP_REPLACE(code, '[^0-9]+', '')");
-                
-        }
-        else
-        {
-            Console.WriteLine("attention la piece ne possède pas de couleur");
-        }
+            // if (couleur != null)
+            // {
+            //     DataTable test = connection.ExecuteQuery($"SELECT code FROM piece WHERE type='{couleur}' AND REGEXP_REPLACE(code, '[^0-9]+', '')");
+                    
+            // }
+            // else
+            // {
+            //     Console.WriteLine("attention la piece ne possède pas de couleur");
+            // }
 
-    }
+
+
+    
     private static Boolean VBatten(Connection connection, int height, object pkCasier,DataTable armoireData)
     {
         return true;
