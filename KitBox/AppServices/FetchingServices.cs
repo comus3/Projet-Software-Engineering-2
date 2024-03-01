@@ -125,14 +125,14 @@ static class FetchingServices
     /// attention a ne pas executer ca si larmoire
     /// ne contient aucune piece -- > erreur
     /// </returns>
-    public static Dictionary<string,object> FetchCommandePieces(Connection connection,object commandePk)
+    public static Dictionary<string,DataTable> FetchCommandePieces(Connection connection,object commandePk)
     {
         string executionMessage = $"fetching pieces for {commandePk}";
         Armoire armoire = new Armoire(connection);
         Dictionary<string, object> caracteristic = new Dictionary<string, object>();
         caracteristic["commande"] = commandePk;
         DataTable armoires = armoire.LoadAll(caracteristic);
-        Dictionary<string,object> result = new Dictionary<string, object>();
+        Dictionary<string,DataTable> result = new Dictionary<string, DataTable>();
         foreach (DataRow rowArm in armoires.Rows)
         {
             string ArmoireIndex = $"ArmoireOfPk{rowArm[0]}";
@@ -149,7 +149,7 @@ static class FetchingServices
 
     private static DataTable FetchCasierAssociatedToArmoire(Connection connection, object armoirePk)
     {
-        DataTable result = connection.ExecuteQuery($"SELECT `index` FROM casier WHERE `armoire` = {armoirePk}");
+        DataTable result = connection.ExecuteQuery($"SELECT `id_casier` FROM casier WHERE `armoire` = {armoirePk}");
         return result;
     }
     private static void AddOldCommand(string currentCommand)
