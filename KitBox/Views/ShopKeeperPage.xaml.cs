@@ -1,55 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
-using System;
-using System.Collections.Generic;
+﻿using DAL;
 using System.Data;
+using DevTools;
+using AppServices;
+using KitBox.AppServices;
 
 namespace KitBox.Views;
 
 public partial class ShopKeeperPage : ContentPage
 {
-    private Connection con;
-    internal class CommandeAttributes
-    {
-        public string Index {get; set;}
-        public CommandeAttributes(string index)
-        {
-            this.Index = index;
-        }
-    }
+    private Connection conn;
 
     public ShopKeeperPage()
     {
         InitializeComponent();
+        BindingContext = this;
 
+        // Testez la connexion
         Connection.TestConnection();
-        con = new Connection();
+        // Initialisez la connexion
+        conn = new Connection();
 
-        Commande commande = new Commande(con);
+        // Chargez les commandes depuis la base de données
+        Commande commande = new Commande(conn);
         Dictionary<string, object> com = new Dictionary<string, object>();
-        // com["index"] = 1;
-        DataTable data = commande.LoadAll(com);
-        Console.WriteLine(data);
-        // List<CommandeAttributes> lstCommande = new List<CommandeAttributes>();
-        // foreach (DataRow row in data.Rows)
-        // {
-        //     string Longueur = row[1].ToString();
-        //     string Profondeur = row[2].ToString();
-        //     string Price = row[3].ToString();
-        //     Logger.WriteToFile(Longueur+ "  " + Profondeur + "  " + Price);
-
-        //     CommandeAttributes commandeAttributes = new CommandeAttributes(Index);
-        //     Logger.WriteToFile(commandeAttributes);
-        //     lstCommande.Add(commandeAttributes);
-        // }
-        // // Set the ItemsSource of the ListView to your list of ArmoireAttributes
-        // this.lstCom.ItemsSource = lstCommande;
-
-        //}
+        List<string> colomns = new List<string>();
+        colomns.Add("id_commande");
+        DataTable data = commande.LoadAll(com,colomns);
+        //Displayer.DisplayData(data);
+        foreach(DataRow row in data.Rows)
+        {
+            foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row.ItemArray[0]))
+            {
+                //Displayer.DisplayData(keyValuePair.Value);
+            }
+        }
+        //update puis save pour completed (quand boutton complet)
+    
 
     }
 }
