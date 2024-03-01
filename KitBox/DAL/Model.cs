@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using MySql.Data.MySqlClient;
+using DevTools;
 
 
 namespace DAL;
@@ -43,7 +44,6 @@ public abstract class Model
     /// pour appliquer les modifs il faut utiliser save
     /// </summary>
     /// <param name="values"></param>
-
     public void Update(Dictionary<string, object> values)
     {
         foreach (var kvp in values)
@@ -168,9 +168,14 @@ public abstract class Model
     /// goodeuh leuk
     /// </summary>
     /// <param name="where"></param>
-    public DataTable LoadAll(Dictionary<string, object> where)
+    public DataTable LoadAll(Dictionary<string, object> where, List<string>? colomns = null)
     {
-        string query = $"SELECT * FROM {this.tableName}";
+        if (colomns == null)
+        {
+            colomns = new List<string>();
+        }
+        string baseQuery = ColomnSelect(colomns);
+        string query = baseQuery + this.tableName.ToString();
         if (where != null && where.Count > 0)
         {
             query += " WHERE";
@@ -193,8 +198,8 @@ public abstract class Model
                 // Ajouter la condition à la requête SQL
                 query += $" `{condition.Key}` = {formattedValue} AND";
             }
-        // Supprimer le dernier 'AND' intulie de la requête SQL
-        query = query.Remove(query.Length - 4);
+            // Supprimer le dernier 'AND' intulie de la requête SQL
+            query = query.Remove(query.Length - 4);
         }
         return this.connection.ExecuteQuery(query);
     }
@@ -205,7 +210,7 @@ public abstract class Model
     /// de la derniere ligne inseree
     /// </summary>
     /// <returns>DataTable containing desired primary key</returns>
-    public DataTable getLastPk()
+    private DataTable getLastPk()
     {
         string query = "SELECT LAST_INSERT_ID();";
         return this.connection.ExecuteQuery(query);
@@ -229,6 +234,32 @@ public abstract class Model
         {
             return value.ToString();
         }
+    }
+    /// <summary>
+    /// retourne la liste des colomnes
+    /// sous forme de basequery
+    /// </summary>
+    /// <param name="colomns"></param>
+    /// <returns></returns>
+    private string ColomnSelect(List<string> colomns)
+    {
+        string baseQuery = "SELECT ";
+        if (colomns != null & colomns.Count != 0)
+        {
+            foreach (string name in colomns)
+            {
+                baseQuery += $"{name}, ";
+            }
+            //retirer le dernier ,  qui nest pas neeceessaire
+            baseQuery = baseQuery.Substring(0, baseQuery.Length - 2) + " FROM ";
+            return baseQuery;
+        }
+        else
+        {
+            Logger.WriteToFile("No colomns specified, returning all colomns.");
+            return baseQuery+"* FROM ";
+        }
+
     }
 
 }
