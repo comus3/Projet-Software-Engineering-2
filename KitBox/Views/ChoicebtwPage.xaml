@@ -24,6 +24,12 @@
                     CornerRadius="8"
                     HeightRequest="50"
                     HorizontalOptions="FillAndExpand"/>
+            <Button Text="Secretary" 
+                    Clicked="SecretaryClicked" 
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

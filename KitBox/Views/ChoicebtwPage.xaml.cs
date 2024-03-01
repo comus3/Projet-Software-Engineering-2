@@ -27,5 +27,12 @@ public partial class ChoicebtwPage : ContentPage
         
         
     }
+    private async void SecretaryClicked(object sender, EventArgs e)
+    {
+
+        await (Navigation.PushAsync(new SecretaryPage()));
+        
+        
+    }
     
 }
