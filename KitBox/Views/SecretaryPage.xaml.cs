@@ -1,53 +1,44 @@
 ﻿using DAL;
-using Org.BouncyCastle.Utilities;
-using Microsoft.Maui.Controls;
-using DAL;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using DevTools;
-
-namespace KitBox.Views;
 
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
 using DAL;
 using System;
 using System.Data;
-using DevTools;
 
-
-public partial class SecretaryPage : ContentPage
+using System.Collections.Generic;
+namespace KitBox.Views
 {
-    
-    private Connection con;
-    internal class itemsattributes
+    public partial class SecretaryPage : ContentPage
+    {
+        private Connection con;
+        private DataTable data;
+
+        public SecretaryPage()
         {
-            
-            public string Nom { get; set; }
-            
-            public string Price { get; set; }
-            public itemsattributes(string nom, string price)
+            InitializeComponent();
+            BindingContext = this;
+            Connection.TestConnection();
+            con = new Connection();
+            Piece affichage = new Piece(con);
+            List<string> colonnes = new List<string>
             {
-                Nom = nom; 
-                Price = price;
-            }
+      
+                "code",
+                "stock",
+                "Price_Supplier_1",
+                "Price_Supplier_2"
+            };
+            data = affichage.LoadAll(null, colonnes);
+
+            // Assigner les données à la source de la ListView
+            listePiece.ItemsSource = data.AsEnumerable();
         }
-    public SecretaryPage()
-    {
-        InitializeComponent();
-        BindingContext = this;
-        Connection.TestConnection();
-        con = new Connection();
-        
-    }
 
-    
-
-    private async void Modifier_Clicked(object sender, EventArgs e)
-    {
-        await (Navigation.PushAsync(new Customer_catalog())); //Ceci ne constitue pas la version finale, c'est juste un test
+        private async void Modifier_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Customer_catalog()); //Ceci ne constitue pas la version finale, c'est juste un test
+        }
     }
-    //Black,galvanisé,marron,white 
-    
 }
+
