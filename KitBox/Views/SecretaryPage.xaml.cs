@@ -21,6 +21,11 @@ public partial class SecretaryPage : ContentPage
         Connection.TestConnection();
         con = new Connection();
     }
-    
+
+    private async void Modifier_Clicked(object sender, EventArgs e)
+    {
+        await (Navigation.PushAsync(new Customer_catalog())); //Ceci ne constitue pas la version finale, c'est juste un test
+    }
+    //Black,galvanisé,marron,white 
     
 }
