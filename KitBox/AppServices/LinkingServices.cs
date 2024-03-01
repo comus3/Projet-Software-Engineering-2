@@ -116,10 +116,6 @@ static class LinkingServices
     public static void CreateAllCasierLinks(Connection connection, Casier casier)
     {
         
-        //todo 
-        // un casier est cree --> alors il va faloir call les methodes link casier une serie de fois
-        //  pour lier toutes les pk des pieces correspondantes
-        //   utilisrer le .gettype fdams la methode insert du modele pour calll cette methode
     }
     /// <summary>
     /// lie automatiquement une armoire a
@@ -133,6 +129,42 @@ static class LinkingServices
         DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
         string? color = armoireInfo.Rows[0]["couleur"].ToString();
         
+    }
+    private static Boolean VBatten(Connection connection, int height, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean CupHandle(Connection connection, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean Door(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean SidePanel(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean HorizontalPanel(Connection connection, string color, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean CrossBarFront(Connection connection, object pkCasier,DataTable armoireData)
+    {
+        return true;
+    }
+    private static Boolean CrossBarSide(Connection connection, object pkCasier,DataTable armireData)
+    {
+        return true;
+    }
+    private static Boolean CrossBarBack(Connection connection, object pkCasier,DataTable armoireData)
+    {
+        return true;
     }
 }
 
