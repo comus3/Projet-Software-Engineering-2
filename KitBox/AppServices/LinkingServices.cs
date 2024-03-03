@@ -229,7 +229,7 @@ static class LinkingServices
 }
 
 
-//code ecrit par comus3
-//nhesitez paas a me poser
+//code ecrit par comus3 et baptiste
+//nhesitez paas a nous poser
 //toute question sur comment il
 //marche
