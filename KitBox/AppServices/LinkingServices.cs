@@ -174,11 +174,11 @@ static class LinkingServices
                         {
                             if (HorizontalPanel(connection, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"]), Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                             {
-                                if (CrossBarFront(connection, casierAttributes.PrimaryKey, armoireData))
+                                if (CrossBarFront(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
                                 {
-                                    if (CrossBarSide(connection, casierAttributes.PrimaryKey, armoireData))
+                                    if (CrossBarSide(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                                     {
-                                        if (CrossBarBack(connection, casierAttributes.PrimaryKey, armoireData))
+                                        if (CrossBarBack(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
                                         {
                                             Logger.WriteToFile($"All pieces for casierAttributes {casier.PrimaryKey} have been linked");
                                             return true;
@@ -429,23 +429,32 @@ static class LinkingServices
     private static Boolean CrossBarFront(Connection connection, object pkCasier, int longueur)
     {
         //2 front cross bars
-        //code built like this : TR{longueur}
+        //code built like this : TRF{longueur}
         List<int> possibleValues = new List<int> { 32, 42, 52, 62, 80, 100, 120 };
         if (possibleValues.Contains(longueur))
         {
-            LinkCasier(connection, $"TR{longueur}", pkCasier, 2);
+            LinkCasier(connection, $"TRF{longueur}", pkCasier, 2);
             return true;
         }
         Logger.WriteToFile($"error, longueur {longueur} is not valid for CrossBarFront for Primary key of casier : {pkCasier.ToString()}");
         return false;
     }
-    private static Boolean CrossBarSide(Connection connection, object pkCasier, DataTable armireData)
+    private static Boolean CrossBarSide(Connection connection, object pkCasier, int largeur)
     {
         return true;
     }
-    private static Boolean CrossBarBack(Connection connection, object pkCasier, DataTable armoireData)
+    private static Boolean CrossBarBack(Connection connection, object pkCasier, int longeur)
     {
-        return true;
+        //2 front cross bars
+        //code built like this : TRR{longueur}
+        List<int> possibleValues = new List<int> { 32, 42, 52, 62, 80, 100, 120 };
+        if (possibleValues.Contains(longeur))
+        {
+            LinkCasier(connection, $"TRR{longeur}", pkCasier, 2);
+            return true;
+        }
+        Logger.WriteToFile($"error, longueur {longeur} is not valid for CrossBarFront for Primary key of casier : {pkCasier.ToString()}");
+        return false;
     }
 }
 
