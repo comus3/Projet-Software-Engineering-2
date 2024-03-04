@@ -1,4 +1,7 @@
-namespace DAL ; 
+namespace DAL ;
+using System.Data;
+using AppServices;
+using DevTools;
 
 public class Casier : Model
 {
@@ -7,5 +10,17 @@ public class Casier : Model
     {
         tableName = "casier";
         primaryKey = "id_casier";
+    }
+    public override DataTable Insert()
+    {
+        if (LinkingServices.CreateAllCasierLinks(this.connection, this))
+        {
+            return base.Insert();
+        }
+        else
+        {
+            Logger.WriteToFile("Error creating links for armoire.");
+            return null;
+        }
     }
 }
