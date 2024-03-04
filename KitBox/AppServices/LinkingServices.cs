@@ -441,7 +441,15 @@ static class LinkingServices
     }
     private static Boolean CrossBarSide(Connection connection, object pkCasier, int largeur)
     {
-        return true;
+        //4 side cross bars
+        //code built like this : TRG{largeur}
+        List<int> possibleValues = new List<int> { 32,42,52};
+        if (possibleValues.Contains(largeur))
+        {
+            LinkCasier(connection, $"TRG{largeur}", pkCasier, 4);
+            return true;
+        }
+        return false;
     }
     private static Boolean CrossBarBack(Connection connection, object pkCasier, int longeur)
     {
