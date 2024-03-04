@@ -75,12 +75,13 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkCasier"></param>
-    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier)
+    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier,int quantite)
     {
         RtCasier coucou = new RtCasier(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
         infoLink["id_casier"] = pkCasier;
         infoLink["id_piece"] = pkPiece;
+        infoLink["quantite"] = quantite;
         coucou.Update(infoLink);
         DataTable result = coucou.Insert();
         string executionMessage = $"linking piece {pkPiece} for {pkCasier}";
@@ -93,12 +94,13 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkArmoire"></param>
-    private static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire)
+    private static void LinkArmoire(Connection connection, object pkPiece, object pkArmoire, int quantite)
     {
         RtArmoire coucou = new RtArmoire(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
         infoLink["id_armoire"] = pkArmoire;
         infoLink["id_piece"] = pkPiece;
+        infoLink["quantite"] = quantite;
         coucou.Update(infoLink);
         DataTable result = coucou.Insert();
         string executionMessage = $"linking piece {pkPiece} for {pkArmoire}";
@@ -271,21 +273,24 @@ static class LinkingServices
 
     private static Boolean VBatten(Connection connection, int height, object pkCasier)
     {
+        string pieceCode;
         switch(height)
         {
             case 32:
-                LinkCasier(connection,"TAS27",pkCasier);
-                return true;
+                pieceCode = "TAS27";
+                break;
             case 42:
-                LinkCasier(connection,"TAS37",pkCasier);
-                return true;
+                pieceCode = "TAS37";
+                break;
             case 52:
-                LinkCasier(connection,"TAS47",pkCasier);
-                return true;
+                pieceCode = "TAS47";
+                break;
             default:
                 Logger.WriteToFile($"error, heught {height} is not valid for VBatten for Primary key of casier : {pkCasier.ToString()}");
                 return false;
         }
+        LinkCasier(connection, pieceCode, pkCasier, 4);
+        return true;
     }
     private static Boolean CupHandle(Connection connection, object pkCasier, DataTable armoireData)
     {
