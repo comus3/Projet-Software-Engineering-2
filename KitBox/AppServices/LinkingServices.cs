@@ -224,7 +224,7 @@ static class LinkingServices
         int hauteurtot = GetHauteur(connection, armoire.PrimaryKey);
         return true;
     }
-    public static int GetHauteur(Connection connection, string armoireId)
+    private static int GetHauteur(Connection connection, string armoireId)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> condition = new Dictionary<string, object>();
