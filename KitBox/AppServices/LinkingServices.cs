@@ -170,7 +170,7 @@ static class LinkingServices
                 {
                     if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                     {
-                        if (BackPanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
+                        if (BackPanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
                         {
                             if (HorizontalPanel(connection, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
                             {
@@ -384,11 +384,25 @@ static class LinkingServices
         LinkCasier(connection, $"PAG{height}{largeur}{colorCode}", pkCasier, 2);
         return true;
     }
-    private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
+    private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier, int longeur)
     {
         //1 back panel
         //color height and longueur
         //code built like this : PAR{hauteur}{longueur}{couleur}
+        string colorCode;
+        switch(color)
+        {
+            case "white":
+                colorCode = "BL";
+                break;
+            case "marron":
+                colorCode = "BR";
+                break;
+            default:
+                Logger.WriteToFile($"error, color {color} is not valid for BackPanel for Primary key of casier : {pkCasier.ToString()}");
+                return false;
+        }
+        LinkCasier(connection, $"PAR{height}{longeur}{colorCode}", pkCasier, 1);
         return true;
     }
     private static Boolean HorizontalPanel(Connection connection, string color, object pkCasier, DataTable armoireData)
