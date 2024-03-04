@@ -51,14 +51,14 @@ static class LinkingServices
     }
     private class CasierAttributes
     {
-        string PrimaryKey { get; set; }
-        string Color { get; set; }
-        string Hauteur { get; set; }
-        string Porte { get; set; }
-        string Price { get; set; }
-        string Armoire { get; set; }
-        string CouleurPorte { get; set; }
-        public CasierAttributes(string primaryKey, string color, string hauteur, string porte, string price, string armoire, string couleurPorte)
+        public string PrimaryKey { get; set; }
+        public string Color { get; set; }
+        public int Hauteur { get; set; }
+        public string Porte { get; set; }
+        public string Price { get; set; }
+        public string Armoire { get; set; }
+        public string CouleurPorte { get; set; }
+        public CasierAttributes(string primaryKey, string color, int hauteur, string porte, string price, string armoire, string couleurPorte)
         {
             PrimaryKey = primaryKey;
             Color = color;
@@ -143,30 +143,43 @@ static class LinkingServices
     /// <param name="casier"></param>
     public static bool CreateAllCasierLinks(Connection connection, Casier casier)
     {
+        DataTable casierData = casier.Load(casier.PrimaryKey);
+        CasierAttributes casierAttributes = new CasierAttributes(casier.PrimaryKey, casierData.Rows[0]["couleur"].ToString(), Convert.ToInt32(casierData.Rows[0]["h"]), casierData.Rows[0]["porte"].ToString(), "0", casierData.Rows[0]["armoire"].ToString(), casierData.Rows[0]["couleur_porte"].ToString());
+        Armoire armoire = new Armoire(connection);
+        DataTable armoireData = armoire.Load(casier.Load(casier.PrimaryKey).Rows[0]["armoire"]);
+        if (armoireData.Rows.Count == 0)
+        {
+            throw new Exception("No armoire found for casier");
+        }
+        if (armoireData.Rows.Count > 1)
+        {
+            throw new Exception("Multiple armoires found for casier");
+        }
+
         static void raiseError(string message, Connection connection, Casier casier)
         {
             unlinkAll(connection, casier);
             throw new Exception(message);
         }
-        if (VBatten(connection, casier.Hauteur, casier.PrimaryKey))
+        if (VBatten(connection, casierAttributes.Hauteur, casierAttributes.PrimaryKey,armoireData))
         {
-            if (CupHandle(connection, casier.PrimaryKey))
+            if (CupHandle(connection, casierAttributes.PrimaryKey, armoireData))
             {
-                if (Door(connection, casier.Hauteur, casier.CouleurPorte, casier.PrimaryKey))
+                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, armoireData))
                 {
-                    if (SidePanel(connection, casier.Hauteur, casier.Color, casier.PrimaryKey))
+                    if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
                     {
-                        if (BackPanel(connection, casier.Hauteur, casier.Color, casier.PrimaryKey))
+                        if (BackPanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
                         {
-                            if (HorizontalPanel(connection, casier.Color, casier.PrimaryKey))
+                            if (HorizontalPanel(connection, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
                             {
-                                if (CrossBarFront(connection, casier.PrimaryKey))
+                                if (CrossBarFront(connection, casierAttributes.PrimaryKey, armoireData))
                                 {
-                                    if (CrossBarSide(connection, casier.PrimaryKey))
+                                    if (CrossBarSide(connection, casierAttributes.PrimaryKey, armoireData))
                                     {
-                                        if (CrossBarBack(connection, casier.PrimaryKey))
+                                        if (CrossBarBack(connection, casierAttributes.PrimaryKey, armoireData))
                                         {
-                                            Logger.WriteToFile($"All pieces for casier {casier.PrimaryKey} have been linked");
+                                            Logger.WriteToFile($"All pieces for casierAttributes {casier.PrimaryKey} have been linked");
                                             return true;
                                         }
                                         raiseError("error while linking CrossBarBack", connection, casier);
@@ -295,7 +308,6 @@ static class LinkingServices
     }
 }
 
-}
     //si meme l de casier alors on fait autre chose encore
 
 //fin de autrechose avec un return dedans
