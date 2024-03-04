@@ -75,7 +75,7 @@ static class LinkingServices
     /// <param name="connection"></param>
     /// <param name="pkPiece"></param>
     /// <param name="pkCasier"></param>
-    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier,int quantite)
+    private static void LinkCasier(Connection connection, object pkPiece, object pkCasier, int quantite)
     {
         RtCasier coucou = new RtCasier(connection);
         Dictionary<string, object> infoLink = new Dictionary<string, object>();
@@ -164,7 +164,7 @@ static class LinkingServices
         }
         if (VBatten(connection, casierAttributes.Hauteur, casierAttributes.PrimaryKey))
         {
-            if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte,casierAttributes.CouleurPorte))
+            if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte, casierAttributes.CouleurPorte))
             {
                 if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
                 {
@@ -274,7 +274,7 @@ static class LinkingServices
     private static Boolean VBatten(Connection connection, int height, object pkCasier)
     {
         string pieceCode;
-        switch(height)
+        switch (height)
         {
             case 32:
                 pieceCode = "TAS27";
@@ -292,7 +292,7 @@ static class LinkingServices
         LinkCasier(connection, pieceCode, pkCasier, 4);
         return true;
     }
-    private static Boolean CupHandle(Connection connection, object pkCasier,string porte,string couleurPorte)
+    private static Boolean CupHandle(Connection connection, object pkCasier, string porte, string couleurPorte)
     {
         //2 doors (in option) with 2 cup handles (not available for glass doors)
         string pieceCode = "COUPEL";
@@ -309,7 +309,7 @@ static class LinkingServices
                 return true;
             }
         }
-        else if(porte == "0")
+        else if (porte == "0")
         {
             //no cup handle for no doors
             return true;
@@ -369,7 +369,7 @@ static class LinkingServices
         //color couleur
         //code built like this : PAG{hauteur}{profondeur}{couleur}
         string colorCode;
-        switch(color)
+        switch (color)
         {
             case "white":
                 colorCode = "BL";
@@ -390,7 +390,7 @@ static class LinkingServices
         //color height and longueur
         //code built like this : PAR{hauteur}{longueur}{couleur}
         string colorCode;
-        switch(color)
+        switch (color)
         {
             case "white":
                 colorCode = "BL";
@@ -411,7 +411,7 @@ static class LinkingServices
         //color and longueur and largeur
         //code built like this : PAH{longueur}{largeur}{couleur}
         string colorCode;
-        switch(color)
+        switch (color)
         {
             case "white":
                 colorCode = "BL";
@@ -426,9 +426,18 @@ static class LinkingServices
         LinkCasier(connection, $"PAH{longeur}{largeur}{colorCode}", pkCasier, 2);
         return true;
     }
-    private static Boolean CrossBarFront(Connection connection, object pkCasier, DataTable armoireData)
+    private static Boolean CrossBarFront(Connection connection, object pkCasier, int longueur)
     {
-        return true;
+        //2 front cross bars
+        //code built like this : TR{longueur}
+        List<int> possibleValues = new List<int> { 32, 42, 52, 62, 80, 100, 120 };
+        if (possibleValues.Contains(longueur))
+        {
+            LinkCasier(connection, $"TR{longueur}", pkCasier, 2);
+            return true;
+        }
+        Logger.WriteToFile($"error, longueur {longueur} is not valid for CrossBarFront for Primary key of casier : {pkCasier.ToString()}");
+        return false;
     }
     private static Boolean CrossBarSide(Connection connection, object pkCasier, DataTable armireData)
     {
@@ -440,7 +449,7 @@ static class LinkingServices
     }
 }
 
-    //si meme l de casier alors on fait autre chose encore
+//si meme l de casier alors on fait autre chose encore
 
 //fin de autrechose avec un return dedans
 // if (couleur != null)
