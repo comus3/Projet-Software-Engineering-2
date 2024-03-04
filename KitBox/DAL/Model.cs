@@ -15,6 +15,7 @@ public abstract class Model
     protected string primaryKey;
     protected Dictionary<string, object> attributes = new Dictionary<string, object>();
     protected Connection connection;
+    public Dictionary<string, object> Attributes { get { return attributes;}}
     public string PrimaryKey{get{return primaryKey;}}
     public Model(Connection connection)
     {
@@ -111,7 +112,7 @@ public abstract class Model
     /// <returns>
     /// retourne la pk de lóbjet insere
     /// </returns>
-    public DataTable Insert()
+    public virtual DataTable Insert()
     {
 
         // Get keys and values excluding the primary key
