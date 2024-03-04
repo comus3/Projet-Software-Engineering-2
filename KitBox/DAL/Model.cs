@@ -111,7 +111,7 @@ public abstract class Model
     /// <returns>
     /// retourne la pk de lóbjet insere
     /// </returns>
-    public DataTable Insert()
+    public virtual DataTable Insert()
     {
 
         // Get keys and values excluding the primary key
