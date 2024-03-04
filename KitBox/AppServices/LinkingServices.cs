@@ -9,6 +9,7 @@ using DAL;
 using DevTools;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Controls.Shapes;
+using System.Text.RegularExpressions;
 
 
 namespace AppServices;
@@ -225,19 +226,20 @@ static class LinkingServices
         //get couleur de l'armoire 
         DataTable armoireInfo = armoire.Load(armoire.Attributes[armoire.PrimaryKey]);
         string? couleur = armoireInfo.Rows[0]["couleur"].ToString();
+        string couleurCode;
         switch (couleur)
         {
             case "white":
-                couleur = "BL";
+                couleurCode = "BL";
                 break;
             case "marron":
-                couleur = "BR";
+                couleurCode = "BR";
                 break;
             case "galva":
-                couleur = "GV";
+                couleurCode = "GV";
                 break;
             case "black":
-                couleur = "NR";
+                couleurCode = "NR";
                 break;
             default:
                 Logger.WriteToFile($"error, couleur {couleur} is not valid for Armoire for Primary key of armoire : {armoire.Attributes[armoire.PrimaryKey].ToString()}");
@@ -249,8 +251,8 @@ static class LinkingServices
             int nombreCasier = GetCasierNombre(connection, armoire.Attributes[armoire.PrimaryKey]);
             Piece piece = new Piece(connection);
             Dictionary<string, object> condition = new Dictionary<string, object>();
-            condition["Dimentions_Hauteur"] = $"{nombreCasier}x{result.hauteur}";
-            condition["color"] = couleur;
+            condition["Dimensions_hauteur"] = $"{nombreCasier}x{result.hauteur}(h)";
+            condition["type"] = couleur;
             List<string> colomns = new List<string>();
             colomns.Add("code");
             DataTable pieceData = piece.LoadAll(condition, colomns);
@@ -268,7 +270,7 @@ static class LinkingServices
         }
         else
         {
-            string query = $"SELECT  reference, SUBSTRING(code, 3, 5) AS extracted_numbers FROM piece WHERE color = '{couleur}' AND code LIKE 'COR%'";
+            string query = $"SELECT  reference, code AS extracted_numbers FROM piece WHERE type = '{couleur}' AND code LIKE 'COR%'";
             DataTable resultData = connection.ExecuteQuery(query);
             if (resultData.Rows.Count == 0)
             {
@@ -277,13 +279,11 @@ static class LinkingServices
             }
             foreach (DataRow row in resultData.Rows)
             {
-                if (Convert.ToInt32(row["extracted_numbers"]) > result.hauteur)
+                int extractedNumbers = int.Parse(Regex.Replace(row["extracted_numbers"].ToString(), @"[^0-9]", ""));
+                if (extractedNumbers > result.hauteur)
                 {
-                    Piece piece = new Piece(connection);
-                    Dictionary<string, object> condition = new Dictionary<string, object>();
-                    condition["reference"] = row["reference"];
-                    object code = piece.LoadAll(condition).Rows[0]["code"];
-                    LinkArmoire(connection, code, armoire.Attributes[armoire.PrimaryKey], 4);
+                    LinkArmoire(connection,$"COR{extractedNumbers}{couleurCode}", armoire.Attributes[armoire.PrimaryKey], 4);
+                    break;
                 }
             }
 
@@ -503,7 +503,7 @@ static class LinkingServices
     {
         //4 side cross bars
         //code built like this : TRG{largeur}
-        List<int> possibleValues = new List<int> { 32, 42, 52 };
+        List<int> possibleValues = new List<int> { 32, 42, 52 ,62};
         if (possibleValues.Contains(largeur))
         {
             LinkCasier(connection, $"TRG{largeur}", pkCasier, 4);
