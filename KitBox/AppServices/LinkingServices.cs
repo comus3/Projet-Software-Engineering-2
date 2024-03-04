@@ -106,6 +106,34 @@ static class LinkingServices
         Logger.WriteToFile(executionMessage);
         Displayer.DisplayData(result);
     }
+    private static void unlinkAll(Connection connection, object toUnlink)
+    {
+
+        object primaryKey = new object();
+        string toUnlinkColomn = "";
+        string table = "";
+        if (toUnlink is Armoire)
+        {
+            Armoire armoire = (Armoire)toUnlink;
+            toUnlinkColomn = "id_armoire";
+            table = "rt_armoire";
+            primaryKey = armoire.PrimaryKey;
+        }
+        else if (toUnlink is Casier)
+        {
+            Casier casier = (Casier)toUnlink;
+            toUnlinkColomn = "id_casier";
+            table = "rt_casier";
+            primaryKey = casier.PrimaryKey;
+        }
+        else
+        {
+            Exception e = new Exception("toUnlink is not a valid type");
+        }
+        string query = $"DELETE FROM {table} WHERE {toUnlinkColomn} = {primaryKey}";
+
+
+    }
     /// <summary>
     /// lie automatiquement,
     /// en fonction de ses caracteristiques un casier a toutes
@@ -115,7 +143,35 @@ static class LinkingServices
     /// <param name="casier"></param>
     public static void CreateAllCasierLinks(Connection connection, Casier casier)
     {
-        
+        if Vbatten(connection, casier.Hauteur, casier.PrimaryKey)
+        {
+            if (CupHandle(connection, casier.PrimaryKey))
+            {
+                if (Door(connection, casier.Hauteur, casier.CouleurPorte, casier.PrimaryKey))
+                {
+                    if (SidePanel(connection, casier.Hauteur, casier.Color, casier.PrimaryKey))
+                    {
+                        if (BackPanel(connection, casier.Hauteur, casier.Color, casier.PrimaryKey))
+                        {
+                            if (HorizontalPanel(connection, casier.Color, casier.PrimaryKey))
+                            {
+                                if (CrossBarFront(connection, casier.PrimaryKey))
+                                {
+                                    if (CrossBarSide(connection, casier.PrimaryKey))
+                                    {
+                                        if (CrossBarBack(connection, casier.PrimaryKey))
+                                        {
+                                            Console.WriteLine("casier complet");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+        }
     }
     /// <summary>
     /// lie automatiquement une armoire a
