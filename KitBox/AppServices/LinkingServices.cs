@@ -118,7 +118,7 @@ static class LinkingServices
             Armoire armoire = (Armoire)toUnlink;
             toUnlinkColomn = "id_armoire";
             table = "rt_armoire";
-            primaryKey = armoire.PrimaryKey;
+            primaryKey = armoire.Attributes[armoire.PrimaryKey];
         }
         else if (toUnlink is Casier)
         {
@@ -139,6 +139,7 @@ static class LinkingServices
     /// lie automatiquement,
     /// en fonction de ses caracteristiques un casier a toutes
     /// les pieces necessaires a sa construction
+    /// FONCTIONNE
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="casier"></param>
