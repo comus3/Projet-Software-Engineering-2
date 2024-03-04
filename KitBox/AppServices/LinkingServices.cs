@@ -125,7 +125,7 @@ static class LinkingServices
             Casier casier = (Casier)toUnlink;
             toUnlinkColomn = "id_casier";
             table = "rt_casier";
-            primaryKey = casier.PrimaryKey;
+            primaryKey = casier.Attributes[casier.PrimaryKey];
         }
         else
         {
@@ -144,10 +144,10 @@ static class LinkingServices
     /// <param name="casier"></param>
     public static bool CreateAllCasierLinks(Connection connection, Casier casier)
     {
-        DataTable casierData = casier.Load(casier.PrimaryKey);
-        CasierAttributes casierAttributes = new CasierAttributes(casier.PrimaryKey, casierData.Rows[0]["couleur"].ToString(), Convert.ToInt32(casierData.Rows[0]["h"]), casierData.Rows[0]["porte"].ToString(), "0", casierData.Rows[0]["armoire"].ToString(), casierData.Rows[0]["couleur_porte"].ToString());
+        DataTable casierData = casier.Load(casier.Attributes[casier.PrimaryKey]);
+        CasierAttributes casierAttributes = new CasierAttributes(casierData.Rows[0]["id_casier"].ToString(), casierData.Rows[0]["couleur"].ToString(), Convert.ToInt32(casierData.Rows[0]["h"]), casierData.Rows[0]["porte"].ToString(), "0", casierData.Rows[0]["armoire"].ToString(), casierData.Rows[0]["couleur_porte"].ToString());
         Armoire armoire = new Armoire(connection);
-        DataTable armoireData = armoire.Load(casier.Load(casier.PrimaryKey).Rows[0]["armoire"]);
+        DataTable armoireData = armoire.Load(casier.Load(casier.Attributes[casier.PrimaryKey]).Rows[0]["armoire"]);
         if (armoireData.Rows.Count == 0)
         {
             throw new Exception("No armoire found for casier");
@@ -166,21 +166,21 @@ static class LinkingServices
         {
             if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte, casierAttributes.CouleurPorte))
             {
-                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
+                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"])))
                 {
                     if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                     {
-                        if (BackPanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
+                        if (BackPanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"])))
                         {
-                            if (HorizontalPanel(connection, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"]), Convert.ToInt32(armoireData.Rows[0]["largeur"])))
+                            if (HorizontalPanel(connection, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"]), Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                             {
-                                if (CrossBarFront(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
+                                if (CrossBarFront(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"])))
                                 {
                                     if (CrossBarSide(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                                     {
-                                        if (CrossBarBack(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
+                                        if (CrossBarBack(connection, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"])))
                                         {
-                                            Logger.WriteToFile($"All pieces for casierAttributes {casier.PrimaryKey} have been linked");
+                                            Logger.WriteToFile($"All pieces for casierAttributes {casierAttributes.PrimaryKey} have been linked");
                                             return true;
                                         }
                                         raiseError("error while linking CrossBarBack", connection, casier);
@@ -296,7 +296,7 @@ static class LinkingServices
     {
         //2 doors (in option) with 2 cup handles (not available for glass doors)
         string pieceCode = "COUPEL";
-        if (porte == "1")
+        if (porte == "True")
         {
             if (couleurPorte != "verre")
             {
@@ -309,7 +309,7 @@ static class LinkingServices
                 return true;
             }
         }
-        else if (porte == "0")
+        else if (porte == "False")
         {
             //no cup handle for no doors
             return true;
