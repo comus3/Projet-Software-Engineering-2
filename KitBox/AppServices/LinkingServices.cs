@@ -35,11 +35,11 @@ static class LinkingServices
     }
     private class ArmoireAttributes
     {
-        string PrimaryKey{get;set;}
-        string Longueur{get;set;}
-        string Largeur{get;set;}
-        string Price{get;set;}
-        string Commande{get;set;}
+        string PrimaryKey { get; set; }
+        string Longueur { get; set; }
+        string Largeur { get; set; }
+        string Price { get; set; }
+        string Commande { get; set; }
         public ArmoireAttributes(string primaryKey, string longueur, string largeur, string price, string commande)
         {
             PrimaryKey = primaryKey;
@@ -51,13 +51,13 @@ static class LinkingServices
     }
     private class CasierAttributes
     {
-        string PrimaryKey{get;set;}
-        string Color{get;set;}
-        string Hauteur{get;set;}
-        string Porte{get;set;}
-        string Price{get;set;}
-        string Armoire{get;set;}
-        string CouleurPorte{get;set;}
+        string PrimaryKey { get; set; }
+        string Color { get; set; }
+        string Hauteur { get; set; }
+        string Porte { get; set; }
+        string Price { get; set; }
+        string Armoire { get; set; }
+        string CouleurPorte { get; set; }
         public CasierAttributes(string primaryKey, string color, string hauteur, string porte, string price, string armoire, string couleurPorte)
         {
             PrimaryKey = primaryKey;
@@ -141,9 +141,14 @@ static class LinkingServices
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="casier"></param>
-    public static void CreateAllCasierLinks(Connection connection, Casier casier)
+    public static bool CreateAllCasierLinks(Connection connection, Casier casier)
     {
-        if Vbatten(connection, casier.Hauteur, casier.PrimaryKey)
+        static void raiseError(string message, Connection connection, Casier casier)
+        {
+            unlinkAll(connection, casier);
+            throw new Exception(message);
+        }
+        if (VBatten(connection, casier.Hauteur, casier.PrimaryKey))
         {
             if (CupHandle(connection, casier.PrimaryKey))
             {
@@ -161,17 +166,35 @@ static class LinkingServices
                                     {
                                         if (CrossBarBack(connection, casier.PrimaryKey))
                                         {
-                                            Console.WriteLine("casier complet");
+                                            Logger.WriteToFile($"All pieces for casier {casier.PrimaryKey} have been linked");
+                                            return true;
                                         }
+                                        raiseError("error while linking CrossBarBack", connection, casier);
+                                        return false;
                                     }
+                                    raiseError("error while linking CrossBarSide", connection, casier);
+                                    return false;
                                 }
+                                raiseError("error while linking CrossBarFront", connection, casier);
+                                return false;
                             }
+                            raiseError("error while linking Horizontal Panel", connection, casier);
+                            return false;
                         }
+                        raiseError("error while linking BackPannel", connection, casier);
+                        return false;
                     }
+                    raiseError("error while linking side pannels", connection, casier);
+                    return false;
                 }
-            
+                raiseError("error while linking Door", connection, casier);
+                return false;
             }
+            raiseError("error while linking cupHandle", connection, casier);
+            return false;
         }
+        raiseError("error while linking vBatte", connection, casier);
+        return false;
     }
     /// <summary>
     /// lie automatiquement une armoire a
@@ -180,12 +203,13 @@ static class LinkingServices
     /// </summary>
     /// <param name="connection"></param>
     /// <param name="armoire"></param>
-    public static void CreateAllArmoireLinks(Connection connection, Armoire armoire)
+    public static bool CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
         //get couleur de l'armoire 
         DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
         string? couleur = armoireInfo.Rows[0]["couleur"].ToString();
-        int hauteurtot = GetHauteur(connection, armoire.PrimaryKey);    
+        int hauteurtot = GetHauteur(connection, armoire.PrimaryKey);
+        return true;
     }
     public static int GetHauteur(Connection connection, string armoireId)
     {
@@ -230,59 +254,61 @@ static class LinkingServices
 
         return hauteurtot;
     }
-        //si meme l de casier alors on fait autre chose encore
-
-        //fin de autrechose avec un return dedans
-            // if (couleur != null)
-            // {
-            //     DataTable test = connection.ExecuteQuery($"SELECT code FROM piece WHERE type='{couleur}' AND REGEXP_REPLACE(code, '[^0-9]+', '')");
-                    
-            // }
-            // else
-            // {
-            //     Console.WriteLine("attention la piece ne possède pas de couleur");
-            // }
 
 
 
-    
-    private static Boolean VBatten(Connection connection, int height, object pkCasier,DataTable armoireData)
+    private static Boolean VBatten(Connection connection, int height, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean CupHandle(Connection connection, object pkCasier,DataTable armoireData)
+    private static Boolean CupHandle(Connection connection, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean Door(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    private static Boolean Door(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean SidePanel(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    private static Boolean SidePanel(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier,DataTable armoireData)
+    private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean HorizontalPanel(Connection connection, string color, object pkCasier,DataTable armoireData)
+    private static Boolean HorizontalPanel(Connection connection, string color, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean CrossBarFront(Connection connection, object pkCasier,DataTable armoireData)
+    private static Boolean CrossBarFront(Connection connection, object pkCasier, DataTable armoireData)
     {
         return true;
     }
-    private static Boolean CrossBarSide(Connection connection, object pkCasier,DataTable armireData)
+    private static Boolean CrossBarSide(Connection connection, object pkCasier, DataTable armireData)
     {
         return true;
     }
-    private static Boolean CrossBarBack(Connection connection, object pkCasier,DataTable armoireData)
+    private static Boolean CrossBarBack(Connection connection, object pkCasier, DataTable armoireData)
     {
         return true;
     }
 }
+
+}
+    //si meme l de casier alors on fait autre chose encore
+
+//fin de autrechose avec un return dedans
+// if (couleur != null)
+// {
+//     DataTable test = connection.ExecuteQuery($"SELECT code FROM piece WHERE type='{couleur}' AND REGEXP_REPLACE(code, '[^0-9]+', '')");
+
+// }
+// else
+// {
+//     Console.WriteLine("attention la piece ne possède pas de couleur");
+// }
+
 
 
 //code ecrit par comus3 et baptiste
