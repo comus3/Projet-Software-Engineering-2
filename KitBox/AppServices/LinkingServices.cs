@@ -166,7 +166,7 @@ static class LinkingServices
         {
             if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte,casierAttributes.CouleurPorte))
             {
-                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, armoireData))
+                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                 {
                     if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, armoireData))
                     {
@@ -321,8 +321,45 @@ static class LinkingServices
             return false;
         }
     }
-    private static Boolean Door(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
+    private static Boolean Door(Connection connection, int height, string colorDoor, object pkCasier, int largeur)
     {
+        //two doors with largeur
+        //ce que je comprends pas cest que la largeur des doors minimum = la largeur minimale de l'armoire
+        //pour linstant voici limplementation
+        //
+        // si largeur < 63 alors larguer porte = largeur armoire mais si largeur > 63 alors largeur porte = 62
+        //aussi porte est en verre ou de couleur
+        string type;
+        string codeL;
+        if (largeur < 63)
+        {
+            codeL = largeur.ToString();
+        }
+        else if (largeur > 63)
+        {
+            codeL = "62";
+        }
+        else
+        {
+            Logger.WriteToFile($"error, largeur {largeur} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
+            return false;
+        }
+        switch (colorDoor)
+        {
+            case "glass":
+                type = "VE";
+                break;
+            case "white":
+                type = "BL";
+                break;
+            case "marron":
+                type = "BR";
+                break;
+            default:
+                Logger.WriteToFile($"error, colorDoor {colorDoor} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
+                return false;
+        }
+        LinkCasier(connection, $"POR{height}{codeL}{type}", pkCasier, 2);
         return true;
     }
     private static Boolean SidePanel(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
