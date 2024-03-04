@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using DAL;
 using DevTools;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+using Microsoft.Maui.Controls.Shapes;
 
 
 namespace AppServices;
@@ -221,53 +223,110 @@ static class LinkingServices
     public static bool CreateAllArmoireLinks(Connection connection, Armoire armoire)
     {
         //get couleur de l'armoire 
-        DataTable armoireInfo = armoire.Load(armoire.PrimaryKey);
+        DataTable armoireInfo = armoire.Load(armoire.Attributes[armoire.PrimaryKey]);
         string? couleur = armoireInfo.Rows[0]["couleur"].ToString();
-        int hauteurtot = GetHauteur(connection, armoire.PrimaryKey);
-        return true;
-    }
-    private static int GetHauteur(Connection connection, string armoireId)
-    {
-        Piece piece = new Piece(connection);
-        Dictionary<string, object> condition = new Dictionary<string, object>();
-        condition["armoire"] = armoireId;
-        List<string> column = new List<string>();
-        column.Add("hauteur");
-        //get toutes les hauteurs existantes dans l'armoire
-        DataTable hauteurinfo = piece.LoadAll(condition, column);
-
-        int hauteurtot = 0;
-        int countIdenticalRows = 0;
-        DataRow firstRow = hauteurinfo.Rows[0];
-
-        foreach (DataRow row in hauteurinfo.Rows)
+        switch (couleur)
         {
-            bool identical = true;
-
-            for (int i = 0; i < hauteurinfo.Columns.Count; i++)
+            case "white":
+                couleur = "BL";
+                break;
+            case "marron":
+                couleur = "BR";
+                break;
+            case "galva":
+                couleur = "GV";
+                break;
+            case "black":
+                couleur = "NR";
+                break;
+            default:
+                Logger.WriteToFile($"error, couleur {couleur} is not valid for Armoire for Primary key of armoire : {armoire.Attributes[armoire.PrimaryKey].ToString()}");
+                return false;
+        }
+        (int hauteur, bool identical) result = GetHauteur(connection, armoire.Attributes[armoire.PrimaryKey]);
+        if (result.identical)
+        {
+            int nombreCasier = GetCasierNombre(connection, armoire.Attributes[armoire.PrimaryKey]);
+            Piece piece = new Piece(connection);
+            Dictionary<string, object> condition = new Dictionary<string, object>();
+            condition["Dimentions_Hauteur"] = $"{nombreCasier}x{result.hauteur}";
+            condition["color"] = couleur;
+            List<string> colomns = new List<string>();
+            colomns.Add("code");
+            DataTable pieceData = piece.LoadAll(condition, colomns);
+            if (pieceData.Rows.Count == 0)
             {
-                if (!row[i].Equals(firstRow[i]))
+                Logger.WriteToFile($"error, no piece found for armoire {armoire.Attributes[armoire.PrimaryKey]}");
+                return false;
+            }
+            if(pieceData.Rows.Count > 1)
+            {
+                Logger.WriteToFile($"error, multiple pieces found for armoire {armoire.Attributes[armoire.PrimaryKey]}");
+                return false;
+            }
+            LinkArmoire(connection, pieceData.Rows[0]["code"], armoire.Attributes[armoire.PrimaryKey], 4);
+        }
+        else
+        {
+            string query = $"SELECT  reference, SUBSTRING(code, 3, 5) AS extracted_numbers FROM piece WHERE color = '{couleur}' AND code LIKE 'COR%'";
+            DataTable resultData = connection.ExecuteQuery(query);
+            if (resultData.Rows.Count == 0)
+            {
+                Logger.WriteToFile($"error, no piece found for armoire {armoire.Attributes[armoire.PrimaryKey]}");
+                return false;
+            }
+            foreach (DataRow row in resultData.Rows)
+            {
+                if (Convert.ToInt32(row["extracted_numbers"]) > result.hauteur)
                 {
-                    // Si les lignes sont différentes, incrémenter hauteurtot et sortir de la boucle
-                    hauteurtot += Convert.ToInt32(row["hauteur"]);
-                    identical = false;
-                    break;
+                    Piece piece = new Piece(connection);
+                    Dictionary<string, object> condition = new Dictionary<string, object>();
+                    condition["reference"] = row["reference"];
+                    object code = piece.LoadAll(condition).Rows[0]["code"];
+                    LinkArmoire(connection, code, armoire.Attributes[armoire.PrimaryKey], 4);
                 }
             }
 
-            if (identical)
-            {
-                countIdenticalRows++;
-            }
         }
 
-        // Si toutes les lignes sont identiques, retourner le nombre de fois où la valeur est apparue fois la valeur
-        if (countIdenticalRows == hauteurinfo.Rows.Count)
+        return true;
+    }
+    private static int GetCasierNombre(Connection connection ,object armoireId)
+    {
+        Casier casier = new Casier(connection);
+        Dictionary<string, object> conditionCasierOfArmoire = new Dictionary<string, object>();
+        conditionCasierOfArmoire["armoire"] = armoireId;
+        DataTable casierData = casier.LoadAll(conditionCasierOfArmoire);
+        return casierData.Rows.Count;
+    }
+    private static (int, bool) GetHauteur(Connection connection, object armoireId)
+    {
+        bool identical = true;
+        int resultHeight = 0;
+
+        Casier casier = new Casier(connection);
+        Dictionary<string, object> conditionCasierOfArmoire = new Dictionary<string, object>();
+        conditionCasierOfArmoire["armoire"] = armoireId;
+        DataTable casierData = casier.LoadAll(conditionCasierOfArmoire);
+        if (casierData.Rows.Count == 0)
         {
-            hauteurtot = Convert.ToInt32(firstRow["hauteur"]) * countIdenticalRows;
+            throw new Exception("No casier found for armoire");
         }
+        int initialHauteur = Convert.ToInt32(casierData.Rows[0]["h"]);
+        foreach (DataRow casierRow in casierData.Rows)
+        {
+            if (casierRow["h"].ToString() != casierData.Rows[0]["h"].ToString() && identical)
+            {
+                identical = false;
+            }
+            resultHeight += Convert.ToInt32(casierRow["h"]);
+        }
+        if (identical)
+        {
+            return (initialHauteur, identical);
+        }
+        return (resultHeight, identical);
 
-        return hauteurtot;
     }
 
 
@@ -444,7 +503,7 @@ static class LinkingServices
     {
         //4 side cross bars
         //code built like this : TRG{largeur}
-        List<int> possibleValues = new List<int> { 32,42,52};
+        List<int> possibleValues = new List<int> { 32, 42, 52 };
         if (possibleValues.Contains(largeur))
         {
             LinkCasier(connection, $"TRG{largeur}", pkCasier, 4);
@@ -482,7 +541,7 @@ static class LinkingServices
 
 
 
-//code ecrit par comus3 et baptiste
+//code ecrit par comus3
 //nhesitez paas a nous poser
 //toute question sur comment il
 //marche
