@@ -13,13 +13,25 @@ public class Casier : Model
     }
     public override DataTable Insert()
     {
-        if (LinkingServices.CreateAllCasierLinks(this.connection, this))
+        DataTable result = base.Insert();
+        object casierPk = result.Rows[0][0];
+        
+        if (casierPk != null)
         {
-            return base.Insert();
+            this.Load(Convert.ToInt32(casierPk));
+            if (LinkingServices.CreateAllCasierLinks(this.connection, this))
+            {
+                return result;
+            }
+            else
+            {
+                Logger.WriteToFile("Error creating links for casier.");
+                return null;
+            }
         }
         else
         {
-            Logger.WriteToFile("Error creating links for armoire.");
+            Logger.WriteToFile("Error inserting casier.");
             return null;
         }
     }
