@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 using DAL;
 using DevTools;
-using static KitBox.AppServices.LinkingServices;
 
 
-namespace KitBox.AppServices;
+namespace AppServices;
 
 
 static class LinkingServices
@@ -272,6 +271,7 @@ static class LinkingServices
 
     private static Boolean VBatten(Connection connection, int height, object pkCasier, DataTable armoireData)
     {
+
         return true;
     }
     private static Boolean CupHandle(Connection connection, object pkCasier, DataTable armoireData)
