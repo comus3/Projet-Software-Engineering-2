@@ -166,7 +166,7 @@ static class LinkingServices
         {
             if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte,casierAttributes.CouleurPorte))
             {
-                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
+                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longeur"])))
                 {
                     if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                     {
@@ -386,6 +386,9 @@ static class LinkingServices
     }
     private static Boolean BackPanel(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
     {
+        //1 back panel
+        //color height and longueur
+        //code built like this : PAR{hauteur}{longueur}{couleur}
         return true;
     }
     private static Boolean HorizontalPanel(Connection connection, string color, object pkCasier, DataTable armoireData)
