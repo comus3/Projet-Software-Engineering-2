@@ -160,7 +160,7 @@ static class LinkingServices
             unlinkAll(connection, casier);
             throw new Exception(message);
         }
-        if (VBatten(connection, casierAttributes.Hauteur, casierAttributes.PrimaryKey,armoireData))
+        if (VBatten(connection, casierAttributes.Hauteur, casierAttributes.PrimaryKey))
         {
             if (CupHandle(connection, casierAttributes.PrimaryKey, armoireData))
             {
@@ -269,10 +269,23 @@ static class LinkingServices
 
 
 
-    private static Boolean VBatten(Connection connection, int height, object pkCasier, DataTable armoireData)
+    private static Boolean VBatten(Connection connection, int height, object pkCasier)
     {
-
-        return true;
+        switch(height)
+        {
+            case 32:
+                LinkCasier(connection,"TAS27",pkCasier);
+                return true;
+            case 42:
+                LinkCasier(connection,"TAS37",pkCasier);
+                return true;
+            case 52:
+                LinkCasier(connection,"TAS47",pkCasier);
+                return true;
+            default:
+                Logger.WriteToFile($"error, heught {height} is not valid for VBatten for Primary key of casier : {pkCasier.ToString()}");
+                return false;
+        }
     }
     private static Boolean CupHandle(Connection connection, object pkCasier, DataTable armoireData)
     {
