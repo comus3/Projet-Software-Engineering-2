@@ -164,7 +164,7 @@ static class LinkingServices
         }
         if (VBatten(connection, casierAttributes.Hauteur, casierAttributes.PrimaryKey))
         {
-            if (CupHandle(connection, casierAttributes.PrimaryKey, armoireData))
+            if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte,casierAttributes.CouleurPorte))
             {
                 if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, armoireData))
                 {
@@ -292,9 +292,34 @@ static class LinkingServices
         LinkCasier(connection, pieceCode, pkCasier, 4);
         return true;
     }
-    private static Boolean CupHandle(Connection connection, object pkCasier, DataTable armoireData)
+    private static Boolean CupHandle(Connection connection, object pkCasier,string porte,string couleurPorte)
     {
-        return true;
+        //2 doors (in option) with 2 cup handles (not available for glass doors)
+        string pieceCode = "COUPEL";
+        if (porte == "1")
+        {
+            if (couleurPorte != "verre")
+            {
+                LinkCasier(connection, pieceCode, pkCasier, 2);
+                return true;
+            }
+            else
+            {
+                //no cup handle for glass doors
+                return true;
+            }
+        }
+        else if(porte == "0")
+        {
+            //no cup handle for no doors
+            return true;
+        }
+        else
+        {
+            //invalid porte
+            Logger.WriteToFile($"error, porte {porte} is not valid for CupHandle for Primary key of casier : {pkCasier.ToString()}");
+            return false;
+        }
     }
     private static Boolean Door(Connection connection, int height, string color, object pkCasier, DataTable armoireData)
     {
