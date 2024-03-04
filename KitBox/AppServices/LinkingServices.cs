@@ -373,8 +373,10 @@ static class LinkingServices
         {
             case "white":
                 colorCode = "BL";
+                break;
             case "marron":
                 colorCode = "BR";
+                break;
             default:
                 Logger.WriteToFile($"error, color {color} is not valid for SidePanel for Primary key of casier : {pkCasier.ToString()}");
                 return false;
