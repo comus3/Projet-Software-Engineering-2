@@ -63,3 +63,8 @@ public class Connection
         return dataTable;
     }
 }
+
+//code ecrit par comus3
+//nhesitez paas a me poser
+//toute question sur comment il
+//marche
