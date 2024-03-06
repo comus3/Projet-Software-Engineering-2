@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
+using System.Linq;
+using System.Windows.Input;
 using DAL;
-using DevTools;
 namespace KitBox.Views
 {
     public partial class SecretaryPage : ContentPage
     {
         private Connection con;
         private DataTable data;
+        private ObservableCollection<PieceData> pieces;
+
+        public ICommand SearchCommand { get; private set; }
 
         public SecretaryPage()
         {
@@ -22,60 +26,69 @@ namespace KitBox.Views
             {
                 "reference",
                 "code",
-                "`Price _Supplier_1`", // Ajouter des backticks autour des noms de colonnes avec des espaces
-                "`Price -_Supplier_2`", // Ajouter des backticks autour des noms de colonnes avec des espaces
                 "stock"
+                // Add other column names here
             };
             data = affichage.LoadAll(null, colonnes);
 
-            // Assigner les données à la source de la ListView
-            listePiece.ItemsSource = data.AsEnumerable();
-        }
-
-
-        private async void Modifier_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Customer_catalog()); //Ceci ne constitue pas la version finale, c'est juste un test
-        }
-
-        private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
+            // Convert DataTable to a format suitable for display
+            pieces = new ObservableCollection<PieceData>(); // Define a class to hold your data (see below)
+            foreach (DataRow row in data.Rows)
             {
-                string searchText = e.NewTextValue;
-                if (string.IsNullOrWhiteSpace(searchText))
+                pieces.Add(new PieceData
                 {
-                    // Si la barre de recherche est vide, afficher toutes les données
-                    listePiece.ItemsSource = data.AsEnumerable();
-                }
-                else
-                {
-                    // Filtrer les données en fonction du texte de recherche
-                    if (double.TryParse(searchText, out double searchDouble))
-                    {
-                        // Si le texte de recherche peut être converti en double,
-                        // filtrer les colonnes de type double
-                        data.DefaultView.RowFilter = $"[Price _Supplier_1] = {searchDouble} OR [Price -_Supplier_2] = {searchDouble}";
-                        listePiece.ItemsSource = data.DefaultView;
-                    }
-                    else
-                    {
-                        // Si le texte de recherche ne peut pas être converti en double,
-                        // filtrer les colonnes de type string
-                        data.DefaultView.RowFilter = $"reference LIKE '%{searchText}%' OR code LIKE '%{searchText}%' OR stock LIKE '%{searchText}%'";
-                        listePiece.ItemsSource = data.DefaultView;
-                    }
-                }
+                    Reference = row["reference"].ToString(),
+                    Code = row["code"].ToString(),
+                    Stock = row["stock"].ToString()
+                    // Assign other columns here
+                });
             }
-            catch (Exception ex)
+
+            // Bind the data to ListView
+            myListView.ItemsSource = pieces;
+
+            // Initialize search command
+            SearchCommand = new Command<string>(Search);
+        }
+
+        private void Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
             {
-                // Gérer l'exception ou afficher un message d'erreur
-                Logger.WriteToFile($"An error occurred: {ex.Message}");
+                // If the search query is null or empty, show all items
+                myListView.ItemsSource = pieces;
+            }
+            else
+            {
+                // Filter the items based on the search query
+                var filteredItems = pieces.Where(p =>
+                    p.Reference.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Code.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase));
+                myListView.ItemsSource = filteredItems;
             }
         }
 
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search(e.NewTextValue);
+        }
 
-
+        private void ModifyButton_Clicked(object sender, EventArgs e)
+        {
+            // Handle button click event here
+            // Access the clicked item using the CommandParameter
+            var button = (Button)sender;
+            var piece = (PieceData)button.CommandParameter;
+            // Now you can access the selected piece and perform the modification logic
+        }
     }
 
+    public class PieceData
+    {
+        public string Reference { get; set; }
+        public string Code { get; set; }
+        public string Stock { get; set; }
+        // Add properties for other columns here
+    }
 }
