@@ -11,12 +11,17 @@
             VerticalOptions="Start"
             FontSize="24" /> 
     
-        <ListView x:Name="dataListView" ItemsSource="{Binding Data}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding id_commande}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ListView >
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout>
+                        <Label Text="{Binding Numero}" />
+                        <!-- Ajoutez d'autres labels pour afficher d'autres colonnes de votre DataTable -->
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
     </StackLayout>
 </ContentPage>

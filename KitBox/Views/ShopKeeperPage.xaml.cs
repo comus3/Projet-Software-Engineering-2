@@ -9,7 +9,7 @@ namespace KitBox.Views;
 public partial class ShopKeeperPage : ContentPage
 {
     private Connection conn;
-
+    
     public ShopKeeperPage()
     {
         InitializeComponent();
@@ -28,11 +28,16 @@ public partial class ShopKeeperPage : ContentPage
         DataTable data = commande.LoadAll(com,colomns);
         //Displayer.DisplayData(data);
 
+        foreach (DataRow row in data.Rows)
+        {
+            string numero = row.ToString();
+        }
+
         foreach(DataRow row in data.Rows)
         {
             foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row.ItemArray[0]))
             {
-                //Displayer.DisplayData(keyValuePair.Value);
+                Displayer.DisplayData(keyValuePair.Value);
             }
         }
         //update puis save pour completed (quand boutton complet)
