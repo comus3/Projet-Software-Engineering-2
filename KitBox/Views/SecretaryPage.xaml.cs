@@ -26,7 +26,9 @@ namespace KitBox.Views
             {
                 "reference",
                 "code",
-                "stock"
+                "stock",
+                "Price_Supplier_2",
+                "Price_Supplier_1"
                 // Add other column names here
             };
             data = affichage.LoadAll(null, colonnes);
@@ -39,7 +41,9 @@ namespace KitBox.Views
                 {
                     Reference = row["reference"].ToString(),
                     Code = row["code"].ToString(),
-                    Stock = row["stock"].ToString()
+                    Stock = row["stock"].ToString(),
+                    Price_Supplier_2 = row["Price_Supplier_2"].ToString(),
+                    Price_Supplier_1 = row["Price_Supplier_1"].ToString()
                     // Assign other columns here
                 });
             }
@@ -64,7 +68,9 @@ namespace KitBox.Views
                 var filteredItems = pieces.Where(p =>
                     p.Reference.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Code.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                    p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase));
+                    p.Price_Supplier_2.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Price_Supplier_1.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase)) ;
                 myListView.ItemsSource = filteredItems;
             }
         }
@@ -89,6 +95,10 @@ namespace KitBox.Views
         public string Reference { get; set; }
         public string Code { get; set; }
         public string Stock { get; set; }
+        
+        public string Price_Supplier_2 { get; set; }
+        
+        public string Price_Supplier_1 { get; set; }
         // Add properties for other columns here
     }
 }
