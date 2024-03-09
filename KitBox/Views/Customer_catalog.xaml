@@ -14,10 +14,10 @@
             FontSize="14" />
         
 
-        <!-- Label et Picker pour la longueur -->
+      
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="Choose the length:" VerticalOptions="Center" />
-            <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> <!-- Ajustez la largeur selon vos besoins -->
+            <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> 
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:Int32}">
                         <x:Int32>32</x:Int32>
@@ -31,10 +31,10 @@
             </Picker>
         </StackLayout>
 
-        <!-- Label et Picker pour la largeur -->
+     
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="Choose the width:" VerticalOptions="Center" />
-            <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> <!-- Ajustez la largeur selon vos besoins -->
+            <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> 
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:Int32}">
                         <x:Int32>32</x:Int32>
@@ -44,10 +44,23 @@
                 </Picker.ItemsSource>
             </Picker>
         </StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Label Text="Choose the Color:" VerticalOptions="Center" />
+            <Picker x:Name="Locker_Color_Picker" VerticalOptions="Center" WidthRequest="400"> 
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>black</x:String>
+                        <x:String>white</x:String>
+                        <x:String>marron</x:String>
+                        <x:String>galva</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
 
         <Button 
             Text="Create a new cabinet" 
-            Clicked="OnCreateCasierClicked" 
+            Clicked="OnCreateLockerClicked" 
             TextColor="White"
             CornerRadius="8"
             HeightRequest="50"
