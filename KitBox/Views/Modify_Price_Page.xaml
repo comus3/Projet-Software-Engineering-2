@@ -1,0 +1,14 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.Modify_Price_Page">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="OldPriceSupplier1Entry" Placeholder="Ancien prix fournisseur 1" />
+            <Entry x:Name="OldPriceSupplier2Entry" Placeholder="Ancien prix fournisseur 2" />
+            <!-- Add other UI elements here as needed -->
+            
+            <!-- Button for confirmation -->
+            <Button Text="Confirmer" Clicked="ConfirmButton_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

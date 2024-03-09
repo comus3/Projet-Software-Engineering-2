@@ -86,8 +86,12 @@ namespace KitBox.Views
             // Access the clicked item using the CommandParameter
             var button = (Button)sender;
             var piece = (PieceData)button.CommandParameter;
+            
+            Navigation.PushAsync(new Modify_Price_Page(piece.Price_Supplier_1, piece.Price_Supplier_2));
+    
             // Now you can access the selected piece and perform the modification logic
         }
+
     }
 
     public class PieceData
