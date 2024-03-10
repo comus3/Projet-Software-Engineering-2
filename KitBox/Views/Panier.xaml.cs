@@ -44,13 +44,12 @@ namespace KitBox.Views
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
             foreach (DataRow row in data.Rows)
             {
-                string Longueur = row[1].ToString();
-                string Profondeur = row[2].ToString();
-                string Price = row[3].ToString();
+                string Longueur = row.ItemArray[1].ToString();
+                string Profondeur = row.ItemArray[2].ToString();
+                string Price = row.ItemArray[3].ToString();
                 Logger.WriteToFile(Longueur+ "  " + Profondeur + "  " + Price);
 
                 ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur,Price);
-                Logger.WriteToFile(armoireAttributes);
                 lstArmoireItems.Add(armoireAttributes);
             }
             // Set the ItemsSource of the ListView to your list of ArmoireAttributes
