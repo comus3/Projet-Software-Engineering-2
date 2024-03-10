@@ -163,5 +163,3 @@ static class FetchingServices
 //toute question sur comment il
 //marche
 
-
-//vivement le stage quand les gens seront vrmt motives a coder avec moi (moi lol)
