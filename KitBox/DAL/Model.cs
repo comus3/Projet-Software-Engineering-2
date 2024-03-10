@@ -125,10 +125,8 @@ public abstract class Model
     }
     public DataTable getPrimaryKey(Dictionary<string, object> where)
     {
-        List<object> primaryKeys = new List<object>();
-        List<string> primaryKeyList = new List<string> { "this.primaryKey" };
-
-        return LoadAll(where,primaryKeyList);
+        List<string> colomns = new List<string> {this.primaryKey};
+        return LoadAll(where,colomns);
     }
 
     /// <summary>
