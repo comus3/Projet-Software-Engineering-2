@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Modify_Price_Page">
     <ContentPage.Content>
+        
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <!-- Entry for Old Price Supplier 1 -->
             <StackLayout Orientation="Horizontal">
