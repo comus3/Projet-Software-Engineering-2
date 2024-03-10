@@ -12,6 +12,9 @@
                 VerticalOptions="Start"
                 FontSize="24" /> 
             <Button Text="Back to Menu" Clicked="BackMenu"/>
+            <Button Text="Details" Clicked="Details" />
+                                
+            
             <ListView ItemsSource="{Binding Commandes}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -25,13 +28,53 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Details" Clicked="Details" Grid.Column="2" HorizontalOptions="End"/>
+                                
                                 <Button Text="Completed" Clicked="OnCompletedClicked" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <CollectionView ItemsSource="{Binding Pieces}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <HorizontalStackLayout>
+                                <Label Text="Piece de la commande n° " FontAttributes="Bold" FontSize="20" />
+                                <Label Text="{Binding CommandeId}" FontAttributes="Bold" FontSize="20"/>
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding Reference}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Code}"/>
+                            <Label Text="Hauteur :"/>
+                            <Label Text="{Binding DimensionsHauteur}"/>
+                            <Label Text="Largeur : "/>
+                            <Label Text="{Binding DimensionLargeur}"/>
+                            <Label Text="Dimensions Client :"/>
+                            <Label Text="{Binding DimensionClient}"/>
+                            <Label Text="Profondeur :"/>
+                            <Label Text="{Binding DimensionProfondeur}"/>
+                            <Label Text="Diameter :"/>
+                            <Label Text="{Binding DimensionDiametre}"/>
+                            <Label Text="Longueur :"/>
+                            <Label Text="{Binding DimensionLongeur}"/>
+                            <Label Text="Price 1 :"/>
+                            <Label Text="{Binding PriceSupplier1}"/>
+                            <Label Text="Delay 1 :"/>
+                            <Label Text="{Binding DelaySupplier1}"/>
+                            <Label Text="Price 2 :"/>
+                            <Label Text="{Binding PriceSupplier2}"/>
+                            <Label Text="Delay 2 :"/>
+                            <Label Text="{Binding DelaySupplier2}"/>
+                            <Label Text="Stock :"/>
+                            <Label Text="{Binding Stock}"/>
+                            <Label Text="Type :"/>
+                            <Label Text="{Binding Type}"/>
+                            <!-- Continuez avec les autres propriétés comme ci-dessus -->
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -18,10 +18,22 @@ public partial class ShopKeeperPage : ContentPage
 
     public class PieceModel
     {
+        public string CommandeId { get; set; }
         public string Reference { get; set; }
         public string Code { get; set; }
+        public string DimensionsHauteur { get; set; }
+        public string DimensionLargeur { get; set; }
+        public string DimensionClient { get; set; }
+        public string DimensionProfondeur { get; set; }
+        public string DimensionDiametre { get; set; }
+        public string DimensionLongueur { get; set; }
+        public string PriceSupplier1 { get; set; }
+        public string DelaySupplier1 { get; set; }
+        public string PriceSupplier2 { get; set; }
+        public string DelaySupplier2 { get; set; }
+        public string Stock { get; set; }
+        public string Type { get; set; }
     }
-
     public ObservableCollection<CommandeModel> Commandes { get; set; } = new ObservableCollection<CommandeModel>();
     public ObservableCollection<PieceModel> Pieces { get; set; } = new ObservableCollection<PieceModel>();
   
@@ -47,13 +59,19 @@ public partial class ShopKeeperPage : ContentPage
         {
             Commande commande = new Commande(conn);
             Dictionary<string, object> com = new Dictionary<string, object>();
+            
             List<string> colomns = new List<string>();
+            Console.WriteLine(colomns);
             colomns.Add("id_commande");
+            //colomns.Add("completed");
             DataTable data = commande.LoadAll(com,colomns);
             Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
+                //if (row["completed"].ToString() == "0")
+                //{
+                    Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
+                //}
             }
         //update puis save pour completed (quand boutton complet)
         }
@@ -77,28 +95,39 @@ public partial class ShopKeeperPage : ContentPage
 
         private void Details(object sender, EventArgs e)
         {
-            // Commande commande = new Commande(conn);
-            // Dictionary<string, object> com = new Dictionary<string, object>();
-            // List<string> colomns = new List<string>();
-            // //colomns.Add("id_commande");
-            // DataTable data = commande.LoadAll(com,colomns);
-            // foreach(DataRow row in data.Rows)
-            // {
-            //     foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row.ItemArray[0]))
-            //     {
-            //         Displayer.DisplayData(keyValuePair.Value);
-            //         foreach (DataColumn column in keyValuePair.Value.Columns)
-            //         {
-            //             Console.WriteLine(column.ColumnName);
-            //         }
-                    // Pieces.Add(new PieceModel { 
-                    //     Reference = row["reference"].ToString(),
-                    //     Code = row["code"].ToString(),
-
-                    //      });
-                    // Console.WriteLine(Pieces);
-                // }
-            // }
+            Commande commande = new Commande(conn);
+            Dictionary<string, object> com = new Dictionary<string, object>();
+            List<string> colomns = new List<string>();
+            colomns.Add("id_commande");
+            DataTable data = commande.LoadAll(com,colomns);
+            foreach(DataRow row1 in data.Rows)
+            {
+                var idCommande = row1["id_commande"].ToString();
+                foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row1.ItemArray[0]))
+                {
+                    Displayer.DisplayData(keyValuePair.Value);
+                    foreach(DataRow row in keyValuePair.Value.Rows)
+                    {
+                        Pieces.Add(new PieceModel
+                        {
+                            CommandeId = idCommande,
+                            Reference = row["Reference"].ToString(),
+                            Code = row["Code"].ToString(),
+                            DimensionsHauteur = row["Dimensions_hauteur"].ToString(),
+                            DimensionLargeur = row["dimension_largeur"].ToString(),
+                            DimensionClient = row["dimension_client"].ToString(),    
+                            DimensionProfondeur = row["dimension_profondeur"].ToString(),
+                            DimensionDiametre = row["dimension_diametre"].ToString(),
+                            DimensionLongueur = row["dimension_longeur"].ToString(),
+                            PriceSupplier1 = row["Price_Supplier_1"].ToString(),
+                            DelaySupplier1 = row["Delay_Supplier_1"].ToString(),
+                            PriceSupplier2 = row["Price_Supplier_2"].ToString(),
+                            DelaySupplier2 = row["Delay_Supplier_2"].ToString(),
+                            Stock = row["Stock"].ToString(),
+                            Type = row["Type"].ToString()
+                        });
+                    }              }
+            }
 
         }
 }
