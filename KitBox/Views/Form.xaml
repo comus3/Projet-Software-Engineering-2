@@ -4,8 +4,6 @@
              Title="Set up your locker">
     <ScrollView>
         <StackLayout>
-
-        
             <StackLayout>
                 <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
                 

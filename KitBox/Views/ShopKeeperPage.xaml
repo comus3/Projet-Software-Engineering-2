@@ -1,0 +1,35 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.ShopKeeperPage"
+             Title="Order preparation">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+            <Label 
+                Text="List of orders to be prepared"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" /> 
+            <ListView ItemsSource="{Binding Commandes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
+                                <Button Text="Completed" Grid.Column="3" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,4 +1,12 @@
 using DAL;
+using Org.BouncyCastle.Utilities;
+using Microsoft.Maui.Controls;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using DevTools;
+using AppServices;
+
 
 namespace KitBox.Views
 {
@@ -11,7 +19,9 @@ namespace KitBox.Views
         int count = 0; // Compteur pour les casiers
 
         string[] options = { "marron", "white" };
-        List<string> doorOptions = new List<string> { "marron", "white", "glass" };
+        List<string> doorOptions = new List<string> { "marron", "white" }; // Supprimer l'option "glass" du picker de couleur de la porte
+
+        List<int> heigth = new List<int> { 32, 42, 52 };
 
         public Form(Object armoirePk)
         {
@@ -30,8 +40,13 @@ namespace KitBox.Views
             newLabel.FontAttributes = FontAttributes.Bold;
             newLabel.HorizontalOptions = LayoutOptions.Center;
 
-            Entry entry = new Entry();
-            entry.Placeholder = "Height " + count;
+            Label heigthLabel = new Label();
+            heigthLabel.Text = "Height " + count;
+            Picker heightPicker = new Picker();
+            foreach (int elem in heigth)
+            {
+                heightPicker.Items.Add(elem.ToString());
+            }
 
             Label colorLabel = new Label();
             colorLabel.Text = "Choose a color : ";
@@ -47,9 +62,17 @@ namespace KitBox.Views
             doorLabel.VerticalOptions = LayoutOptions.Center;
             CheckBox checkBox = new CheckBox();
 
+            // Nouvelle checkbox pour la porte en verre
+            Label glassDoorLabel = new Label();
+            glassDoorLabel.Text = "Glass door";
+            glassDoorLabel.VerticalOptions = LayoutOptions.Center;
+            CheckBox glassCheckBox = new CheckBox();
+
             HorizontalStackLayout stackPanel = new HorizontalStackLayout();
             stackPanel.Children.Add(doorLabel);
             stackPanel.Children.Add(checkBox);
+            stackPanel.Children.Add(glassDoorLabel);
+            stackPanel.Children.Add(glassCheckBox);
 
             Label colorDoorLabel = new Label();
             colorDoorLabel.Text = "Choose a color for the door number " + count.ToString() + " : ";
@@ -75,8 +98,30 @@ namespace KitBox.Views
                 }
             };
 
+            // Ajoutez également une logique pour gérer la sélection de la checkbox pour la porte en verre
+            glassCheckBox.CheckedChanged += (sender, args) =>
+            {
+                bool isChecked = glassCheckBox.IsChecked;
+                if (isChecked)
+                {
+                    // Si la checkbox pour la porte en verre est cochée, supprimez le picker de couleur de la porte
+                    stackPanel.Children.Remove(colorDoorLabel);
+                    stackPanel.Children.Remove(colorDoorPicker);
+                }
+                else
+                {
+                    // Sinon, si la checkbox pour la porte en verre est décochée, ajoutez le picker de couleur de la porte
+                    if (checkBox.IsChecked)
+                    {
+                        stackPanel.Children.Add(colorDoorLabel);
+                        stackPanel.Children.Add(colorDoorPicker);
+                    }
+                }
+            };
+
             labelContainer.Children.Add(newLabel);
-            labelContainer.Children.Add(entry);
+            labelContainer.Children.Add(heigthLabel);
+            labelContainer.Children.Add(heightPicker);
             labelContainer.Children.Add(colorLabel);
             labelContainer.Children.Add(colorPicker);
             labelContainer.Children.Add(stackPanel);
@@ -86,8 +131,9 @@ namespace KitBox.Views
             {
                 Color = colorPicker,
                 DoorColor = colorDoorPicker,
-                Height = entry,
+                Height = heightPicker,
                 CheckBox = checkBox,
+                GlassCheckBox = glassCheckBox // Enregistrez la checkbox pour la porte en verre
             });
         }
 
@@ -96,7 +142,7 @@ namespace KitBox.Views
             // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
             foreach (var casierData in casiersData)
             {
-                if (casierData.Color.SelectedItem == null || casierData.Height.Text == null)
+                if (casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null)
                 {
                     await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
                     return;
@@ -104,17 +150,11 @@ namespace KitBox.Views
 
                 createCasier(casierData);
             }
+            Armoire armoire = new Armoire(con);
+            armoire.Load(Convert.ToInt32(this.armoirePk));
+            LinkingServices.CreateAllArmoireLinks(con, armoire);
 
             await Navigation.PushAsync(new FinishPage());
-        }
-        
-
-        private class CasierData
-        {
-            public Picker Color { get; set; }
-            public Picker DoorColor { get; set; }
-            public Entry Height { get; set; }
-            public CheckBox CheckBox { get; set; }
         }
 
         private void createCasier(CasierData casierData)
@@ -123,18 +163,39 @@ namespace KitBox.Views
             Dictionary<string, object> infoCasier = new Dictionary<string, object>();
 
             infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
-            infoCasier["h"] = casierData.Height.Text;
+            infoCasier["h"] = casierData.Height.SelectedItem.ToString();
             infoCasier["porte"] = casierData.CheckBox.IsChecked;
-            if ((bool)infoCasier["porte"])
+            if(casierData.CheckBox.IsChecked)
             {
-                infoCasier["couleurPorte"] = casierData.DoorColor.SelectedItem.ToString();
+                if (casierData.GlassCheckBox.IsChecked)
+                {
+                    infoCasier["couleur_porte"] = "glass";
+                }
+                else
+                {
+                    // Sinon, définissez la couleur de la porte à partir du picker de couleur de la porte
+                    infoCasier["couleur_porte"] = casierData.DoorColor.SelectedItem.ToString();
+                }
             }
+            // Si la checkbox pour la porte en verre est cochée, définissez la couleur de la porte comme null
+            
+
             infoCasier["armoire"] = this.armoirePk;
             casier.Update(infoCasier);
             casier.Insert();
         }
+
+        private class CasierData
+        {
+            public Picker Color { get; set; }
+            public Picker DoorColor { get; set; }
+            public Picker Height { get; set; }
+            public CheckBox CheckBox { get; set; }
+            public CheckBox GlassCheckBox { get; set; } // Ajoutez la checkbox pour la porte en verre
+        }
     }
 }
+
 
 
 

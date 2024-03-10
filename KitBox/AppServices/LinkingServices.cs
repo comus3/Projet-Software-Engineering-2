@@ -170,7 +170,7 @@ static class LinkingServices
         {
             if (CupHandle(connection, casierAttributes.PrimaryKey, casierAttributes.Porte, casierAttributes.CouleurPorte))
             {
-                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"])))
+                if (Door(connection, casierAttributes.Hauteur, casierAttributes.CouleurPorte, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["longueur"]), casierAttributes.Porte))
                 {
                     if (SidePanel(connection, casierAttributes.Hauteur, casierAttributes.Color, casierAttributes.PrimaryKey, Convert.ToInt32(armoireData.Rows[0]["largeur"])))
                     {
@@ -261,7 +261,7 @@ static class LinkingServices
                 Logger.WriteToFile($"error, no piece found for armoire {armoire.Attributes[armoire.PrimaryKey]}");
                 return false;
             }
-            if(pieceData.Rows.Count > 1)
+            if (pieceData.Rows.Count > 1)
             {
                 Logger.WriteToFile($"error, multiple pieces found for armoire {armoire.Attributes[armoire.PrimaryKey]}");
                 return false;
@@ -282,7 +282,7 @@ static class LinkingServices
                 int extractedNumbers = int.Parse(Regex.Replace(row["extracted_numbers"].ToString(), @"[^0-9]", ""));
                 if (extractedNumbers > result.hauteur)
                 {
-                    LinkArmoire(connection,$"COR{extractedNumbers}{couleurCode}", armoire.Attributes[armoire.PrimaryKey], 4);
+                    LinkArmoire(connection, $"COR{extractedNumbers}{couleurCode}", armoire.Attributes[armoire.PrimaryKey], 4);
                     break;
                 }
             }
@@ -291,7 +291,7 @@ static class LinkingServices
 
         return true;
     }
-    private static int GetCasierNombre(Connection connection ,object armoireId)
+    private static int GetCasierNombre(Connection connection, object armoireId)
     {
         Casier casier = new Casier(connection);
         Dictionary<string, object> conditionCasierOfArmoire = new Dictionary<string, object>();
@@ -381,7 +381,7 @@ static class LinkingServices
             return false;
         }
     }
-    private static Boolean Door(Connection connection, int height, string colorDoor, object pkCasier, int largeur)
+    private static Boolean Door(Connection connection, int height, string colorDoor, object pkCasier, int largeur, string porte)
     {
         //two doors with largeur
         //ce que je comprends pas cest que la largeur des doors minimum = la largeur minimale de l'armoire
@@ -391,35 +391,39 @@ static class LinkingServices
         //aussi porte est en verre ou de couleur
         string type;
         string codeL;
-        if (largeur < 63)
+        if (porte == "True")
         {
-            codeL = largeur.ToString();
-        }
-        else if (largeur > 63)
-        {
-            codeL = "62";
-        }
-        else
-        {
-            Logger.WriteToFile($"error, largeur {largeur} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
-            return false;
-        }
-        switch (colorDoor)
-        {
-            case "glass":
-                type = "VE";
-                break;
-            case "white":
-                type = "BL";
-                break;
-            case "marron":
-                type = "BR";
-                break;
-            default:
-                Logger.WriteToFile($"error, colorDoor {colorDoor} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
+            if (largeur < 63)
+            {
+                codeL = largeur.ToString();
+            }
+            else if (largeur > 63)
+            {
+                codeL = "62";
+            }
+            else
+            {
+                Logger.WriteToFile($"error, largeur {largeur} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
                 return false;
+            }
+            switch (colorDoor)
+            {
+                case "glass":
+                    type = "VE";
+                    break;
+                case "white":
+                    type = "BL";
+                    break;
+                case "marron":
+                    type = "BR";
+                    break;
+                default:
+                    Logger.WriteToFile($"error, colorDoor {colorDoor} is not valid for Door for Primary key of casier : {pkCasier.ToString()}");
+                    return false;
+            }
+            LinkCasier(connection, $"POR{height}{codeL}{type}", pkCasier, 2);
+            return true;
         }
-        LinkCasier(connection, $"POR{height}{codeL}{type}", pkCasier, 2);
         return true;
     }
     private static Boolean SidePanel(Connection connection, int height, string color, object pkCasier, int largeur)
@@ -503,7 +507,7 @@ static class LinkingServices
     {
         //4 side cross bars
         //code built like this : TRG{largeur}
-        List<int> possibleValues = new List<int> { 32, 42, 52 ,62};
+        List<int> possibleValues = new List<int> { 32, 42, 52, 62 };
         if (possibleValues.Contains(largeur))
         {
             LinkCasier(connection, $"TRG{largeur}", pkCasier, 4);
