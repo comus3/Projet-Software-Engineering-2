@@ -39,7 +39,7 @@ namespace KitBox.Views
             // Chargez les armoires depuis la base de données
             Armoire armoire = new Armoire(con);
             Dictionary<string, object> arm = new Dictionary<string, object>();
-            arm["commande"] = FetchingServices.CurrentCommand ;
+            arm["commande"] = FetchingServices.CurrentCommand;
             DataTable data = armoire.LoadAll(arm);
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
             foreach (DataRow row in data.Rows)
@@ -50,6 +50,7 @@ namespace KitBox.Views
                 Logger.WriteToFile(Longueur+ "  " + Profondeur + "  " + Price);
 
                 ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur,Price);
+                Logger.WriteToFile(armoireAttributes);
                 lstArmoireItems.Add(armoireAttributes);
             }
             // Set the ItemsSource of the ListView to your list of ArmoireAttributes
