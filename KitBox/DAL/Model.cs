@@ -126,39 +126,9 @@ public abstract class Model
     public DataTable getPrimaryKey(Dictionary<string, object> where)
     {
         List<object> primaryKeys = new List<object>();
+        List<string> primaryKeyList = new List<string> { "this.primaryKey" };
 
-        // Construire la requête SQL pour sélectionner les clés primaires en fonction des conditions spécifiées
-        string query = $"SELECT {primaryKey} FROM {tableName}";
-        //si where ne contient rien alonrs on return toutes les pk du tableau
-        // Si le dictionnaire `where` contient des conditions, les ajouter à la requête SQL
-        if (where != null && where.Count > 0)
-        {
-            query += " WHERE";
-
-            // Ajouter chaque condition du dictionnaire à la requête SQL
-            foreach (var condition in where)
-            {
-                // comme dhab correctement formatée dans la requête SQL en fonction de son type
-                string formattedValue;
-                if (condition.Value is string)
-                {
-                    formattedValue = $"`{condition.Value}`";
-                }
-                else
-                {
-                    formattedValue = condition.Value.ToString();
-                }
-
-                // Ajouter la condition à la requête SQL
-                query += $" `{condition.Key}` = {formattedValue} AND";
-            }
-
-            // Supprimer le dernier 'AND' superflu de la requête SQL
-            query = query.Remove(query.Length - 4);
-            //recupere la primary key de la ligne dont la colonne colomn vaut value
-        }
-
-        return this.connection.ExecuteQuery(query);
+        return LoadAll(where,primaryKeyList);
     }
 
     /// <summary>
