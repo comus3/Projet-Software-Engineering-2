@@ -25,7 +25,7 @@
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
                                 <Button Text="Details" Clicked="Details" Grid.Column="2" HorizontalOptions="End"/>
-                                <Button Text="Completed" Grid.Column="3" />
+                                <Button Text="Completed" Clicked="OnCompletedClicked" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
