@@ -38,6 +38,11 @@ public partial class ShopKeeperPage : ContentPage
         LoadCommandes();
     }
 
+    private void BackMenu(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new ChoicebtwPage());
+    }
+
         private void LoadCommandes()
         {
             Commande commande = new Commande(conn);
@@ -64,8 +69,6 @@ public partial class ShopKeeperPage : ContentPage
                 {
                     // Supprimez l'élément de la collection
                     Commandes.Remove(commandeModel);
-                    
-                    // Mettez à jour la base de données ou effectuez d'autres actions nécessaires ici
                 }
             }
         }
