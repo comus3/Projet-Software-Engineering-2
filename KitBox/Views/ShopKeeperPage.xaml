@@ -2,26 +2,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.ShopKeeperPage"
              Title="Order preparation">
-    
-    <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
-        <Label 
-            Text="List of orders to be prepared"
-            HorizontalOptions="Center" 
-            FontAttributes="Bold"
-            VerticalOptions="Start"
-            FontSize="24" /> 
-    
-        <ListView >
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout>
-                        <Label Text="{Binding Numero}" />
-                        <!-- Ajoutez d'autres labels pour afficher d'autres colonnes de votre DataTable -->
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-    </StackLayout>
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+            <Label 
+                Text="List of orders to be prepared"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" /> 
+            <ListView ItemsSource="{Binding Commandes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
+                                <Button Text="Details" Clicked="Details" Grid.Column="2" HorizontalOptions="End"/>
+                                <Button Text="Completed" Grid.Column="3" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
