@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.FinishPage"
              Title="FinishPage">
-    <VerticalStackLayout>
-        <Label Text="Your order has been registered" VerticalOptions="Center" 
-            HorizontalOptions="Center" Margin="10,20,10,80"/>
-        <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
-            Margin="10,5,10,5"/>
+
+    <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="Your order has been registered" VerticalOptions="Center" 
+                   HorizontalOptions="Center" Margin="10,20,10,80" FontSize="24"/>
+        </StackLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
+                    Margin="10,5,10,5"/>
+        </StackLayout>
     </VerticalStackLayout>
+
 </ContentPage>
