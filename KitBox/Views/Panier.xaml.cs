@@ -65,6 +65,7 @@ namespace KitBox.Views
             // Méthode pour gérer le clic sur le bouton "Acheter"
             // Récupérer l'armoire sélectionnée
             DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
+            Navigation.PushAsync(new CustomerRegisterForm());
         }
 
         private void Supprimer_Clicked(object sender, EventArgs e)
