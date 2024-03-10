@@ -1,42 +1,74 @@
-
+using System;
+using System.Collections.Generic;
+using System.Data;
+using KitBox.AppServices;
+using DevTools;
+using DAL;
 
 namespace KitBox.Views
 {
     public partial class Panier : ContentPage
     {
+        private Connection con;
+
+        internal class ArmoireAttributes
+        {
+            public string Longueur { get; set; }
+            public string Profondeur { get; set; }
+            public string Price { get; set; }
+
+            public ArmoireAttributes(string longueur, string profondeur, string price)
+            {
+                Longueur = longueur;
+                Profondeur = profondeur;
+                Price = price;
+            }
+        }
+
         public Panier()
         {
             InitializeComponent();
+            Connection.TestConnection();
+            con = new Connection();
+        }
 
-            // Je test pour l'instant quelques trucs pour voir si ça marche
-            lstArmoire.ItemsSource = new string[]
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ChargerDonnees();
+        }
+
+        private void ChargerDonnees()
+        {
+            Armoire armoire = new Armoire(con);
+            Dictionary<string, object> arm = new Dictionary<string, object>();
+            arm["commande"] = FetchingServices.CurrentCommand;
+            DataTable data = armoire.LoadAll(arm);
+            List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
+            foreach (DataRow row in data.Rows)
             {
-                "Armoire 1",
-                "Armoire 2",
-                "Armoire 3",
-                "Armoire 4",
-                "Armoire 5"
-            };
+                string Longueur = row.ItemArray[1].ToString();
+                string Profondeur = row.ItemArray[2].ToString();
+                string Price = row.ItemArray[3].ToString();
+                Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
+
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur, Price);
+                lstArmoireItems.Add(armoireAttributes);
+            }
+            lstArmoire.ItemsSource = lstArmoireItems;
         }
 
         private void Acheter_Clicked(object sender, EventArgs e)
         {
-            // Méthode pour gérer le clic sur le bouton "Acheter"
-            // Récupérer l'armoire sélectionnée
-            string phrase = (sender as Button).CommandParameter as string;
-
-            // Ajoutez ici le code pour acheter la phrase
-            DisplayAlert("Acheter", $"L'armoire'{phrase}' a été achetée avec succès.", "OK");
+            DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
+            Navigation.PushAsync(new CustomerRegisterForm());
         }
 
         private void Supprimer_Clicked(object sender, EventArgs e)
         {
-            // Méthode pour gérer le clic sur le bouton "Supprimer"
-            // Récupérer l'armoire sélectionnée
-            string phrase = (sender as Button).CommandParameter as string;
+            var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            // Ajoutez ici le code pour supprimer l'armoire
-            DisplayAlert("Supprimer", $"L'armoire '{phrase}' a été supprimée avec succès.", "OK");
+            DisplayAlert("Supprimer", $"L'armoire avec longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
         }
     }
 }

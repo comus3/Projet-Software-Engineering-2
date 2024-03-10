@@ -21,18 +21,21 @@ namespace KitBox.Views
             InitializeComponent();
             BindingContext = this;
             Connection.TestConnection();
-
             con = new Connection();
-
-         
+            if (FetchingServices.CurrentCommand == null)
+            {
+                CreateCommande();
+            }
+            listArmoirePk = new List<Object>();
+        }
+        private void CreateCommande()
+        {
             com = new Commande(con);
             Dictionary<string, object> infoClient = new Dictionary<string, object>();
-            infoClient["date"] = 240224;
+            infoClient["date"] = DateTime.Today.ToString("ddMMyy");
             com.Update(infoClient);
             DataTable data = com.Insert();
-            Displayer.DisplayData(data);
             FetchingServices.CurrentCommand = data.Rows[0].ItemArray[0].ToString();
-            listArmoirePk = new List<Object>();
         }
 
         private void OnCreateLockerClicked(object sender, EventArgs e)
