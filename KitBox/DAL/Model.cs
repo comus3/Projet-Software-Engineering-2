@@ -101,7 +101,7 @@ public abstract class Model
     /// </summary>
     public void Delete()
     {
-        string query = $"DELETE FROM {this.tableName} WHERE `{this.primaryKey}` = {this.attributes[primaryKey]}";
+        string query = $"DELETE FROM {this.tableName} WHERE {this.primaryKey} = {this.attributes[primaryKey]}";
         this.connection.ExecuteQuery(query);
 
     }
