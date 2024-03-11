@@ -1,15 +1,12 @@
 using DAL;
 using Org.BouncyCastle.Utilities;
 using Microsoft.Maui.Controls;
-using DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using DevTools;
-using DAL;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
+using AppServices;
+
 
 namespace KitBox.Views
 {
@@ -153,6 +150,9 @@ namespace KitBox.Views
 
                 createCasier(casierData);
             }
+            Armoire armoire = new Armoire(con);
+            armoire.Load(Convert.ToInt32(this.armoirePk));
+            LinkingServices.CreateAllArmoireLinks(con, armoire);
 
             await Navigation.PushAsync(new FinishPage());
         }
@@ -165,17 +165,20 @@ namespace KitBox.Views
             infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
             infoCasier["h"] = casierData.Height.SelectedItem.ToString();
             infoCasier["porte"] = casierData.CheckBox.IsChecked;
-
+            if(casierData.CheckBox.IsChecked)
+            {
+                if (casierData.GlassCheckBox.IsChecked)
+                {
+                    infoCasier["couleur_porte"] = "glass";
+                }
+                else
+                {
+                    // Sinon, définissez la couleur de la porte à partir du picker de couleur de la porte
+                    infoCasier["couleur_porte"] = casierData.DoorColor.SelectedItem.ToString();
+                }
+            }
             // Si la checkbox pour la porte en verre est cochée, définissez la couleur de la porte comme null
-            if (casierData.GlassCheckBox.IsChecked)
-            {
-                infoCasier["couleurPorte"] = null;
-            }
-            else
-            {
-                // Sinon, définissez la couleur de la porte à partir du picker de couleur de la porte
-                infoCasier["couleurPorte"] = casierData.DoorColor.SelectedItem.ToString();
-            }
+            
 
             infoCasier["armoire"] = this.armoirePk;
             casier.Update(infoCasier);
