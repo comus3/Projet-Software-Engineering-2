@@ -47,9 +47,11 @@ namespace KitBox.Views
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
             foreach (DataRow row in data.Rows)
             {
-                string Longueur = row.ItemArray[1].ToString();
-                string Profondeur = row.ItemArray[2].ToString();
-                string Price = row.ItemArray[3].ToString();
+
+
+                string Longueur = $" La longueur de l'armoire est de: {row.ItemArray[1].ToString()}";
+                string Profondeur = $" La profondeur de l'armoire est de: {row.ItemArray[2].ToString()}";
+                string Price = $"Le prix total est de:{row.ItemArray[3].ToString()} ";
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
                 ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur, Price);
