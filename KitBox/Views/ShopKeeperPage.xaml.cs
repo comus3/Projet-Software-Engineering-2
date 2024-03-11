@@ -104,7 +104,7 @@ public partial class ShopKeeperPage : ContentPage
                 // Récupérez l'ID de commande à partir du modèle lié au bouton
                 var idCommande = commandeModel.IdCommande;
 
-                // Initialisez la liste des colonnes à récupérer pour les pièces
+                // Liste des colonnes à récupérer pour les pièces
                 List<string> colomns = new List<string> 
                 {
                     "Reference", "Code", "Dimensions_hauteur", "dimension_largeur", "dimension_client", 
@@ -113,19 +113,14 @@ public partial class ShopKeeperPage : ContentPage
                     "Stock", "Type"
                 };
 
-                // Utilisez FetchCommandePieces pour récupérer seulement les pièces liées à cet ID de commande
+                // FetchCommandePieces pour récupérer seulement les pièces liées à cet ID de commande
                 var piecesDataTables = FetchingServices.FetchCommandePieces(conn, idCommande);
-
-                // Assurez-vous que la collection Pieces est vide ou réinitialisée
                 Pieces.Clear();
 
-                // Parcourez chaque KeyValuePair retourné par FetchCommandePieces
                 foreach (var keyValuePair in piecesDataTables)
                 {
-                    // Parcourez chaque DataRow dans la DataTable
                     foreach (DataRow row in keyValuePair.Value.Rows)
                     {
-                        // Ajoutez chaque pièce à la collection Pieces
                         Pieces.Add(new PieceModel
                         {
                             CommandeId = idCommande,
@@ -148,43 +143,4 @@ public partial class ShopKeeperPage : ContentPage
                 }
             }
         }
-
-
-        // private void Details(object sender, EventArgs e)
-        // {
-        //     Commande commande = new Commande(conn);
-        //     Dictionary<string, object> com = new Dictionary<string, object>();
-        //     List<string> colomns = new List<string>();
-        //     colomns.Add("id_commande");
-        //     DataTable data = commande.LoadAll(com,colomns);
-        //     foreach(DataRow row1 in data.Rows)
-        //     {
-        //         var idCommande = row1["id_commande"].ToString();
-        //         foreach(KeyValuePair<string,DataTable> keyValuePair in FetchingServices.FetchCommandePieces(conn,row1.ItemArray[0]))
-        //         {
-        //             Displayer.DisplayData(keyValuePair.Value);
-        //             foreach(DataRow row in keyValuePair.Value.Rows)
-        //             {
-        //                 Pieces.Add(new PieceModel
-        //                 {
-        //                     CommandeId = idCommande,
-        //                     Reference = row["Reference"].ToString(),
-        //                     Code = row["Code"].ToString(),
-        //                     DimensionsHauteur = row["Dimensions_hauteur"].ToString(),
-        //                     DimensionLargeur = row["dimension_largeur"].ToString(),
-        //                     DimensionClient = row["dimension_client"].ToString(),    
-        //                     DimensionProfondeur = row["dimension_profondeur"].ToString(),
-        //                     DimensionDiametre = row["dimension_diametre"].ToString(),
-        //                     DimensionLongueur = row["dimension_longeur"].ToString(),
-        //                     PriceSupplier1 = row["Price_Supplier_1"].ToString(),
-        //                     DelaySupplier1 = row["Delay_Supplier_1"].ToString(),
-        //                     PriceSupplier2 = row["Price_Supplier_2"].ToString(),
-        //                     DelaySupplier2 = row["Delay_Supplier_2"].ToString(),
-        //                     Stock = row["Stock"].ToString(),
-        //                     Type = row["Type"].ToString()
-        //                 });
-        //             }              }
-        //     }
-
-        // }
 }
