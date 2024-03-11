@@ -12,7 +12,7 @@
                 VerticalOptions="Start"
                 FontSize="24" /> 
             <Button Text="Back to Menu" Clicked="BackMenu"/>
-            <Button Text="Details" Clicked="Details" />
+            
                                 
             
             <ListView ItemsSource="{Binding Commandes}">
@@ -28,7 +28,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                
+                                <Button Text="Details" Clicked="Details" Grid.Column="2" />
                                 <Button Text="Completed" Clicked="OnCompletedClicked" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
@@ -41,8 +41,8 @@
                     <DataTemplate>
                         <StackLayout>
                             <HorizontalStackLayout>
-                                <Label Text="Piece de la commande n° " FontAttributes="Bold" FontSize="20" />
-                                <Label Text="{Binding CommandeId}" FontAttributes="Bold" FontSize="20"/>
+                            <Label Text="Piece de la commande n° " FontAttributes="Bold" FontSize="20" />
+                            <Label Text="{Binding CommandeId}" FontAttributes="Bold" FontSize="20"/>
                             </HorizontalStackLayout>
                             <Label Text="{Binding Reference}" FontAttributes="Bold"/>
                             <Label Text="{Binding Code}"/>
