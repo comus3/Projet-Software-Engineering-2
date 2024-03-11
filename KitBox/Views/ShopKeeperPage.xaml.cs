@@ -85,8 +85,13 @@ public partial class ShopKeeperPage : ContentPage
 
                 if(commandeModel != null && Commandes.Contains(commandeModel))
                 {
+                    var piecesAssociees = Pieces.Where(p => p.CommandeId == commandeModel.IdCommande).ToList();
                     // Supprimez l'élément de la collection
                     Commandes.Remove(commandeModel);
+                    foreach(var piece in piecesAssociees)
+                    {
+                        Pieces.Remove(piece);
+                    }
                 }
             }
         }
