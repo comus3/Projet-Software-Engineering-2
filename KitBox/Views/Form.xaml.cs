@@ -31,7 +31,6 @@ namespace KitBox.Views
             BindingContext = this;
             Connection.TestConnection();
             con = new Connection();
-            
         }
 
         private void OnCreateNewLockerClicked(object sender, EventArgs e)
@@ -73,12 +72,7 @@ namespace KitBox.Views
             glassCheckBox.IsVisible = false; // Caché par défaut
 
             // Logique pour afficher la checkbox de porte en verre lorsque la checkbox de porte est cochée
-            checkBox.CheckedChanged += (s, args) =>
-            {
-                bool isChecked = checkBox.IsChecked;
-                glassCheckBox.IsVisible = isChecked; // Rend la checkbox de porte en verre visible si la checkbox de porte est cochée
-                glassDoorLabel.IsVisible = isChecked; // Rend le label de porte en verre visible si la checkbox de porte est cochée
-            };
+           
 
             HorizontalStackLayout stackPanel = new HorizontalStackLayout();
             stackPanel.Children.Add(doorLabel);
@@ -95,21 +89,30 @@ namespace KitBox.Views
                 colorDoorPicker.Items.Add(option);
             }
 
-            checkBox.CheckedChanged += (sender, args) =>
+            checkBox.CheckedChanged += (s, args) =>
             {
                 bool isChecked = checkBox.IsChecked;
+                bool isglasschecked = glassCheckBox.IsVisible; 
+                            
                 if (isChecked)
                 {
+                    glassCheckBox.IsVisible = true; // Rend la checkbox de porte en verre visible si la checkbox de porte est cochée
+                    glassDoorLabel.IsVisible =true; 
+                                               
                     stackPanel.Children.Add(colorDoorLabel);
                     stackPanel.Children.Add(colorDoorPicker);
+                                               
                 }
                 else
                 {
+                    glassCheckBox.IsVisible = false ; // Rend la checkbox de porte en verre visible si la checkbox de porte est cochée
+                    glassDoorLabel.IsVisible = false ;
+                    glassCheckBox.IsChecked = false;
                     stackPanel.Children.Remove(colorDoorLabel);
                     stackPanel.Children.Remove(colorDoorPicker);
                 }
+                                           
             };
-
             // Ajoutez également une logique pour gérer la sélection de la checkbox pour la porte en verre
             glassCheckBox.CheckedChanged += (sender, args) =>
             {
@@ -147,7 +150,7 @@ namespace KitBox.Views
                 CheckBox = checkBox,
                 GlassCheckBox = glassCheckBox // Enregistrez la checkbox pour la porte en verre
             });
-           
+            
         }
 
         private async void OnFinishClicked(object sender, EventArgs e)
@@ -176,7 +179,6 @@ namespace KitBox.Views
 
             await Navigation.PushAsync(new FinishPage());
         }
-
 
         private void createCasier(CasierData casierData)
         {
