@@ -8,6 +8,7 @@ using DevTools;
 using AppServices;
 
 
+
 namespace KitBox.Views
 {
     public partial class Form : ContentPage
@@ -65,8 +66,18 @@ namespace KitBox.Views
             // Nouvelle checkbox pour la porte en verre
             Label glassDoorLabel = new Label();
             glassDoorLabel.Text = "Glass door";
+            glassDoorLabel.IsVisible = false; 
             glassDoorLabel.VerticalOptions = LayoutOptions.Center;
             CheckBox glassCheckBox = new CheckBox();
+            glassCheckBox.IsVisible = false; // Caché par défaut
+
+            // Logique pour afficher la checkbox de porte en verre lorsque la checkbox de porte est cochée
+            checkBox.CheckedChanged += (s, args) =>
+            {
+                bool isChecked = checkBox.IsChecked;
+                glassCheckBox.IsVisible = isChecked; // Rend la checkbox de porte en verre visible si la checkbox de porte est cochée
+                glassDoorLabel.IsVisible = isChecked; // Rend le label de porte en verre visible si la checkbox de porte est cochée
+            };
 
             HorizontalStackLayout stackPanel = new HorizontalStackLayout();
             stackPanel.Children.Add(doorLabel);
@@ -165,7 +176,7 @@ namespace KitBox.Views
             infoCasier["couleur"] = casierData.Color.SelectedItem.ToString();
             infoCasier["h"] = casierData.Height.SelectedItem.ToString();
             infoCasier["porte"] = casierData.CheckBox.IsChecked;
-            if(casierData.CheckBox.IsChecked)
+            if (casierData.CheckBox.IsChecked)
             {
                 if (casierData.GlassCheckBox.IsChecked)
                 {
@@ -178,7 +189,6 @@ namespace KitBox.Views
                 }
             }
             // Si la checkbox pour la porte en verre est cochée, définissez la couleur de la porte comme null
-            
 
             infoCasier["armoire"] = this.armoirePk;
             casier.Update(infoCasier);
@@ -195,6 +205,8 @@ namespace KitBox.Views
         }
     }
 }
+
+
 
 
 
