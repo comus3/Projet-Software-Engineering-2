@@ -50,7 +50,14 @@ namespace KitBox.Views
             newLabel.Text = "Locker number " + count.ToString();
             newLabel.FontAttributes = FontAttributes.Bold;
             newLabel.HorizontalOptions = LayoutOptions.Center;
-
+            Button cancel = new Button();
+            cancel.Text = "cancel locker number " + count.ToString();
+            HorizontalStackLayout locker_i = new HorizontalStackLayout(); 
+         
+           
+            locker_i.Children.Add(newLabel);
+            locker_i.Children.Add(cancel);
+            
             Label heigthLabel = new Label();
             heigthLabel.Text = "Height " + count;
             Picker heightPicker = new Picker();
@@ -142,7 +149,7 @@ namespace KitBox.Views
                 }
             };
 
-            labelContainer.Children.Add(newLabel);
+            labelContainer.Children.Add(locker_i);
             labelContainer.Children.Add(heigthLabel);
             labelContainer.Children.Add(heightPicker);
             labelContainer.Children.Add(colorLabel);
@@ -233,24 +240,3 @@ namespace KitBox.Views
 
 
 
-// checkBox.CheckedChanged += (sender, e) => {
-		// 	bool isChecked = ((CheckBox)sender).IsChecked;
-		// 	if (isChecked)
-		// 	{
-		// 		StackLayout doorStack = new StackLayout();
-		// 		doorStack.Children.Add(colorDoor);
-		// 		doorStack.Children.Add(colorDoorPicker);
-		// 		labelContainer.Children.Insert(labelContainer.Children.IndexOf(stackPanel) + 1, doorStack);
-		// 	}
-		// 	else
-		// 	{
-		// 		foreach (View item in labelContainer.Children)
-		// 		{
-		// 			if (item is StackLayout && ((StackLayout)item).Children.Contains(colorDoor) && ((StackLayout)item).Children.Contains(colorDoorPicker))
-		// 			{
-		// 				labelContainer.Children.Remove(item);
-		// 				break;
-		// 			}
-		// 		}
-		// 	}
-		// };

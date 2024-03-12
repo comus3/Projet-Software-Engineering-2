@@ -3,18 +3,24 @@
              x:Class="KitBox.Views.Form"
              Title="Set up your locker">
     <ScrollView>
-        <StackLayout>
-            <StackLayout>
-                <StackLayout x:Name="labelContainer1"  Margin="10,5,10,5" />
-               
-            
-                <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
-                
-                
-            </StackLayout>
-            
-            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5" VerticalOptions="End"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Premier conteneur pour le bouton CreateanewLocker1 -->
            
-        </StackLayout>
+            
+            
+            <StackLayout x:Name="labelContainer1" Grid.Row="2" Margin="10,5,10,5" />
+            
+            <!-- Deuxième conteneur pour les éléments dynamiques -->
+            <StackLayout x:Name="labelContainer" Grid.Row="1" Margin="10,5,10,5" />
+            
+            <!-- Bouton Finish -->
+            <Button Text="Finish" Clicked="OnFinishClicked" Grid.Row="3" Margin="10,5,10,5" VerticalOptions="End" HorizontalOptions="End" />
+        </Grid>
     </ScrollView>
 </ContentPage>
