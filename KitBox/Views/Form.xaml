@@ -5,14 +5,15 @@
     <ScrollView>
         <StackLayout>
             <StackLayout>
+                <StackLayout x:Name="labelContainer1"  Margin="10,5,10,5" />
+               
+            
                 <StackLayout x:Name="labelContainer"  Margin="10,5,10,5" />
                 
-                <Button Text="Create a new Locker" 
-                        Clicked="OnCreateNewLockerClicked" 
-                        Margin="10,5,10,5"/>
+                
             </StackLayout>
             
-            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5" />
+            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5" VerticalOptions="End"/>
            
         </StackLayout>
     </ScrollView>

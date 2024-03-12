@@ -16,7 +16,7 @@ namespace KitBox.Views
         private Object armoirePk;
         private Connection con;
         private List<CasierData> casiersData = new List<CasierData>();
-
+        private Button CreateanewLocker;
         int count = 0; // Compteur pour les casiers
 
         string[] options = { "marron", "white" };
@@ -31,8 +31,18 @@ namespace KitBox.Views
             BindingContext = this;
             Connection.TestConnection();
             con = new Connection();
-        }
+            Button CreateanewLocker = new Button()
+            {
+                Text = "Create a new Locker"
+            };
+            CreateanewLocker.Clicked += OnCreateNewLockerClicked; // Ajoutez un gestionnaire d'événements pour le clic
 
+
+            VerticalStackLayout stacklay = new VerticalStackLayout();
+            stacklay.Children.Add(CreateanewLocker);
+            labelContainer1.Children.Add(stacklay);
+        }
+        
         private void OnCreateNewLockerClicked(object sender, EventArgs e)
         {
             count++;
@@ -71,9 +81,7 @@ namespace KitBox.Views
             CheckBox glassCheckBox = new CheckBox();
             glassCheckBox.IsVisible = false; // Caché par défaut
 
-            // Logique pour afficher la checkbox de porte en verre lorsque la checkbox de porte est cochée
-           
-
+            
             HorizontalStackLayout stackPanel = new HorizontalStackLayout();
             stackPanel.Children.Add(doorLabel);
             stackPanel.Children.Add(checkBox);
@@ -140,7 +148,7 @@ namespace KitBox.Views
             labelContainer.Children.Add(colorLabel);
             labelContainer.Children.Add(colorPicker);
             labelContainer.Children.Add(stackPanel);
-
+            
             // Ajouter les données du casier actuel à la liste casiersData
             casiersData.Add(new CasierData
             {
