@@ -20,7 +20,7 @@
             <StackLayout x:Name="labelContainer" Grid.Row="1" Margin="10,5,10,5" />
             
             <!-- Bouton Finish -->
-            <Button Text="Finish" Clicked="OnFinishClicked" Grid.Row="3" Margin="10,5,10,5" VerticalOptions="End" HorizontalOptions="End" />
+            <Button Text="Finish" Clicked="OnFinishClicked" Grid.Row="3" Margin="10,5,10,5" VerticalOptions="End" HorizontalOptions="End" BackgroundColor="Crimson"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -17,6 +17,7 @@ namespace KitBox.Views
         private Connection con;
         private List<CasierData> casiersData = new List<CasierData>();
         private Button CreateanewLocker;
+        private Button cancel; 
         int count = 0; // Compteur pour les casiers
 
         string[] options = { "marron", "white" };
@@ -37,7 +38,7 @@ namespace KitBox.Views
             };
             CreateanewLocker.Clicked += OnCreateNewLockerClicked; // Ajoutez un gestionnaire d'événements pour le clic
 
-
+          
             VerticalStackLayout stacklay = new VerticalStackLayout();
             stacklay.Children.Add(CreateanewLocker);
             labelContainer1.Children.Add(stacklay);
@@ -46,15 +47,17 @@ namespace KitBox.Views
         private void OnCreateNewLockerClicked(object sender, EventArgs e)
         {
             count++;
+            bool cancelClicked = false;
             Label newLabel = new Label();
             newLabel.Text = "Locker number " + count.ToString();
             newLabel.FontAttributes = FontAttributes.Bold;
-            newLabel.HorizontalOptions = LayoutOptions.Center;
+            newLabel.HorizontalOptions = LayoutOptions.Start;
             Button cancel = new Button();
+            
             cancel.Text = "cancel locker number " + count.ToString();
-            HorizontalStackLayout locker_i = new HorizontalStackLayout(); 
-         
-           
+            HorizontalStackLayout locker_i = new HorizontalStackLayout();
+            locker_i.Spacing = 500; 
+            cancel.HorizontalOptions = LayoutOptions.End;
             locker_i.Children.Add(newLabel);
             locker_i.Children.Add(cancel);
             
@@ -154,20 +157,41 @@ namespace KitBox.Views
             labelContainer.Children.Add(heightPicker);
             labelContainer.Children.Add(colorLabel);
             labelContainer.Children.Add(colorPicker);
-            labelContainer.Children.Add(stackPanel);
+            labelContainer.Children.Add(stackPanel); 
             
-            // Ajouter les données du casier actuel à la liste casiersData
-            casiersData.Add(new CasierData
+            var kasierData = new CasierData();
+                        casiersData.Add(kasierData);
+            cancel.Clicked += (s, args) =>
             {
-                Color = colorPicker,
-                DoorColor = colorDoorPicker,
-                Height = heightPicker,
-                CheckBox = checkBox,
-                GlassCheckBox = glassCheckBox // Enregistrez la checkbox pour la porte en verre
-            });
-            
+
+
+                kasierData.cancelled = true;
+                labelContainer.Children.Remove(locker_i);
+                labelContainer.Children.Remove(heigthLabel);
+                labelContainer.Children.Remove(heightPicker);
+                labelContainer.Children.Remove(colorLabel);
+                labelContainer.Children.Remove(colorPicker);
+                labelContainer.Children.Remove(stackPanel); 
+                
+                
+            };
+
+
+
+
+                     kasierData.Color = colorPicker; 
+                    kasierData.DoorColor = colorDoorPicker;
+                    kasierData.Height = heightPicker;
+                    kasierData.CheckBox = checkBox; 
+                    kasierData.GlassCheckBox = glassCheckBox; // Enregistrez la checkbox pour la porte en verre
+
+
+
+
+
         }
 
+      
         private async void OnFinishClicked(object sender, EventArgs e)
         {
             // Check if no lockers have been created
@@ -180,13 +204,18 @@ namespace KitBox.Views
             // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
             foreach (var casierData in casiersData)
             {
-                if (casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null)
+                if ((casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null) && (casierData.cancelled == false ))
                 {
                     await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
                     return;
                 }
 
-                createCasier(casierData);
+                if (casierData.cancelled == false)
+                { 
+                    createCasier(casierData);
+                }
+
+               
             }
             Armoire armoire = new Armoire(con);
             armoire.Load(Convert.ToInt32(this.armoirePk));
@@ -229,6 +258,7 @@ namespace KitBox.Views
             public Picker Height { get; set; }
             public CheckBox CheckBox { get; set; }
             public CheckBox GlassCheckBox { get; set; } // Ajoutez la checkbox pour la porte en verre
+            public bool cancelled { get; set; }
         }
     }
 }
