@@ -12,7 +12,8 @@
                         Margin="10,5,10,5"/>
             </StackLayout>
             
-            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5"/>            
+            <Button Text="Finish" Clicked="OnFinishClicked" Margin="10,5,10,5" />
+           
         </StackLayout>
     </ScrollView>
 </ContentPage>

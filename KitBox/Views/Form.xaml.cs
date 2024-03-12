@@ -31,6 +31,7 @@ namespace KitBox.Views
             BindingContext = this;
             Connection.TestConnection();
             con = new Connection();
+            
         }
 
         private void OnCreateNewLockerClicked(object sender, EventArgs e)
@@ -146,10 +147,18 @@ namespace KitBox.Views
                 CheckBox = checkBox,
                 GlassCheckBox = glassCheckBox // Enregistrez la checkbox pour la porte en verre
             });
+           
         }
 
         private async void OnFinishClicked(object sender, EventArgs e)
         {
+            // Check if no lockers have been created
+            if (casiersData.Count == 0)
+            {
+                await DisplayAlert("Error", "You need to create at least one locker.", "OK");
+                return;
+            }
+
             // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
             foreach (var casierData in casiersData)
             {
@@ -167,6 +176,7 @@ namespace KitBox.Views
 
             await Navigation.PushAsync(new FinishPage());
         }
+
 
         private void createCasier(CasierData casierData)
         {
