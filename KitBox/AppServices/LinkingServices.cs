@@ -17,6 +17,15 @@ namespace AppServices;
 
 static class LinkingServices
 {
+    private class RtSupplier : Model
+    {
+
+        public RtSupplier(Connection connection) : base(connection)
+        {
+            tableName = "rt_supplier";
+            primaryKey = "id_relation";
+        }
+    }
     private class RtCasier : Model
     {
 
