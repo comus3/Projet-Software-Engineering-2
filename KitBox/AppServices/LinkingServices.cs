@@ -288,7 +288,7 @@ static class LinkingServices
             }
 
         }
-
+        PricingServices.PriceObject(armoire, connection);
         return true;
     }
     private static int GetCasierNombre(Connection connection, object armoireId)
