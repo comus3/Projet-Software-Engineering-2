@@ -89,7 +89,14 @@ static class LinkingServices
         DataTable result = coucou.Insert();
         string executionMessage = $"linking piece {pkPiece} for {pkCasier}";
         Logger.WriteToFile(executionMessage);
-        Displayer.DisplayData(result);
+        if (StockServices.MakeOrder(pkPiece, quantite, connection))
+        {
+            Logger.WriteToFile($"Reserve for {pkPiece} has been made");
+        }
+        else
+        {
+            Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+        }
     }
     /// <summary>
     /// lie une armoire a une piece
@@ -108,7 +115,14 @@ static class LinkingServices
         DataTable result = coucou.Insert();
         string executionMessage = $"linking piece {pkPiece} for {pkArmoire}";
         Logger.WriteToFile(executionMessage);
-        Displayer.DisplayData(result);
+        if (StockServices.MakeOrder(pkPiece, quantite, connection))
+        {
+            Logger.WriteToFile($"Reserve for {pkPiece} has been made");
+        }
+        else
+        {
+            Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+        }
     }
     private static void unlinkAll(Connection connection, object toUnlink)
     {
