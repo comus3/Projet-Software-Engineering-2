@@ -35,8 +35,44 @@ class PricingServices
         obj.Attributes["price"] = price;
         obj.Save();
     }
-    public static void PriceCommande()
+    public static void PriceCommande(object pkCommande, Connection connection)
     {
+        double price = 0;
+
+        List<string> armoiresIDs = new List<string>();
+
+        Armoire armoire = new Armoire(connection);
+        Casier casier = new Casier(connection);
+        Dictionary<string, object> conditionArmoire = new Dictionary<string, object>();
+        Dictionary<string, object> conditionCasier = new Dictionary<string, object>();
+        conditionArmoire["commande"] = pkCommande;
+        List<string> colomnsArmoire = new List<string>();
+        List<string> colomnsCasier = new List<string>();
+        colomnsArmoire.Add("price");
+        colomnsCasier.Add("price");
+        colomnsArmoire.Add("id_armoire");
+
+        DataTable armoireValues = armoire.LoadAll(conditionArmoire,colomnsArmoire);
+        foreach (DataRow row in armoireValues.Rows)
+        {
+            price += Convert.ToDouble(row.ItemArray[0]);
+            armoiresIDs.Add(row.ItemArray[1].ToString());
+        }
+        foreach (string id in armoiresIDs)
+        {
+            conditionCasier["armoire"] = id;
+            DataTable casierValues = casier.LoadAll(conditionCasier, colomnsCasier);
+            foreach (DataRow row in casierValues.Rows)
+            {
+                price += Convert.ToDouble(row.ItemArray[0]);
+            }
+        }
+        Commande commande = new Commande(connection);
+        Dictionary<string, object> conditionCommande = new Dictionary<string, object>();
+        conditionCommande["price"] = price;
+        commande.Load(pkCommande);
+        commande.Update(conditionCommande);
+        commande.Save();
 
     }
 }
