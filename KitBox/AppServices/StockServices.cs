@@ -14,7 +14,16 @@ namespace AppServices;
 
 class StockServices
 {
-    public static void ReserveStock(object pieceCode,int nombreReserve, Connection connection)
+    private class RtSupplier : Model
+    {
+
+        public RtSupplier(Connection connection) : base(connection)
+        {
+            tableName = "rt_supplier";
+            primaryKey = "id_relation";
+        }
+    }
+    public static void ReserveStock(object pieceCode, int nombreReserve, Connection connection)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> update = new Dictionary<string, object>();
@@ -24,7 +33,7 @@ class StockServices
         piece.Load(pieceCode);
         piece.Save();
     }
-    public static void ExecuteReserve(object pieceCode,int nombreComplete, Connection connection)
+    public static void ExecuteReserve(object pieceCode, int nombreComplete, Connection connection)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> update = new Dictionary<string, object>();
@@ -33,7 +42,7 @@ class StockServices
         piece.Load(pieceCode);
         piece.Save();
     }
-    public static bool CheckStock(object pieceCode, int nombreNecessaire,Connection connection)
+    public static bool CheckStock(object pieceCode, int nombreNecessaire, Connection connection)
     {
         Piece piece = new Piece(connection);
         return (nombreNecessaire < Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[8]));
@@ -41,7 +50,7 @@ class StockServices
     /// <summary>
     /// demander au prof comment il veut
     /// </summary>
-    public static List<string> AutoCommand(Connection connection)
+    public static List<string> GenerateAutoCommandMessage(Connection connection)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> conditions = new Dictionary<string, object>();
@@ -53,12 +62,12 @@ class StockServices
         DataTable pieces = piece.LoadAll(conditions);
         foreach (DataRow row in pieces.Rows)
         {
-            if ((Convert.ToInt32(row.ItemArray[1]) + Convert.ToInt32(row.ItemArray[2]))<3)
+            if ((Convert.ToInt32(row.ItemArray[1]) + Convert.ToInt32(row.ItemArray[2])) < 3)
             {
                 aCommander.Add(row.ItemArray[0].ToString());
             }
-        }   
-        return  aCommander;
+        }
+        return aCommander;
 
 
     }
@@ -74,25 +83,35 @@ class StockServices
             return false;
         }
     }
-    public static void ExecuteAutoCommand(string code,int quantite, int supplier )
+    public static void ExecuteAutoCommand(string code, int quantite, int supplier, Connection connection)
     {
-        Connection connection = new Connection();
-        HistoriqueCommande histcom = new HistoriqueCommande(connection);
-        Dictionary<string,object> data = new Dictionary<string,object>();  
-        int result = 0;
+        int result;
+        int prixPiece;
+
+        RtSupplier rtSupplier = new RtSupplier(connection);
+        HistoriqueCommande histCommande = new HistoriqueCommande(connection);
+
+        Dictionary<string, object> data = new Dictionary<string, object>();
         Dictionary<string, object> condition = new Dictionary<string, object>();
+
         condition["id_piece"] = code;
         condition["id_supplier"] = supplier;
         List<string> colomns = new List<string>();
         colomns.Add("price_supplier");
-        DataTable histoData = histcom.LoadAll(condition, colomns);
-        result = quantite * Convert.ToInt32(histoData);
+        DataTable priceData = rtSupplier.LoadAll(condition, colomns);
+
+        prixPiece = Convert.ToInt32(priceData.Rows[0].ItemArray[0]);
+        int prixTotal = quantite * prixPiece;
         data["piece"] = code;
         data["id_supplier"] = supplier;
         data["quantite"] = quantite;
         data["date"] = DateTime.Today.ToString("ddMMyy");
-        data["prix_piece"] = histoData;
-        data["prix_total"] = result;
+        data["prix_piece"] = prixPiece;
+        data["prix_total"] = prixTotal;
+
+        histCommande.Update(data);
+        histCommande.Insert();
+
     }
 }
 
