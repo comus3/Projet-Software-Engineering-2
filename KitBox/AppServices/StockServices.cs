@@ -55,6 +55,30 @@ class StockServices
         Piece piece = new Piece(connection);
         return (nombreNecessaire < Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[8]));
     }
+    //<summary>
+    //détecte si la différence entre (le stock + les pièces commandées)
+    //et les pièces à commander (dans awaitpiece)
+    //est supérieure à 5 pour une pièce donnée.
+    //true si la différence est supérieure à 5
+    //<param name="pieceCode"></param>
+    //<param name="connection"></param>
+    //</summary>
+    public static bool IsStockLow(object pieceCode, Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        Dictionary<string, object> code = new Dictionary<string, object>() { { "code", pieceCode } };
+        DataTable pieceData = piece.LoadAll(code);
+        AwaitPiece awaitPiece = new AwaitPiece(connection);
+        DataTable awaitingData = awaitPiece.LoadAll(code);
+        int pieces_a_commander = 0;
+        foreach (DataRow row in awaitingData.Rows)
+        { 
+            pieces_a_commander += Convert.ToInt32(row.ItemArray[2]);
+        }
+        int stock = Convert.ToInt32(pieceData.Rows[0].ItemArray[8]);
+        int pieces_commandées = Convert.ToInt32(pieceData.Rows[0].ItemArray[10]);
+        return ((stock+pieces_commandées-pieces_a_commander) > 5);
+    }
     /// <summary>
     /// demander au prof comment il veut
     /// </summary>
