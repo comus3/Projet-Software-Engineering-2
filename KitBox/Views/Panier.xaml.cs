@@ -13,15 +13,20 @@ namespace KitBox.Views
 
         internal class ArmoireAttributes
         {
+
             public string Longueur { get; set; }
+        
             public string Profondeur { get; set; }
             public string Price { get; set; }
 
-            public ArmoireAttributes(string longueur, string profondeur, string price)
+            public string Number { get; set; }
+
+            public ArmoireAttributes(string longueur, string profondeur, string price, string number)
             {
                 Longueur = longueur;
                 Profondeur = profondeur;
                 Price = price;
+                Number = number; 
             }
         }
 
@@ -45,16 +50,19 @@ namespace KitBox.Views
             arm["commande"] = FetchingServices.CurrentCommand;
             DataTable data = armoire.LoadAll(arm);
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
+            int numeroArmoire = 1;
+
             foreach (DataRow row in data.Rows)
             {
-                string nom_armoire = $" Cabinet number: "; 
+                string Number = $" Cabinet number: {numeroArmoire} "; 
                 string Longueur = $" The length of the cabinet is: {row.ItemArray[1].ToString()}";
                 string Profondeur = $" The depth of the cabinet is: {row.ItemArray[2].ToString()}";
                 string Price = $"The total price is:{row.ItemArray[3].ToString()} ";
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur, Price);
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price);
                 lstArmoireItems.Add(armoireAttributes);
+                numeroArmoire++;
             }
             lstArmoire.ItemsSource = lstArmoireItems;
         }
