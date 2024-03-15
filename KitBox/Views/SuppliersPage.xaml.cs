@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using DAL;
+using DevTools;
 
 namespace KitBox.Views
 {
@@ -81,6 +82,14 @@ namespace KitBox.Views
             Navigation.PushAsync(new ModifySupplierPage(supplier.nom, supplier.telephone, supplier.adresse, supplier.id_supplier));
     
           
+        }
+
+        private void Details_Clicked(object sender, EventArgs e)
+        {
+            var supplier = (SupplierData)((ViewCell)sender).BindingContext;
+            Navigation.PushAsync(new Suppliersitems(supplier.id_supplier, supplier.nom));
+
+                         
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
