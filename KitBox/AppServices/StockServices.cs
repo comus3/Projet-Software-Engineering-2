@@ -119,8 +119,6 @@ class StockServices
 
         histCommande.Update(data);
         histCommande.Insert();
-
-
     }
     public static void UpdateAwaitPiece(object code,object commandePk , int quantite, Connection connection)
     {
@@ -131,6 +129,39 @@ class StockServices
         data["quantite"] = quantite;
         awaitPiece.Update(data);
         awaitPiece.Insert();
+    }
+    public static void InputStockArrival(object code, int quantite, Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        
+        AwaitPiece awaitPiece = new AwaitPiece(connection);
+        Dictionary<string, object> condition = new Dictionary<string, object>();
+        condition["code"] = code;
+        List<string> colomns = new List<string>();
+        colomns.Add("quantite");
+        colomns.Add(awaitPiece.PrimaryKey.ToString());
+        DataTable quantiteData = awaitPiece.LoadAll(condition, colomns);
+        foreach (DataRow row in quantiteData.Rows)
+        {
+            int quantiteLeft = quantite - Convert.ToInt32(row.ItemArray[1]); 
+            if (quantiteLeft >= 0)
+            {
+                ReserveStock(code, Convert.ToInt32(row.ItemArray[1]), connection);
+                awaitPiece.Load(row.ItemArray[0]);
+                awaitPiece.Delete();
+                quantite = quantiteLeft;
+            }
+            else
+            {
+                ReserveStock(code, quantite, connection);
+                Dictionary<string, object> update = new Dictionary<string, object>();
+                update.Add("quantite", Convert.ToInt32(row.ItemArray[0]) - quantite);
+                awaitPiece.Load(row.ItemArray[0]);
+                awaitPiece.Update(update);
+                awaitPiece.Save();
+                break;
+        }
     }
 }
 
