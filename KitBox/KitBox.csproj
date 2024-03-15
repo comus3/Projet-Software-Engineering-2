@@ -62,4 +62,10 @@
 	  <Folder Include="Views\Panier\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Views\OrderMakerPage.xaml.cs">
+	    <DependentUpon>OrderMakerPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>
