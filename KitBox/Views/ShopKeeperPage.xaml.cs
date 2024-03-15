@@ -28,12 +28,11 @@ public partial class ShopKeeperPage : ContentPage
         public string DimensionProfondeur { get; set; }
         public string DimensionDiametre { get; set; }
         public string DimensionLongueur { get; set; }
-        public string PriceSupplier1 { get; set; }
-        public string DelaySupplier1 { get; set; }
-        public string PriceSupplier2 { get; set; }
-        public string DelaySupplier2 { get; set; }
         public string Stock { get; set; }
+        public string Reserve { get; set; }
+        public string Await { get; set; }
         public string Type { get; set; }
+        public string Selling_price { get; set; }
     }
     public ObservableCollection<CommandeModel> Commandes { get; set; } = new ObservableCollection<CommandeModel>();
     public ObservableCollection<PieceModel> Pieces { get; set; } = new ObservableCollection<PieceModel>();
@@ -117,13 +116,12 @@ public partial class ShopKeeperPage : ContentPage
                 var idCommande = commandeModel.IdCommande;
 
                 // Liste des colonnes à récupérer pour les pièces
-                List<string> colomns = new List<string> 
-                {
-                    "Reference", "Code", "Dimensions_hauteur", "dimension_largeur", "dimension_client", 
-                    "dimension_profondeur", "dimension_diametre", "dimension_longeur", 
-                    "Price_Supplier_1", "Delay_Supplier_1", "Price_Supplier_2", "Delay_Supplier_2", 
-                    "Stock", "Type"
-                };
+                // List<string> colomns = new List<string> 
+                // {
+                //     "Reference", "Code", "Dimensions_hauteur", "dimension_largeur", "dimension_client", 
+                //     "dimension_profondeur", "dimension_diametre", "dimension_longeur", 
+                //     "Stock", "Reserve", "Await", "Type", "Selling_price"
+                // };
 
                 // FetchCommandePieces pour récupérer seulement les pièces liées à cet ID de commande
                 var piecesDataTables = FetchingServices.FetchCommandePieces(conn, idCommande);
@@ -144,12 +142,11 @@ public partial class ShopKeeperPage : ContentPage
                             DimensionProfondeur = row["dimension_profondeur"].ToString(),
                             DimensionDiametre = row["dimension_diametre"].ToString(),
                             DimensionLongueur = row["dimension_longeur"].ToString(),
-                            PriceSupplier1 = row["Price_Supplier_1"].ToString(),
-                            DelaySupplier1 = row["Delay_Supplier_1"].ToString(),
-                            PriceSupplier2 = row["Price_Supplier_2"].ToString(),
-                            DelaySupplier2 = row["Delay_Supplier_2"].ToString(),
-                            Stock = row["Stock"].ToString(),
-                            Type = row["Type"].ToString()
+                            Stock = row["stock"].ToString(),
+                            Reserve = row["reserve"].ToString(),
+                            Await = row["await"].ToString(),
+                            Type = row["type"].ToString(),
+                            Selling_price = row["selling_price"].ToString()                            
                         });
                     }
                 }
