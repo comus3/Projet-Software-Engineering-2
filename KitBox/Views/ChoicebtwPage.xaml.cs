@@ -16,7 +16,7 @@ public partial class ChoicebtwPage : ContentPage
     private async void OnredirectionOrdermaker(object sender, EventArgs e)
     {
 
-        await (Navigation.PushAsync(new ShopKeeperPage()));
+        await (Navigation.PushAsync(new OrderMakerPage()));
         
         
     }

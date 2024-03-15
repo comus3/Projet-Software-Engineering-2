@@ -8,7 +8,7 @@ using Mysqlx.Crud;
 
 namespace KitBox.Views;
 
-public partial class ShopKeeperPage : ContentPage
+public partial class OrderMakerPage : ContentPage
 {
     private Connection conn;
 
@@ -37,7 +37,7 @@ public partial class ShopKeeperPage : ContentPage
     public ObservableCollection<CommandeModel> Commandes { get; set; } = new ObservableCollection<CommandeModel>();
     public ObservableCollection<PieceModel> Pieces { get; set; } = new ObservableCollection<PieceModel>();
   
-    public ShopKeeperPage()
+    public OrderMakerPage()
     {
         InitializeComponent();
         BindingContext = this;
