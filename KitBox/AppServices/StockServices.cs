@@ -7,9 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using DAL;
-using Google.Protobuf.WellKnownTypes;
 namespace AppServices;
 
 class StockServices

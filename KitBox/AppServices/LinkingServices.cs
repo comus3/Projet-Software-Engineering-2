@@ -10,6 +10,7 @@ using DevTools;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Controls.Shapes;
 using System.Text.RegularExpressions;
+using KitBox.AppServices;
 
 
 namespace AppServices;
@@ -95,6 +96,7 @@ static class LinkingServices
         }
         else
         {
+            FetchingServices.CurrentCommandAvailable = false;
             Logger.WriteToFile($"Error while making reserve for {pkPiece}");
         }
     }
@@ -121,6 +123,7 @@ static class LinkingServices
         }
         else
         {
+            FetchingServices.CurrentCommandAvailable = false;
             Logger.WriteToFile($"Error while making reserve for {pkPiece}");
         }
     }
