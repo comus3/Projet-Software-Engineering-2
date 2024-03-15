@@ -26,8 +26,8 @@ class StockServices
     {
         public AwaitPiece(Connection connection) : base(connection)
         {
-            tableName = "await_piece";
-            primaryKey = "id_relation";
+            tableName = "awaitpiece";
+            primaryKey = "idawaitpiece";
         }
     }
 

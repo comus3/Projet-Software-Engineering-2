@@ -97,7 +97,18 @@ static class LinkingServices
         else
         {
             FetchingServices.CurrentCommandAvailable = false;
-            Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+            Logger.WriteToFile($"Not enaugh stock for {pkPiece}, making await reserve");
+            Casier casier = new Casier(connection);
+            casier.Attributes["id_casier"] = pkCasier;
+            List<string> colomns = new List<string>();
+            colomns.Add("armoire");
+            object armoirePk = casier.LoadAll(casier.Attributes, colomns).Rows[0].ItemArray[0];
+            Armoire armoire = new Armoire(connection);
+            armoire.Attributes["id_armoire"] = armoirePk;
+            List<string> armoireColomns = new List<string>();
+            armoireColomns.Add("commande");
+            object commandePk = armoire.LoadAll(armoire.Attributes, armoireColomns).Rows[0].ItemArray[0];
+            StockServices.UpdateAwaitPiece(pkPiece, commandePk, quantite, connection);
         }
     }
     /// <summary>
