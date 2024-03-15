@@ -4,6 +4,7 @@ using DevTools;
 using AppServices;
 using KitBox.AppServices;
 using System.Collections.ObjectModel;
+using Mysqlx.Crud;
 
 namespace KitBox.Views;
 
@@ -61,7 +62,6 @@ public partial class ShopKeeperPage : ContentPage
             Dictionary<string, object> com = new Dictionary<string, object>();
             
             List<string> colomns = new List<string>();
-            Console.WriteLine(colomns);
             colomns.Add("id_commande");
             colomns.Add("completed");
             DataTable data = commande.LoadAll(com,colomns);
@@ -82,17 +82,27 @@ public partial class ShopKeeperPage : ContentPage
             {
                 // Trouvez l'élément de commande associé au bouton cliqué
                 var commandeModel = (CommandeModel)button.BindingContext;
+                var idCommande = commandeModel.IdCommande;
 
                 if(commandeModel != null && Commandes.Contains(commandeModel))
                 {
+                    var updateValues = new Dictionary<string, object>
+                    {
+                        { "completed", true } 
+                    };
+
+                    Commande commande = new Commande(conn);
+                    commande.Load(idCommande);
+                    commande.Update(updateValues);
+                    commande.Save();
+
                     var piecesAssociees = Pieces.Where(p => p.CommandeId == commandeModel.IdCommande).ToList();
                     // Supprimez l'élément de la collection
-                    Commandes.Remove(commandeModel);
-
+                    Commandes.Remove(commandeModel);                    
                     foreach(var piece in piecesAssociees)
-                {
-                    Pieces.Remove(piece);
-                }
+                    {
+                        Pieces.Remove(piece);
+                    }
                 }
             }
         }
