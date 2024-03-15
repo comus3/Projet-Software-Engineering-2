@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using DAL;
+using DevTools;
+
 namespace KitBox.Views
 {
     public partial class SecretaryPage : ContentPage
@@ -29,12 +31,12 @@ namespace KitBox.Views
                 "stock",
                 "selling_price",
                
-                // Add other column names here
+               
             };
             data = affichage.LoadAll(null, colonnes);
 
-            // Convert DataTable to a format suitable for display
-            pieces = new ObservableCollection<PieceData>(); // Define a class to hold your data (see below)
+            
+            pieces = new ObservableCollection<PieceData>(); 
             foreach (DataRow row in data.Rows)
             {
                 pieces.Add(new PieceData
@@ -44,27 +46,42 @@ namespace KitBox.Views
                     Stock = row["stock"].ToString(),
                     selling_price = row["selling_price"].ToString(),
                    
-                    // Assign other columns here
+                  
                 });
             }
 
-            // Bind the data to ListView
+
             myListView.ItemsSource = pieces;
 
             // Initialize search command
             SearchCommand = new Command<string>(Search);
+        }
+        private async void onsupplier(object sender, EventArgs e)
+        {
+
+            try
+            {
+                    await Navigation.PushAsync(new SuppliersPage());
+            }
+            catch (Exception exception)
+            {
+                Logger.WriteToFile(exception);
+                throw;
+            }
+            
+
         }
 
         private void Search(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
-                // If the search query is null or empty, show all items
+               
                 myListView.ItemsSource = pieces;
             }
             else
             {
-                // Filter the items based on the search query
+                
                 var filteredItems = pieces.Where(p =>
                     p.Reference.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Code.Contains(query, StringComparison.OrdinalIgnoreCase) ||
@@ -82,14 +99,13 @@ namespace KitBox.Views
 
         private void ModifyButton_Clicked(object sender, EventArgs e)
         {
-            // Handle button click event here
-            // Access the clicked item using the CommandParameter
+           
             var button = (Button)sender;
             var piece = (PieceData)button.CommandParameter;
             
             Navigation.PushAsync(new Modify_Price_Page(piece.selling_price, piece.Code));
     
-            // Now you can access the selected piece and perform the modification logic
+          
         }
 
     }
@@ -102,6 +118,6 @@ namespace KitBox.Views
         
         public string selling_price { get; set; }
         
-        // Add properties for other columns here
+       
     }
 }
