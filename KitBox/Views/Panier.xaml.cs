@@ -15,7 +15,7 @@ namespace KitBox.Views
         {
 
             public string Longueur { get; set; }
-        
+
             public string Profondeur { get; set; }
             public string Price { get; set; }
 
@@ -26,7 +26,7 @@ namespace KitBox.Views
                 Longueur = longueur;
                 Profondeur = profondeur;
                 Price = price;
-                Number = number; 
+                Number = number;
             }
         }
 
@@ -54,7 +54,7 @@ namespace KitBox.Views
 
             foreach (DataRow row in data.Rows)
             {
-                string Number = $" Cabinet number: {numeroArmoire} "; 
+                string Number = $" Cabinet number: {numeroArmoire} ";
                 string Longueur = $" The length of the cabinet is: {row.ItemArray[1].ToString()}";
                 string Profondeur = $" The depth of the cabinet is: {row.ItemArray[2].ToString()}";
                 string Price = $"The total price is:{row.ItemArray[3].ToString()} ";
@@ -77,7 +77,23 @@ namespace KitBox.Views
         {
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            DisplayAlert("Delete", $"The cabinet with length {armoire.Longueur}, depth {armoire.Profondeur}, and price {armoire.Price} has been successfully deleted.", "OK");
+            DisplayAlert("Delete", $"The cabinet number {armoire.Number} with length {armoire.Longueur}, depth {armoire.Profondeur}, and price {armoire.Price} has been successfully deleted.", "OK");
+            //armoire.Delete();
+            // Trouver la ligne correspondante dans la DataTable
+            DataRow[] rowsToDelete = data.Select($"Number = '{armoire.Number}'");
+            foreach (DataRow row in rowsToDelete)
+            {
+                row.Delete(); // Supprimer la ligne de la DataTable
+            }
+
+            // Appliquer les modifications à la base de données
+            Armoire armoireDAL = new Armoire(con);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters["Number"] = armoire.Number;
+            armoireDAL.Delete(parameters);
+
+            // Mettre à jour l'affichage
+            ChargerDonnees();
         }
     }
 }
