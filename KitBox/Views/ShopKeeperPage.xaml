@@ -48,9 +48,9 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
@@ -84,9 +84,9 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
