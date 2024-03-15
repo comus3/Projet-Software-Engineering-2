@@ -18,16 +18,16 @@ namespace KitBox.Views
             public string Profondeur { get; set; }
             public string Price { get; set; }
             public string Number { get; set; }
-            public object ArmoirePk {get;set;}
+            public object ArmoirePk { get; set; }
 
-            public ArmoireAttributes(string longueur, string profondeur, string price, string number,object armoirePk)
+            public ArmoireAttributes(string longueur, string profondeur, string price, string number, object armoirePk)
             {
                 Longueur = longueur;
                 Profondeur = profondeur;
                 Price = price;
                 Number = number;
                 ArmoirePk = armoirePk;
-            }   
+            }
         }
 
         public Panier()
@@ -59,16 +59,18 @@ namespace KitBox.Views
                 string Longueur = $"The length of the cabinet is: {row.ItemArray[1].ToString()}";
                 string Profondeur = $"The depth of the cabinet is: {row.ItemArray[2].ToString()}";
                 string Price = $"The total price is: {row.ItemArray[3].ToString()}";
+                //string Color = $"The color of the cabinet is: {row.ItemArray[5].ToString()}";
+
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price,row.ItemArray[0]);
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price, row.ItemArray[0]);
                 lstArmoireItems.Add(armoireAttributes);
                 numeroArmoire++;
             }
             lstArmoire.ItemsSource = lstArmoireItems;
         }
 
-        private void Acheter_Clicked(object sender, EventArgs e) 
+        private void Acheter_Clicked(object sender, EventArgs e)
         {
             DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
             Navigation.PushAsync(new CustomerRegisterForm());
@@ -90,11 +92,23 @@ namespace KitBox.Views
         private void SupprimerArmoire(ArmoireAttributes armoire)
         {
 
-            
+
             Armoire armoireDAL = new Armoire(con);
             armoireDAL.Load(armoire.ArmoirePk);
             armoireDAL.Delete();
             ChargerDonnees();
+        }
+
+        private void Details(object sender, EventArgs e)
+        {
+            var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
+
+           
+            DisplayAlert($"Details of the cabinet number: {armoire.Number} ", $"{armoire.Longueur}\n {armoire.Profondeur}\n  {armoire.Price} euros", "OK");
+
+
+
+
         }
 
     }

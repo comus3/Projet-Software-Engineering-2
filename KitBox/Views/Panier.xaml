@@ -19,6 +19,7 @@
                                 <Label Text="{Binding Longueur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Profondeur}" VerticalOptions="Start" HorizontalOptions="Start"/>
                                 <Label Text="{Binding Price}" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                <Button Text="Details" Clicked="Details" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                                 <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" HorizontalOptions="End"/>
                             </StackLayout>
                         </Frame>
