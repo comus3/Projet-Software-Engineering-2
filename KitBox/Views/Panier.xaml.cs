@@ -77,7 +77,7 @@ namespace KitBox.Views
         {
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            DisplayAlert("Supprimer", $"L'armoire avec longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
+            DisplayAlert("Delete", $"The cabinet with length {armoire.Longueur}, depth {armoire.Profondeur}, and price {armoire.Price} has been successfully deleted.", "OK");
         }
     }
 }
