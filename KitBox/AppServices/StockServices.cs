@@ -23,6 +23,16 @@ class StockServices
             primaryKey = "id_relation";
         }
     }
+
+    private class AwaitPiece : Model
+    {
+        public AwaitPiece(Connection connection) : base(connection)
+        {
+            tableName = "await_piece";
+            primaryKey = "id_relation";
+        }
+    }
+
     public static void ReserveStock(object pieceCode, int nombreReserve, Connection connection)
     {
         Piece piece = new Piece(connection);
@@ -112,6 +122,17 @@ class StockServices
         histCommande.Update(data);
         histCommande.Insert();
 
+
+    }
+    private static async void UpdateAwaitPiece(object code,object commandePk , int quantite, Connection connection)
+    {
+        AwaitPiece awaitPiece = new AwaitPiece(connection);
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data["code"] = code;
+        data["commande"] = commandePk;
+        data["quantite"] = quantite;
+        awaitPiece.Update(data);
+        awaitPiece.Insert();
     }
 }
 
