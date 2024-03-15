@@ -120,7 +120,7 @@ class StockServices
         histCommande.Update(data);
         histCommande.Insert();
     }
-    public static void UpdateAwaitPiece(object code,object commandePk , int quantite, Connection connection)
+    public static void UpdateAwaitPiece(object code, object commandePk, int quantite, Connection connection)
     {
         AwaitPiece awaitPiece = new AwaitPiece(connection);
         Dictionary<string, object> data = new Dictionary<string, object>();
@@ -134,7 +134,7 @@ class StockServices
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> data = new Dictionary<string, object>();
-        
+
         AwaitPiece awaitPiece = new AwaitPiece(connection);
         Dictionary<string, object> condition = new Dictionary<string, object>();
         condition["code"] = code;
@@ -144,7 +144,7 @@ class StockServices
         DataTable quantiteData = awaitPiece.LoadAll(condition, colomns);
         foreach (DataRow row in quantiteData.Rows)
         {
-            int quantiteLeft = quantite - Convert.ToInt32(row.ItemArray[1]); 
+            int quantiteLeft = quantite - Convert.ToInt32(row.ItemArray[1]);
             if (quantiteLeft >= 0)
             {
                 ReserveStock(code, Convert.ToInt32(row.ItemArray[1]), connection);
@@ -161,6 +161,7 @@ class StockServices
                 awaitPiece.Update(update);
                 awaitPiece.Save();
                 break;
+            }
         }
     }
 }
