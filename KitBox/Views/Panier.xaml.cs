@@ -10,15 +10,13 @@ namespace KitBox.Views
     public partial class Panier : ContentPage
     {
         private Connection con;
+        private DataTable data; // Déclaration de la DataTable
 
         internal class ArmoireAttributes
         {
-
             public string Longueur { get; set; }
-
             public string Profondeur { get; set; }
             public string Price { get; set; }
-
             public string Number { get; set; }
 
             public ArmoireAttributes(string longueur, string profondeur, string price, string number)
@@ -35,6 +33,7 @@ namespace KitBox.Views
             InitializeComponent();
             Connection.TestConnection();
             con = new Connection();
+            data = new DataTable(); // Initialisation de la DataTable
         }
 
         protected override void OnAppearing()
@@ -48,16 +47,16 @@ namespace KitBox.Views
             Armoire armoire = new Armoire(con);
             Dictionary<string, object> arm = new Dictionary<string, object>();
             arm["commande"] = FetchingServices.CurrentCommand;
-            DataTable data = armoire.LoadAll(arm);
+            data = armoire.LoadAll(arm);
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
             int numeroArmoire = 1;
 
             foreach (DataRow row in data.Rows)
             {
-                string Number = $" Cabinet number: {numeroArmoire} ";
-                string Longueur = $" The length of the cabinet is: {row.ItemArray[1].ToString()}";
-                string Profondeur = $" The depth of the cabinet is: {row.ItemArray[2].ToString()}";
-                string Price = $"The total price is:{row.ItemArray[3].ToString()} ";
+                string Number = $"Cabinet number: {numeroArmoire}";
+                string Longueur = $"The length of the cabinet is: {row.ItemArray[1].ToString()}";
+                string Profondeur = $"The depth of the cabinet is: {row.ItemArray[2].ToString()}";
+                string Price = $"The total price is: {row.ItemArray[3].ToString()}";
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
                 ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price);
@@ -67,18 +66,27 @@ namespace KitBox.Views
             lstArmoire.ItemsSource = lstArmoireItems;
         }
 
-        private void Acheter_Clicked(object sender, EventArgs e)
+        private async void Acheter_Clicked(object sender, EventArgs e) // Ajout du mot-clé async pour utiliser await avec DisplayAlert
         {
-            DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
-            Navigation.PushAsync(new CustomerRegisterForm());
+            await DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
+            await Navigation.PushAsync(new CustomerRegisterForm());
         }
 
-        private void Supprimer_Clicked(object sender, EventArgs e)
+        private async void Supprimer_Clicked(object sender, EventArgs e) // Ajout du mot-clé async pour utiliser await avec DisplayAlert
         {
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            DisplayAlert("Delete", $"The cabinet number {armoire.Number} with length {armoire.Longueur}, depth {armoire.Profondeur}, and price {armoire.Price} has been successfully deleted.", "OK");
-            //armoire.Delete();
+            // Affichage du message de confirmation
+            bool result = await DisplayAlert("Confirmation", $"Voulez-vous vraiment supprimer l'armoire {armoire.Number} ?", "Oui", "Annuler");
+
+            if (result)
+            {
+                SupprimerArmoire(armoire);
+            }
+        }
+
+        private void SupprimerArmoire(ArmoireAttributes armoire)
+        {
             // Trouver la ligne correspondante dans la DataTable
             DataRow[] rowsToDelete = data.Select($"Number = '{armoire.Number}'");
             foreach (DataRow row in rowsToDelete)
