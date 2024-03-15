@@ -63,15 +63,15 @@ public partial class ShopKeeperPage : ContentPage
             List<string> colomns = new List<string>();
             Console.WriteLine(colomns);
             colomns.Add("id_commande");
-            //colomns.Add("completed");
+            colomns.Add("completed");
             DataTable data = commande.LoadAll(com,colomns);
-            Displayer.DisplayData(data);
+            //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                //if (row["completed"].ToString() == "0")
-                //{
+                if (row["completed"].ToString() == "False")
+                {
                     Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
-                //}
+                }
             }
         //update puis save pour completed (quand boutton complet)
         }
@@ -88,6 +88,7 @@ public partial class ShopKeeperPage : ContentPage
                     var piecesAssociees = Pieces.Where(p => p.CommandeId == commandeModel.IdCommande).ToList();
                     // Supprimez l'élément de la collection
                     Commandes.Remove(commandeModel);
+
                     foreach(var piece in piecesAssociees)
                 {
                     Pieces.Remove(piece);
