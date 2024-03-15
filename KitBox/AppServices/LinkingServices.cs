@@ -125,6 +125,11 @@ static class LinkingServices
         {
             FetchingServices.CurrentCommandAvailable = false;
             Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+            Armoire armoire = new Armoire(connection);
+            Dictionary<string, object> where = new Dictionary<string, object>() { { "id_armoire", pkArmoire } };
+            List<string> colomns = new List<string>() { "commande" };
+            object commandePk = armoire.LoadAll(where, colomns).Rows[0]["commande"];
+            StockServices.UpdateAwaitPiece(pkPiece, commandePk, quantite, connection);
         }
     }
     private static void unlinkAll(Connection connection, object toUnlink)

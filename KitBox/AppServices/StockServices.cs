@@ -122,7 +122,7 @@ class StockServices
 
 
     }
-    private static async void UpdateAwaitPiece(object code,object commandePk , int quantite, Connection connection)
+    public static void UpdateAwaitPiece(object code,object commandePk , int quantite, Connection connection)
     {
         AwaitPiece awaitPiece = new AwaitPiece(connection);
         Dictionary<string, object> data = new Dictionary<string, object>();
