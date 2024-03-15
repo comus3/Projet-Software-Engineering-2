@@ -55,6 +55,25 @@ class StockServices
         Piece piece = new Piece(connection);
         return (nombreNecessaire < Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[8]));
     }
+    public static List<string> CheckAllStockLow(Connection connection)
+    {
+        List<string> list = new List<string>();
+
+        Piece piece = new Piece(connection);
+        Dictionary<string, object> conditions = new Dictionary<string, object>();
+        List<string> colomns = new List<string>();
+        colomns.Add("code");
+        DataTable pieces = piece.LoadAll(conditions, colomns);
+        foreach (DataRow row in pieces.Rows)
+        {
+            if (!IsStockLow(row.ItemArray[0], connection))
+            {
+                list.Add($"Il faut commander {row.ItemArray[0]}");
+            }
+        }
+        return list;
+    }
+
     //<summary>
     //détecte si la différence entre (le stock + les pièces commandées)
     //et les pièces à commander (dans awaitpiece)
@@ -63,7 +82,7 @@ class StockServices
     //<param name="pieceCode"></param>
     //<param name="connection"></param>
     //</summary>
-    public static bool IsStockLow(object pieceCode, Connection connection)
+    private static bool IsStockLow(object pieceCode, Connection connection)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> code = new Dictionary<string, object>() { { "code", pieceCode } };
