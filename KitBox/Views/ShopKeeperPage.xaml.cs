@@ -64,11 +64,12 @@ public partial class ShopKeeperPage : ContentPage
             List<string> colomns = new List<string>();
             colomns.Add("id_commande");
             colomns.Add("completed");
+            colomns.Add("instock");
             DataTable data = commande.LoadAll(com,colomns);
             //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                if (row["completed"].ToString() == "False")
+                if (row["completed"].ToString() == "False" && row["instock"].ToString() == "True")
                 {
                     Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
                 }
