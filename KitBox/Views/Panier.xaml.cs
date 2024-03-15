@@ -18,14 +18,16 @@ namespace KitBox.Views
             public string Profondeur { get; set; }
             public string Price { get; set; }
             public string Number { get; set; }
+            public object ArmoirePk {get;set;}
 
-            public ArmoireAttributes(string longueur, string profondeur, string price, string number)
+            public ArmoireAttributes(string longueur, string profondeur, string price, string number,object armoirePk)
             {
                 Longueur = longueur;
                 Profondeur = profondeur;
                 Price = price;
                 Number = number;
-            }
+                ArmoirePk = armoirePk;
+            }   
         }
 
         public Panier()
@@ -59,25 +61,25 @@ namespace KitBox.Views
                 string Price = $"The total price is: {row.ItemArray[3].ToString()}";
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price);
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price,row.ItemArray[0]);
                 lstArmoireItems.Add(armoireAttributes);
                 numeroArmoire++;
             }
             lstArmoire.ItemsSource = lstArmoireItems;
         }
 
-        private async void Acheter_Clicked(object sender, EventArgs e) // Ajout du mot-clé async pour utiliser await avec DisplayAlert
+        private void Acheter_Clicked(object sender, EventArgs e) 
         {
-            await DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
-            await Navigation.PushAsync(new CustomerRegisterForm());
+            DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
+            Navigation.PushAsync(new CustomerRegisterForm());
         }
 
-        private async void Supprimer_Clicked(object sender, EventArgs e) // Ajout du mot-clé async pour utiliser await avec DisplayAlert
+        private async void Supprimer_Clicked(object sender, EventArgs e)
         {
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            // Affichage du message de confirmation
-            bool result = await DisplayAlert("Confirmation", $"Voulez-vous vraiment supprimer l'armoire {armoire.Number} ?", "Oui", "Annuler");
+
+            bool result = await DisplayAlert("Confirmation", $"OLLLLAAAAAAAAAAA?", "Oui", "Annuler");
 
             if (result)
             {
@@ -87,21 +89,13 @@ namespace KitBox.Views
 
         private void SupprimerArmoire(ArmoireAttributes armoire)
         {
-            // Trouver la ligne correspondante dans la DataTable
-            DataRow[] rowsToDelete = data.Select($"Number = '{armoire.Number}'");
-            foreach (DataRow row in rowsToDelete)
-            {
-                row.Delete(); // Supprimer la ligne de la DataTable
-            }
 
-            // Appliquer les modifications à la base de données
+            
             Armoire armoireDAL = new Armoire(con);
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters["Number"] = armoire.Number;
-            armoireDAL.Delete(parameters);
-
-            // Mettre à jour l'affichage
+            armoireDAL.Load(armoire.ArmoirePk);
+            armoireDAL.Delete();
             ChargerDonnees();
         }
+
     }
 }
