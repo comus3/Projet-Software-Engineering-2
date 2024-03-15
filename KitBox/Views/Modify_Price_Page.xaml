@@ -6,19 +6,12 @@
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <!-- Entry for Old Price Supplier 1 -->
             <StackLayout Orientation="Horizontal">
-                <Label Text="Price Supplier 1: " VerticalOptions="Center"/>
-                <Entry x:Name="OldPriceSupplier1Entry" Placeholder="Ancien prix fournisseur 1" 
+                <Label Text="Price: " VerticalOptions="Center"/>
+                <Entry x:Name="OLDselling_price" Placeholder="prix" 
                        HorizontalOptions="FillAndExpand" WidthRequest="200"/>
             </StackLayout>
             
-            <!-- Entry for Old Price Supplier 2 -->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Price Supplier 2: " VerticalOptions="Center"/>
-                <Entry x:Name="OldPriceSupplier2Entry" Placeholder="Ancien prix fournisseur 2" 
-                       HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-            </StackLayout>
-            
-            <!-- Button for confirmation -->
+           
             <Button Text="Confirmer" Clicked="ConfirmButton_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
