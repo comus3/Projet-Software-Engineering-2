@@ -164,7 +164,7 @@ namespace KitBox.Views
             cancel.Clicked += (s, args) =>
             {
 
-
+                count = count - 1; 
                 kasierData.cancelled = true;
                 labelContainer.Children.Remove(locker_i);
                 labelContainer.Children.Remove(heigthLabel);
@@ -196,50 +196,59 @@ namespace KitBox.Views
       
         private async void OnFinishClicked(object sender, EventArgs e)
         {
-            // Check if no lockers have been created
-            
-
-            var itemsToRemove = new List<CasierData>();
-            foreach (var casierData in casiersData)
+            try
             {
-                if (casierData.cancelled == true)
+                var itemsToRemove = new List<CasierData>();
+                foreach (var casierData in casiersData)
                 {
-                    itemsToRemove.Add(casierData);
+                    if (casierData.cancelled == true)
+                    {
+                        itemsToRemove.Add(casierData);
+                    }
                 }
-            }
-            foreach (var item in itemsToRemove)
-            {
-                casiersData.Remove(item);
-            }
-
-            if (casiersData.Count == 0)
-            {
-                await DisplayAlert("Error", "You need to create at least one locker.", "OK");
-                return;
-            }
-            // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
-            foreach (var casierData in casiersData)
-            {
-                if ((casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null) && casierData.cancelled == false)
-
+                foreach (var item in itemsToRemove)
                 {
-                    await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
+                    casiersData.Remove(item);
+                }
+
+                if (casiersData.Count == 0)
+                {
+                    await DisplayAlert("Error", "You need to create at least one locker.", "OK");
                     return;
                 }
 
-                createCasier(casierData);
+                // Vérifier si les données de chaque casier sont valides et les ajouter à la base de données
+                foreach (var casierData in casiersData)
+                {
+                    if ((casierData.Color.SelectedItem == null || casierData.Height.SelectedItem.ToString() == null) && casierData.cancelled == false)
+                    {
+                        await DisplayAlert("Error", "Make sure to choose a color and enter height", "OK");
+                        return;
+                    }
 
+                    // Si la case "Include a door" est cochée mais aucune couleur de porte n'est sélectionnée
+                    if (casierData.CheckBox.IsChecked && casierData.DoorColor.SelectedItem == null)
+                    {
+                        await DisplayAlert("Error", "Please select a color for the door", "OK");
+                        return;
+                    }
 
+                    createCasier(casierData);
+                }
 
+                Armoire armoire = new Armoire(con);
+                armoire.Load(Convert.ToInt32(this.armoirePk));
+                LinkingServices.CreateAllArmoireLinks(con, armoire);
 
+                await Navigation.PushAsync(new FinishPage());
             }
-
-            Armoire armoire = new Armoire(con);
-            armoire.Load(Convert.ToInt32(this.armoirePk));
-            LinkingServices.CreateAllArmoireLinks(con, armoire);
-
-            await Navigation.PushAsync(new FinishPage());
+            catch (Exception exception)
+            {
+                Logger.WriteToFile(exception);
+                throw;
+            }
         }
+
 
         private void createCasier(CasierData casierData)
         {
