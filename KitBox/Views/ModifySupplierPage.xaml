@@ -2,24 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.ModifySupplierPage">
     <ContentPage.Content>
-        
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <!-- Entry for Old Price Supplier 1 -->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="name: " VerticalOptions="Center"/>
-                <Entry x:Name="OLDname" Placeholder="name" 
-                       HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                
-                <Label Text="telephone: " VerticalOptions="Center"/>
-                <Entry x:Name="OLDtelephone" Placeholder="telephone" 
-                       HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                <Label Text="adresse: " VerticalOptions="Center"/>
-                <Entry x:Name="OLDadresse" Placeholder="adresse" 
-                       HorizontalOptions="FillAndExpand" WidthRequest="200"/>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Name  :  " VerticalOptions="Center"/>
+                    <Entry x:Name="OLDname" Placeholder="Name" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Number:" VerticalOptions="Center"/>
+                    <Entry x:Name="OLDtelephone" Placeholder="Telephone" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Adresse: " VerticalOptions="Center"/>
+                    <Entry x:Name="OLDadresse" Placeholder="Adresse" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
+                </StackLayout>
             </StackLayout>
-            
-            
-           
             <Button Text="Confirmer" Clicked="ConfirmButton_Clicked"/>
         </StackLayout>
     </ContentPage.Content>

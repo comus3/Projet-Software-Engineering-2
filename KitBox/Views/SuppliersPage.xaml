@@ -28,7 +28,7 @@
                                 <ColumnDefinition Width="*" /> 
                                 <ColumnDefinition Width="*" /> 
                                 <ColumnDefinition Width="*" /> 
-                                <ColumnDefinition Width="50" /> 
+                                <ColumnDefinition Width="Auto" /> 
                             </Grid.ColumnDefinitions>
                             <Label Text="{Binding id_supplier}" Grid.Column="0" />
                             <Label Text="{Binding nom}" Grid.Column="1" />
