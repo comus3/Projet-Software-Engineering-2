@@ -1,10 +1,12 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="KitBox.Views.Modify_Price_Page">
+             x:Class="KitBox.Views.Modify_Price_Page"
+             Title="Modify the selling price">
+    
     <ContentPage.Content>
         
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-            <!-- Entry for Old Price Supplier 1 -->
+            
             <StackLayout Orientation="Horizontal">
                 <Label Text="Price: " VerticalOptions="Center"/>
                 <Entry x:Name="OLDselling_price" Placeholder="prix" 

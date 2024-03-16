@@ -84,6 +84,89 @@ namespace KitBox.Views
           
         }
 
+        private void Add_clicked(object sender, EventArgs e)
+        {
+            
+            
+            addSupplierLayout.IsVisible = true;
+        }
+
+            private void Save_Clicked(object sender, EventArgs e)
+        {
+        
+        if (string.IsNullOrWhiteSpace(nomEntry.Text) || string.IsNullOrWhiteSpace(telephoneEntry.Text) || string.IsNullOrWhiteSpace(adresseEntry.Text))
+        {
+            
+            DisplayAlert("Erreur", "Make sure to fill everything in", "OK");
+            return; 
+        }
+
+        
+        var supplier_data = new SupplierData();
+        supplier_data.nom = nomEntry.Text;
+        supplier_data.adresse = adresseEntry.Text;
+        supplier_data.telephone = telephoneEntry.Text;
+
+        try
+        {
+           
+            Supplier supplier = new Supplier(con);
+            Dictionary<string, object> infosupplier = new Dictionary<string, object>();
+            infosupplier["nom"] = supplier_data.nom;
+            infosupplier["adresse"] = supplier_data.adresse;
+            infosupplier["telephone"] = supplier_data.telephone; 
+            supplier.Update(infosupplier);
+            supplier.Insert();
+
+           
+            RefreshPage();
+        }
+        catch (Exception ex)
+        {
+            
+            DisplayAlert("Error", $" : {ex.Message}", "OK");
+        }
+
+       
+        addSupplierLayout.IsVisible = false;
+    }
+
+    private void RefreshPage() //en gros ça reactualise la page et en refastant de quoi faire la liste view 
+    {
+       
+        nomEntry.Text = string.Empty;
+        telephoneEntry.Text = string.Empty;
+        adresseEntry.Text = string.Empty;
+
+        
+        Supplier sup_affichage = new Supplier(con);
+        List<string> colonnes = new List<string>
+        {
+            "nom",
+            "telephone",
+            "adresse",
+            "id_supplier"               
+        };
+        data = sup_affichage.LoadAll(null, colonnes);
+
+        suppliers.Clear(); 
+        foreach (DataRow row in data.Rows)
+        {
+            suppliers.Add(new SupplierData()
+            {
+                nom = row["nom"].ToString(),
+                adresse = row["adresse"].ToString(),
+                telephone = row["telephone"].ToString(),
+                id_supplier = row["id_supplier"].ToString()
+            });
+        }
+
+        
+        myListView.ItemsSource = suppliers;
+    }
+
+
+
         private void Details_Clicked(object sender, EventArgs e)
         {
             var supplier = (SupplierData)((ViewCell)sender).BindingContext;

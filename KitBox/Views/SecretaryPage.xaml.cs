@@ -100,8 +100,8 @@ namespace KitBox.Views
         private void ModifyButton_Clicked(object sender, EventArgs e)
         {
            
-            var button = (Button)sender;
-            var piece = (PieceData)button.CommandParameter;
+            
+            var piece = (PieceData)((ViewCell)sender).BindingContext;
             
             Navigation.PushAsync(new Modify_Price_Page(piece.selling_price, piece.Code));
     

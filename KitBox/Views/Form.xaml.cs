@@ -185,7 +185,7 @@ namespace KitBox.Views
                     kasierData.DoorColor = colorDoorPicker;
                     kasierData.Height = heightPicker;
                     kasierData.CheckBox = checkBox; 
-                    kasierData.GlassCheckBox = glassCheckBox; // Enregistrez la checkbox pour la porte en verre
+                    kasierData.GlassCheckBox = glassCheckBox; 
 
 
 
