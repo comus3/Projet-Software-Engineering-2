@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows.Input;
 using DAL;
 using AppServices ;
+using DevTools;
 
 
 namespace KitBox.Views;
@@ -26,15 +27,20 @@ public partial class Suppliersitems : ContentPage
     private DataTable data;
     private string Name;
     
+    private string selectedPartCode; 
         public ICommand SearchCommand { get; private set; }
-    public Suppliersitems(object code,object name)
+    public Suppliersitems(object code= null,object name= null,string select= null)
     {
         InitializeComponent();
-        cle = code;
+        cle = code ?? 0 ;
+       
+         selectedPartCode = SharedData.SelectedPartCode ?? "rien";
+
+        Logger.WriteToFile(selectedPartCode);
         Connection con = new Connection(); 
         Connection.TestConnection();
         RtSupplier suppliersitems = new RtSupplier(con);
-        Name = name.ToString();
+        Name = name.ToString() ?? "rien";
         titre.Text = Name ; 
         List<string> colonnes = new List<string>
         {
@@ -53,7 +59,7 @@ public partial class Suppliersitems : ContentPage
         {
             suppliers_items.Add(new Suppitemsdata()
             {
-                Reference = row["id_relation"].ToString(),
+                Reference = row["id_piece"].ToString(),
                 Delay = row["delay_supplier"].ToString(),
                 Price = row["price_supplier"].ToString(),
                
@@ -65,6 +71,24 @@ public partial class Suppliersitems : ContentPage
         
 
     }
+
+    private void Select_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new SelectPartPage());
+    }
+    private void Add_Clicked(object sender, EventArgs e)
+    {
+        addSupplierLayout.IsVisible = true; 
+        
+    } 
+   
+    
+    private void Save_Clicked(object sender, EventArgs e)
+    {
+        addSupplierLayout.IsVisible = false; 
+    } 
+    
+
     private void Search(string query)
     {
         if (string.IsNullOrWhiteSpace(query))

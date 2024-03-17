@@ -10,6 +10,15 @@
                 <Label Text="Details of supplier : " FontAttributes="Bold" TextColor="Red"/>
                 <Label x:Name="titre" Text="" FontAttributes="Bold" />
             </StackLayout>
+            <Button Text="Add a part" Clicked="Add_Clicked" HorizontalOptions="FillAndExpand"/>
+            
+            <StackLayout x:Name="addSupplierLayout" IsVisible="False">
+                <Entry Placeholder="delay" x:Name="nomEntry" />
+                <Entry Placeholder="price" x:Name="telephoneEntry" />
+                <Button Text="Select" Clicked="Select_Clicked" />
+                
+                <Button Text="Save" Clicked="Save_Clicked" />
+            </StackLayout>
             <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -19,7 +28,7 @@
                 
                 <ColumnDefinition Width="50" /> 
             </Grid.ColumnDefinitions>
-            <Label Text="id relation" FontAttributes="Bold" Grid.Column="0" />
+            <Label Text="part's id" FontAttributes="Bold" Grid.Column="0" />
             <Label Text="price" FontAttributes="Bold" Grid.Column="1" />
             <Label Text="delay" FontAttributes="Bold" Grid.Column="2" />
             <Label Text="Action" FontAttributes="Bold" Grid.Column="3" /> 

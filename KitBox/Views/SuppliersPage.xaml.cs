@@ -21,6 +21,7 @@ namespace KitBox.Views
         public SuppliersPage()
         {
             InitializeComponent();
+           
             Connection.TestConnection();
             con = new Connection();
             Supplier sup_affichage = new Supplier(con);
