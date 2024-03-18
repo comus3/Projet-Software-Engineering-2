@@ -7,6 +7,8 @@ using System.Linq;
 using System.Windows.Input;
 using DAL;
 using DevTools;
+using KitBox.AppServices;
+
 namespace KitBox.Views;
 
 public partial class SelectPartPage : ContentPage
@@ -77,6 +79,7 @@ public partial class SelectPartPage : ContentPage
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
+        
         Search(e.NewTextValue);
     }
     private async void Select_Clicked(object sender, EventArgs e)
@@ -85,8 +88,9 @@ public partial class SelectPartPage : ContentPage
         try
         {
             
-            var piece = (PieceData)((ViewCell)sender).BindingContext;
-            SharedData.SelectedPartCode = piece.Code;
+            var pieced = (PieceData)((ViewCell)sender).BindingContext;
+            FetchingServices.SelectedPartCode = pieced.Code;
+            
             await Navigation.PopAsync();
         }
         catch (Exception exception)

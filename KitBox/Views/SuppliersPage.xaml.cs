@@ -107,7 +107,7 @@ namespace KitBox.Views
         supplier_data.nom = nomEntry.Text;
         supplier_data.adresse = adresseEntry.Text;
         supplier_data.telephone = telephoneEntry.Text;
-
+        
         try
         {
            
@@ -118,7 +118,7 @@ namespace KitBox.Views
             infosupplier["telephone"] = supplier_data.telephone; 
             supplier.Update(infosupplier);
             supplier.Insert();
-
+            
            
             RefreshPage();
         }
