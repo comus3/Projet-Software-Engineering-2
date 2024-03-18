@@ -14,7 +14,7 @@
             </StackLayout>
             
            
-            <Button Text="Confirmer" Clicked="ConfirmButton_Clicked"/>
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

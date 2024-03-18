@@ -5,7 +5,7 @@
              x:Class="KitBox.Views.SelectPartPage">
     <ContentPage.Content>
         <StackLayout>
-           
+           <Label Text="Click on a part to modify its price" TextColor="Red"/>
             <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" />
             <Grid>
                 <Grid.ColumnDefinitions>

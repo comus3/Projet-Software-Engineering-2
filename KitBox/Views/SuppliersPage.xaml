@@ -4,8 +4,9 @@
              Title="Suppliers' page">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Click on a supplier to see more details about him " TextColor="red " HorizontalOptions="Center"/>
+           
             <Button Text="Add a supplier " Clicked="Add_clicked" HorizontalOptions="FillAndExpand" />
+            <Label Text="Click on a supplier to see more details about him " TextColor="red " HorizontalOptions="Center"/>
             <StackLayout x:Name="addSupplierLayout" IsVisible="False">
                 <Entry Placeholder="Nom du fournisseur" x:Name="nomEntry" />
                 <Entry Placeholder="Téléphone" x:Name="telephoneEntry" />
