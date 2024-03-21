@@ -1,0 +1,55 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.SuppliersPage"
+             Title="Suppliers' page">
+    <ContentPage.Content>
+        <StackLayout>
+           
+            <Button Text="Add a supplier " Clicked="Add_clicked" HorizontalOptions="FillAndExpand" />
+            <Label Text="Click on a supplier to see more details about him " TextColor="red " HorizontalOptions="Center"/>
+            <StackLayout x:Name="addSupplierLayout" IsVisible="False">
+                <Entry Placeholder="Nom du fournisseur" x:Name="nomEntry" />
+                <Entry Placeholder="Téléphone" x:Name="telephoneEntry" />
+                <Entry Placeholder="Adresse" x:Name="adresseEntry" />
+                <Button Text="Save" Clicked="Save_Clicked" />
+            </StackLayout>
+            <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /> 
+                    <ColumnDefinition Width="*" /> 
+                    <ColumnDefinition Width="*" /> 
+                    <ColumnDefinition Width="*" /> 
+                    <ColumnDefinition Width="Auto" /> 
+                </Grid.ColumnDefinitions>
+                <Label Text="id supplier" FontAttributes="Bold" Grid.Column="0" />
+                <Label Text="nom" FontAttributes="Bold" Grid.Column="1" />
+                <Label Text="telephone" FontAttributes="Bold" Grid.Column="2" />
+                <Label Text="adresse" FontAttributes="Bold" Grid.Column="3" /> 
+                <Label Text="Action" FontAttributes="Bold" Grid.Column="4" /> 
+            </Grid>
+            <ListView x:Name="myListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Tapped="Details_Clicked">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" /> 
+                                    <ColumnDefinition Width="*" /> 
+                                    <ColumnDefinition Width="*" /> 
+                                    <ColumnDefinition Width="*" /> 
+                                    <ColumnDefinition Width="Auto" /> 
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding id_supplier}" Grid.Column="0" />
+                                <Label Text="{Binding nom}" Grid.Column="1" />
+                                <Label Text="{Binding telephone}" Grid.Column="2" />
+                                <Label Text="{Binding adresse}" Grid.Column="3"/>
+                                <Button Text="Edit" Clicked="edit_price_Clicked" CommandParameter="{Binding .}"  Grid.Column="4" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
