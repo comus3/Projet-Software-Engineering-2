@@ -29,8 +29,6 @@ static class FetchingServices
         set { _currentCommandAvailable = value; }
     }
     private static string? _selectedPartCode= null;
-    private static string? _currentCommand;
-    private static List<string> _oldCommands = new List<string>();
     public static string? SelectedPartCode
     {
         get { return _selectedPartCode; }

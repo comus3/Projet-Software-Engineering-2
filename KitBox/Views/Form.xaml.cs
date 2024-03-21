@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using DevTools;
 using AppServices;
-
+using KitBox.AppServices;
 
 
 namespace KitBox.Views
@@ -239,6 +239,7 @@ namespace KitBox.Views
                 Armoire armoire = new Armoire(con);
                 armoire.Load(Convert.ToInt32(this.armoirePk));
                 LinkingServices.CreateAllArmoireLinks(con, armoire);
+                PricingServices.PriceCommande(FetchingServices.CurrentCommand,con);
 
                 await Navigation.PushAsync(new FinishPage());
             }
