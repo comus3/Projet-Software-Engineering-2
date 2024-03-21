@@ -81,7 +81,7 @@ namespace KitBox.Views
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
 
-            bool result = await DisplayAlert("Confirmation", $"OLLLLAAAAAAAAAAA?", "Oui", "Annuler");
+            bool result = await DisplayAlert("Confirmation", $"Are you sure you want to delete this cabinet ?", "Oui", "Annuler");
 
             if (result)
             {
@@ -105,8 +105,6 @@ namespace KitBox.Views
 
            
             DisplayAlert($"Details of the cabinet number: {armoire.Number} ", $"{armoire.Longueur}\n {armoire.Profondeur}\n  {armoire.Price} euros", "OK");
-
-
 
 
         }
