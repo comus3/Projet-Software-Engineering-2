@@ -30,7 +30,7 @@ class PricingServices
         }
         foreach (DataRow row in pieces.Rows)
         {
-            price += Convert.ToDouble(row.ItemArray[10]);
+            price += Convert.ToDouble(row.ItemArray[12]);
         }
         obj.Attributes["price"] = price;
         obj.Save();
