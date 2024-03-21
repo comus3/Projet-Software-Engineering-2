@@ -196,7 +196,7 @@ class StockServices
                 ReserveStock(code, Convert.ToInt32(row.ItemArray[0]), connection,false);
                 awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Delete();
-                Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed line {row.ItemArray[0]}");
+                Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed line {row.ItemArray[1]}");
             }
             else
             {
@@ -206,7 +206,7 @@ class StockServices
                 awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Update(update);
                 awaitPiece.Save();
-                Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed {quantiteLeft} from line {row.ItemArray[0]}");
+                Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed {quantiteLeft} from line {row.ItemArray[1]}");
                 break;
             }
         }
