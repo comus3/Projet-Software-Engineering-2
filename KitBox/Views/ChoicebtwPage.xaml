@@ -16,6 +16,7 @@
                       TextColor="White"
                       CornerRadius="8"
                       HeightRequest="50"
+                      BackgroundColor="#007ACC"
                       HorizontalOptions="FillAndExpand"/>
         
             <Button Text="Customer" 
@@ -23,12 +24,14 @@
                     TextColor="White"
                     CornerRadius="8"
                     HeightRequest="50"
+                    BackgroundColor="#007ACC"
                     HorizontalOptions="FillAndExpand"/>
             <Button Text="Secretary" 
                     Clicked="SecretaryClicked" 
                     TextColor="White"
                     CornerRadius="8"
                     HeightRequest="50"
+                    BackgroundColor="#007ACC"
                     HorizontalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </ContentPage.Content>

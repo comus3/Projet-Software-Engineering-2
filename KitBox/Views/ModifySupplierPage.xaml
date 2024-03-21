@@ -1,25 +1,26 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.ModifySupplierPage"
-             Title="Modify supplier's details">
+             Title="Modify Supplier's Details">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-            <!-- Entry for Old Price Supplier 1 -->
-            <StackLayout Orientation="Vertical">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Name  :  " VerticalOptions="Center"/>
-                    <Entry x:Name="OLDname" Placeholder="Name" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Number:" VerticalOptions="Center"/>
-                    <Entry x:Name="OLDtelephone" Placeholder="Telephone" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Adresse: " VerticalOptions="Center"/>
-                    <Entry x:Name="OLDadresse" Placeholder="Adresse" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                </StackLayout>
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+            <!-- Entry for Supplier Name -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Name:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDname" Placeholder="Enter Name" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-            <Button Text="Confirmer" Clicked="ConfirmButton_Clicked"/>
+            <!-- Entry for Supplier Telephone Number -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Telephone:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDtelephone" Placeholder="Enter Telephone Number" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <!-- Entry for Supplier Address -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Address:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDadresse" Placeholder="Enter Address" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <!-- Confirm Button -->
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

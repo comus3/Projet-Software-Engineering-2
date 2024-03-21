@@ -2,68 +2,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.Customer_catalog"
              Title="Cabinet Order">
-    <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
-        <Label 
-            Text="Cabinet Order Menu"
-            HorizontalOptions="Center" 
-            FontSize="24" />
-        <Label 
-            Text="Make sure to choose a width smaller than the length or at least equal"
-            HorizontalOptions="Center"
-            TextColor="Red"
-            FontSize="14" />
-        
-
-      
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Label Text="Choose the length:" VerticalOptions="Center" />
-            <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> 
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int32}">
-                        <x:Int32>32</x:Int32>
-                        <x:Int32>42</x:Int32>
-                        <x:Int32>62</x:Int32>
-                        <x:Int32>80</x:Int32>
-                        <x:Int32>100</x:Int32>
-                        <x:Int32>120</x:Int32>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-        </StackLayout>
-
-     
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Label Text="Choose the width:" VerticalOptions="Center" />
-            <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> 
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int32}">
-                        <x:Int32>32</x:Int32>
-                        <x:Int32>42</x:Int32>
-                        <x:Int32>62</x:Int32>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-        </StackLayout>
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Label Text="Choose the Color:" VerticalOptions="Center" />
-            <Picker x:Name="Locker_Color_Picker" VerticalOptions="Center" WidthRequest="400"> 
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>black</x:String>
-                        <x:String>white</x:String>
-                        <x:String>marron</x:String>
-                        <x:String>galva</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-        </StackLayout>
-
-        <Button 
-            Text="Create a new cabinet" 
-            Clicked="OnCreateLockerClicked" 
-            TextColor="White"
-            CornerRadius="8"
-            HeightRequest="50"
-            HorizontalOptions="FillAndExpand"/>
-    </VerticalStackLayout>
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+            <Label 
+                Text="Cabinet Order Menu"
+                HorizontalOptions="Center" 
+                FontSize="24" />
+            <Label 
+                Text="Make sure to choose a width smaller than the length or at least equal"
+                HorizontalOptions="Center"
+                TextColor="Red"
+                FontSize="14" />
+            <!-- Length Picker -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Choose the Length:" VerticalOptions="Center" />
+                <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> 
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:Int32}">
+                            <x:Int32>32</x:Int32>
+                            <x:Int32>42</x:Int32>
+                            <x:Int32>62</x:Int32>
+                            <x:Int32>80</x:Int32>
+                            <x:Int32>100</x:Int32>
+                            <x:Int32>120</x:Int32>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <!-- Width Picker -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Choose the Width:" VerticalOptions="Center" />
+                <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> 
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:Int32}">
+                            <x:Int32>32</x:Int32>
+                            <x:Int32>42</x:Int32>
+                            <x:Int32>62</x:Int32>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <!-- Color Picker -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Choose the Color:" VerticalOptions="Center" />
+                <Picker x:Name="Locker_Color_Picker" VerticalOptions="Center" WidthRequest="400"> 
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Black</x:String>
+                            <x:String>White</x:String>
+                            <x:String>Brown</x:String>
+                            <x:String>Galva</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <!-- Create Cabinet Button -->
+            <Button 
+                Text="Create a New Cabinet" 
+                Clicked="OnCreateLockerClicked" 
+                TextColor="White"
+                CornerRadius="8"
+                HeightRequest="50"
+                BackgroundColor="#007ACC"
+                HorizontalOptions="FillAndExpand"/>
+        </VerticalStackLayout>
+    </ContentPage.Content>
 </ContentPage>
