@@ -190,11 +190,11 @@ class StockServices
         DataTable quantiteData = awaitPiece.LoadAll(condition, colomns);
         foreach (DataRow row in quantiteData.Rows)
         {
-            quantiteLeft = quantiteLeft - Convert.ToInt32(row.ItemArray[1]);
+            quantiteLeft = quantiteLeft - Convert.ToInt32(row.ItemArray[0]);
             if (quantiteLeft >= 0)
             {
-                ReserveStock(code, Convert.ToInt32(row.ItemArray[1]), connection,false);
-                awaitPiece.Load(row.ItemArray[0]);
+                ReserveStock(code, Convert.ToInt32(row.ItemArray[0]), connection,false);
+                awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Delete();
                 Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed line {row.ItemArray[0]}");
             }
@@ -203,7 +203,7 @@ class StockServices
                 ReserveStock(code, quantiteLeft, connection,false);
                 Dictionary<string, object> update = new Dictionary<string, object>();
                 update.Add("quantite", Convert.ToInt32(row.ItemArray[0]) - quantiteLeft);
-                awaitPiece.Load(row.ItemArray[0]);
+                awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Update(update);
                 awaitPiece.Save();
                 Logger.WriteToFile($"Added {quantiteLeft} in reserve for {code} and removed {quantiteLeft} from line {row.ItemArray[0]}");
