@@ -20,6 +20,14 @@ namespace KitBox.AppServices;
 /// </summary>
 static class FetchingServices
 { 
+    private static bool? _currentCommandAvailable = null;
+    private static string? _currentCommand;
+    private static List<string> _oldCommands = new List<string>();
+    public static bool? CurrentCommandAvailable
+    {
+        get { return _currentCommandAvailable; }
+        set { _currentCommandAvailable = value; }
+    }
     private static string? _selectedPartCode= null;
     private static string? _currentCommand;
     private static List<string> _oldCommands = new List<string>();
@@ -39,6 +47,7 @@ static class FetchingServices
                 AddOldCommand(_currentCommand);
             }
             _currentCommand = value.ToString();
+            _currentCommandAvailable = true;
         }
     }
     public static List<string> OldCommands {  get { return _oldCommands; } }

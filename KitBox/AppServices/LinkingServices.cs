@@ -10,6 +10,7 @@ using DevTools;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Controls.Shapes;
 using System.Text.RegularExpressions;
+using KitBox.AppServices;
 
 
 namespace AppServices;
@@ -104,7 +105,19 @@ static class LinkingServices
         }
         else
         {
-            Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+            FetchingServices.CurrentCommandAvailable = false;
+            Logger.WriteToFile($"Not enaugh stock for {pkPiece}, making await reserve");
+            Casier casier = new Casier(connection);
+            casier.Attributes["id_casier"] = pkCasier;
+            List<string> colomns = new List<string>();
+            colomns.Add("armoire");
+            object armoirePk = casier.LoadAll(casier.Attributes, colomns).Rows[0].ItemArray[0];
+            Armoire armoire = new Armoire(connection);
+            armoire.Attributes["id_armoire"] = armoirePk;
+            List<string> armoireColomns = new List<string>();
+            armoireColomns.Add("commande");
+            object commandePk = armoire.LoadAll(armoire.Attributes, armoireColomns).Rows[0].ItemArray[0];
+            StockServices.UpdateAwaitPiece(pkPiece, commandePk, quantite, connection);
         }
     }
     /// <summary>
@@ -130,7 +143,13 @@ static class LinkingServices
         }
         else
         {
+            FetchingServices.CurrentCommandAvailable = false;
             Logger.WriteToFile($"Error while making reserve for {pkPiece}");
+            Armoire armoire = new Armoire(connection);
+            Dictionary<string, object> where = new Dictionary<string, object>() { { "id_armoire", pkArmoire } };
+            List<string> colomns = new List<string>() { "commande" };
+            object commandePk = armoire.LoadAll(where, colomns).Rows[0]["commande"];
+            StockServices.UpdateAwaitPiece(pkPiece, commandePk, quantite, connection);
         }
     }
     private static void unlinkAll(Connection connection, object toUnlink)
