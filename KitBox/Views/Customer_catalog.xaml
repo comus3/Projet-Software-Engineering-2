@@ -56,7 +56,7 @@
                     </Picker.ItemsSource>
                 </Picker>
             </StackLayout>
-            <!-- Create Cabinet Button -->
+            
             <Button 
                 Text="Create a New Cabinet" 
                 Clicked="OnCreateLockerClicked" 
