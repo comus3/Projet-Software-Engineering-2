@@ -18,6 +18,15 @@ namespace AppServices;
 
 static class LinkingServices
 {
+    private class RtSupplier : Model
+    {
+
+        public RtSupplier(Connection connection) : base(connection)
+        {
+            tableName = "rt_supplier";
+            primaryKey = "id_relation";
+        }
+    }
     private class RtCasier : Model
     {
 
@@ -321,7 +330,7 @@ static class LinkingServices
             }
 
         }
-
+        PricingServices.PriceObject(armoire, connection);
         return true;
     }
     private static int GetCasierNombre(Connection connection, object armoireId)
