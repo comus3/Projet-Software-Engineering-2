@@ -1,24 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.EditItemsSuppPage"
-             Title="Modify the price and the delay">
+             Title="Modify the Price and the Delay">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-            <!-- Entry for Old Price Supplier 1 -->
-            <StackLayout Orientation="Vertical">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Price :  " VerticalOptions="Center"/>
-                    <Entry x:Name="OLDPrice" Placeholder="Name" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Delay:" VerticalOptions="Center"/>
-                    <Entry x:Name="OLDDelay" Placeholder="Telephone" HorizontalOptions="FillAndExpand" WidthRequest="200"/>
-                </StackLayout>
-               
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+            <!-- Entry for Price -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Price:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDPrice" Placeholder="Enter Price" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-            <Button Text="Confirm" Clicked="ConfirmButton_Clicked"/>
+            <!-- Entry for Delay -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Delay:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDDelay" Placeholder="Enter Delay" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <!-- Confirm Button -->
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -21,12 +21,14 @@ namespace KitBox.Views
         int count = 0; // Compteur pour les casiers
 
         string[] options = { "marron", "white" };
-        List<string> doorOptions = new List<string> { "marron", "white" }; // Supprimer l'option "glass" du picker de couleur de la porte
+        List<string> doorOptions = new List<string> { "marron", "white" }; 
 
         List<int> heigth = new List<int> { 32, 42, 52 };
 
         public Form(Object armoirePk)
         {
+            
+            
             this.armoirePk = armoirePk;
             InitializeComponent();
             BindingContext = this;
@@ -36,6 +38,7 @@ namespace KitBox.Views
             {
                 Text = "Create a new Locker"
             };
+            CreateanewLocker.BackgroundColor = Color.FromHex("#007ACC");
             CreateanewLocker.Clicked += OnCreateNewLockerClicked; // Ajoutez un gestionnaire d'événements pour le clic
 
           
@@ -55,6 +58,7 @@ namespace KitBox.Views
             Button cancel = new Button();
             
             cancel.Text = "cancel locker number " + count.ToString();
+            cancel.BackgroundColor = Color.FromHex("#007ACC");
             HorizontalStackLayout locker_i = new HorizontalStackLayout();
             locker_i.Spacing = 500; 
             cancel.HorizontalOptions = LayoutOptions.End;

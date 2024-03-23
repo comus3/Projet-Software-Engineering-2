@@ -125,7 +125,7 @@ namespace KitBox.Views
                 await DisplayAlert("Success", "New piece added successfully!", "OK");
 
                 // Rafraîchir la page
-                await Navigation.PushAsync(new Suppliersitems(cle, Name));
+                RefreshPage();
             }
             catch (Exception exception)
             {
@@ -134,6 +134,38 @@ namespace KitBox.Views
             }
         }
 
+        private void RefreshPage()
+        {
+            // Clear existing data
+            suppliers_items.Clear();
+
+            // Reload data from the database
+            RtSupplier suppliersitems = new RtSupplier(con);
+            List<string> colonnes = new List<string>
+            {
+                "id_relation",
+                "id_piece",
+                "delay_supplier",
+                "price_supplier",
+            };
+            Dictionary<string, object> valuestoload = new Dictionary<string, object>();
+            valuestoload["id_supplier"] = cle;
+            data = suppliersitems.LoadAll(valuestoload, colonnes);
+
+            // Populate ObservableCollection with new data
+            foreach (DataRow row in data.Rows)
+            {
+                suppliers_items.Add(new Suppitemsdata()
+                {
+                    Reference = row["id_piece"].ToString(),
+                    Delay = row["delay_supplier"].ToString(),
+                    Price = row["price_supplier"].ToString(),
+                });
+            }
+
+            // Refresh the ListView
+            myListView.ItemsSource = suppliers_items;
+        }
 
         private void Search(string query)
         {
