@@ -66,11 +66,32 @@ public partial class ShopKeeperPage : ContentPage
             {
                 if (row["completed"].ToString() == "False" && row["payement"].ToString() == "False" && row["instock"].ToString() == "False")
                 {
-                    depositC.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
+                    Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
                 }
             }
 	}
-	private void OnPayementClicked(object sender, EventArgs e){
+	private void OnPayementClicked(object sender, EventArgs e)
+	{
+		if(sender is Button button)
+            {
+                // Trouvez l'élément de commande associé au bouton cliqué
+                var commandeModel = (CommandeModel)button.BindingContext;
+                var idCommande = commandeModel.IdCommande;
 
+                if(commandeModel != null && Commandes.Contains(commandeModel))
+                {
+                    var updateValues = new Dictionary<string, object>
+                    {
+                        { "payement", true } 
+                    };
+
+                    Commande commande = new Commande(conn);
+                    commande.Load(idCommande);
+                    commande.Update(updateValues);
+                    commande.Save();
+                    // Supprimez l'élément de la collection
+                    Commandes.Remove(commandeModel);
+                }
+            }
 	}
 }
