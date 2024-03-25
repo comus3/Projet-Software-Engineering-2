@@ -50,6 +50,26 @@ public partial class ShopKeeperPage : ContentPage
             }
         //update puis save pour completed (quand boutton complet)
         }
+	private void LoadCommandesNotStock()
+	{
+		Commande depositC = new Commande(conn);
+		Dictionary<string, object> com = new Dictionary<string, object>();
+            
+            List<string> colomns = new List<string>();
+            colomns.Add("id_commande");
+            colomns.Add("completed");
+			colomns.Add("payement");
+            colomns.Add("instock");
+            DataTable data = depositC.LoadAll(com,colomns);
+            //Displayer.DisplayData(data);
+            foreach (DataRow row in data.Rows)
+            {
+                if (row["completed"].ToString() == "False" && row["payement"].ToString() == "False" && row["instock"].ToString() == "False")
+                {
+                    depositC.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
+                }
+            }
+	}
 	private void OnPayementClicked(object sender, EventArgs e){
 
 	}

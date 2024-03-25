@@ -12,7 +12,38 @@
                 FontAttributes="Bold"
                 VerticalOptions="Start"
                 FontSize="24" /> 
+            <Label 
+                Text="In Stock"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" /> 
         <ListView ItemsSource="{Binding Commandes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
+                                <Button Text="Payement" Clicked="OnPayementClicked" Grid.Column="3" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        <Label 
+                Text="Not in Stock"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" />
+        <ListView ItemsSource="{Binding depositC}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
