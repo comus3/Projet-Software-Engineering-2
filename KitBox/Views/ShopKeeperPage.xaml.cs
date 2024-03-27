@@ -24,7 +24,7 @@ public partial class ShopKeeperPage : ContentPage
         conn = new Connection();
 
         LoadCommandesInstock();
-		LoadCommandesNotStock();
+		//LoadCommandesNotStock();
 	}
 	private void BackMenu(object sender, EventArgs e)
     {
@@ -44,7 +44,7 @@ public partial class ShopKeeperPage : ContentPage
             //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                if (row["completed"].ToString() == "False" && row["payement"].ToString() == "False" && row["instock"].ToString() == "True")
+                if (row["completed"].ToString() == "False" && row["payement"].ToString() == "False") //&& row["instock"].ToString() == "True")
                 {
                     Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
                 }
