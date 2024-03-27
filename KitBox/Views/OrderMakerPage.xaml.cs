@@ -92,6 +92,7 @@ public partial class OrderMakerPage : ContentPage
                         { "completed", true } 
                     };
 
+                    //ExecuteReserveCommande(conn, );
                     Commande commande = new Commande(conn);
                     commande.Load(idCommande);
                     commande.Update(updateValues);
