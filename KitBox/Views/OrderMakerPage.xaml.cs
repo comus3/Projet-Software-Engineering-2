@@ -95,7 +95,7 @@ public partial class OrderMakerPage : ContentPage
                         { "completed", true } 
                     };
 
-                    //ExecuteReserveCommande(conn, );
+                    StockServices.ExecuteReserveCommande(conn,idCommande);
                     Commande commande = new Commande(conn);
                     commande.Load(idCommande);
                     commande.Update(updateValues);
