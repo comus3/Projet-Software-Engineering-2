@@ -56,12 +56,38 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Deposit" Clicked="OnPayementClicked" Grid.Column="3" />
+                                <Button Text="Deposit" Clicked="OnDepositClicked" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Label 
+                Text="Finalize the payment of the order after a deposit"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" />
+            <ListView ItemsSource="{Binding depositf}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
+                                <Button Text="Finalize payement" Clicked="OnPayementClicked" Grid.Column="3" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
