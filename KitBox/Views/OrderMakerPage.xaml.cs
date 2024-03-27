@@ -55,6 +55,9 @@ public partial class OrderMakerPage : ContentPage
         Navigation.PushAsync(new ChoicebtwPage());
     }
 
+//Pour order maker faire une autre methode avec les commandes qui sont passer par un deposit
+//Pour qu apres ca repasse par le shop keeper pour finir le payement ?
+//Manuellement rentrer la valeur du deposit (30% valeur commande) et puis faire val commande - depot
         private void LoadCommandes()
         {
             Commande commande = new Commande(conn);
