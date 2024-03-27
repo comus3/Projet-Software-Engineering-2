@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using DevTools;
 using Mysqlx.Cursor;
 using KitBox.AppServices;
 using MySqlX.XDevAPI.Relational;
@@ -34,11 +35,11 @@ class StockServices
         }
     }
 
-    public static void ReserveStock(object pieceCode, int nombreReserve, Connection connection)
+    public static void ReserveStock(object pieceCode, int nombreReserve, Connection connection, bool removeStock = true)
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> update = new Dictionary<string, object>();
-        update.Add("stock", Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[8]) - nombreReserve);
+        if(removeStock){update.Add("stock", Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[8]) - nombreReserve);}
         update.Add("reserve", Convert.ToInt32(piece.Load(pieceCode).Rows[0].ItemArray[9]) + nombreReserve);
         piece.Update(update);
         piece.Load(pieceCode);
@@ -180,34 +181,47 @@ class StockServices
     {
         Piece piece = new Piece(connection);
         Dictionary<string, object> data = new Dictionary<string, object>();
-
         AwaitPiece awaitPiece = new AwaitPiece(connection);
         Dictionary<string, object> condition = new Dictionary<string, object>();
-        condition["code"] = code;
         List<string> colomns = new List<string>();
+        
+
+        int quantiteLeft = quantite;
+        condition["code"] = code;
         colomns.Add("quantite");
         colomns.Add(awaitPiece.PrimaryKey.ToString());
         DataTable quantiteData = awaitPiece.LoadAll(condition, colomns);
         foreach (DataRow row in quantiteData.Rows)
         {
-            int quantiteLeft = quantite - Convert.ToInt32(row.ItemArray[1]);
+            quantiteLeft = quantiteLeft - Convert.ToInt32(row.ItemArray[0]);
             if (quantiteLeft >= 0)
             {
-                ReserveStock(code, Convert.ToInt32(row.ItemArray[1]), connection);
-                awaitPiece.Load(row.ItemArray[0]);
+                ReserveStock(code, Convert.ToInt32(row.ItemArray[0]), connection,false);
+                awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Delete();
-                quantite = quantiteLeft;
+                Logger.WriteToFile($"Added {Convert.ToInt32(row.ItemArray[0])} in reserve for {code} and removed line {row.ItemArray[1]}");
             }
             else
             {
-                ReserveStock(code, quantite, connection);
+                ReserveStock(code, quantiteLeft, connection,false);
                 Dictionary<string, object> update = new Dictionary<string, object>();
-                update.Add("quantite", Convert.ToInt32(row.ItemArray[0]) - quantite);
-                awaitPiece.Load(row.ItemArray[0]);
+                update.Add("quantite", Convert.ToInt32(row.ItemArray[0]) - quantiteLeft);
+                awaitPiece.Load(row.ItemArray[1]);
                 awaitPiece.Update(update);
                 awaitPiece.Save();
+                Logger.WriteToFile($"Added {Convert.ToInt32(row.ItemArray[0])} in reserve for {code} and removed {quantiteLeft} from line {row.ItemArray[1]}");
                 break;
             }
+        }
+        if (quantiteLeft > 0)
+        {
+            Piece pieceObj = new Piece(connection);
+            Dictionary<string, object> update = new Dictionary<string, object>();
+            update.Add("stock", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[8]) + quantiteLeft);
+            pieceObj.Update(update);
+            pieceObj.Load(code);
+            pieceObj.Save();
+            Logger.WriteToFile($"Added {quantiteLeft} in stock for {code}");
         }
     }
   public static void ExecuteReserveCommande(Connection connection, Object CommandePk)

@@ -4,10 +4,11 @@ using DevTools;
 using AppServices;
 using KitBox.AppServices;
 using System.Collections.ObjectModel;
+using Mysqlx.Crud;
 
 namespace KitBox.Views;
 
-public partial class ShopKeeperPage : ContentPage
+public partial class OrderMakerPage : ContentPage
 {
     private Connection conn;
 
@@ -27,17 +28,16 @@ public partial class ShopKeeperPage : ContentPage
         public string DimensionProfondeur { get; set; }
         public string DimensionDiametre { get; set; }
         public string DimensionLongueur { get; set; }
-        public string PriceSupplier1 { get; set; }
-        public string DelaySupplier1 { get; set; }
-        public string PriceSupplier2 { get; set; }
-        public string DelaySupplier2 { get; set; }
         public string Stock { get; set; }
+        public string Reserve { get; set; }
+        public string Await { get; set; }
         public string Type { get; set; }
+        public string Selling_price { get; set; }
     }
     public ObservableCollection<CommandeModel> Commandes { get; set; } = new ObservableCollection<CommandeModel>();
     public ObservableCollection<PieceModel> Pieces { get; set; } = new ObservableCollection<PieceModel>();
   
-    public ShopKeeperPage()
+    public OrderMakerPage()
     {
         InitializeComponent();
         BindingContext = this;
@@ -61,17 +61,17 @@ public partial class ShopKeeperPage : ContentPage
             Dictionary<string, object> com = new Dictionary<string, object>();
             
             List<string> colomns = new List<string>();
-            Console.WriteLine(colomns);
             colomns.Add("id_commande");
-            //colomns.Add("completed");
+            colomns.Add("completed");
+            colomns.Add("instock");
             DataTable data = commande.LoadAll(com,colomns);
-            Displayer.DisplayData(data);
+            //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                //if (row["completed"].ToString() == "0")
-                //{
+                if (row["completed"].ToString() == "False" && row["instock"].ToString() == "True")
+                {
                     Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
-                //}
+                }
             }
         //update puis save pour completed (quand boutton complet)
         }
@@ -82,16 +82,27 @@ public partial class ShopKeeperPage : ContentPage
             {
                 // Trouvez l'élément de commande associé au bouton cliqué
                 var commandeModel = (CommandeModel)button.BindingContext;
+                var idCommande = commandeModel.IdCommande;
 
                 if(commandeModel != null && Commandes.Contains(commandeModel))
                 {
+                    var updateValues = new Dictionary<string, object>
+                    {
+                        { "completed", true } 
+                    };
+
+                    Commande commande = new Commande(conn);
+                    commande.Load(idCommande);
+                    commande.Update(updateValues);
+                    commande.Save();
+
                     var piecesAssociees = Pieces.Where(p => p.CommandeId == commandeModel.IdCommande).ToList();
                     // Supprimez l'élément de la collection
-                    Commandes.Remove(commandeModel);
+                    Commandes.Remove(commandeModel);                    
                     foreach(var piece in piecesAssociees)
-                {
-                    Pieces.Remove(piece);
-                }
+                    {
+                        Pieces.Remove(piece);
+                    }
                 }
             }
         }
@@ -105,13 +116,12 @@ public partial class ShopKeeperPage : ContentPage
                 var idCommande = commandeModel.IdCommande;
 
                 // Liste des colonnes à récupérer pour les pièces
-                List<string> colomns = new List<string> 
-                {
-                    "Reference", "Code", "Dimensions_hauteur", "dimension_largeur", "dimension_client", 
-                    "dimension_profondeur", "dimension_diametre", "dimension_longeur", 
-                    "Price_Supplier_1", "Delay_Supplier_1", "Price_Supplier_2", "Delay_Supplier_2", 
-                    "Stock", "Type"
-                };
+                // List<string> colomns = new List<string> 
+                // {
+                //     "Reference", "Code", "Dimensions_hauteur", "dimension_largeur", "dimension_client", 
+                //     "dimension_profondeur", "dimension_diametre", "dimension_longeur", 
+                //     "Stock", "Reserve", "Await", "Type", "Selling_price"
+                // };
 
                 // FetchCommandePieces pour récupérer seulement les pièces liées à cet ID de commande
                 var piecesDataTables = FetchingServices.FetchCommandePieces(conn, idCommande);
@@ -132,12 +142,11 @@ public partial class ShopKeeperPage : ContentPage
                             DimensionProfondeur = row["dimension_profondeur"].ToString(),
                             DimensionDiametre = row["dimension_diametre"].ToString(),
                             DimensionLongueur = row["dimension_longeur"].ToString(),
-                            PriceSupplier1 = row["Price_Supplier_1"].ToString(),
-                            DelaySupplier1 = row["Delay_Supplier_1"].ToString(),
-                            PriceSupplier2 = row["Price_Supplier_2"].ToString(),
-                            DelaySupplier2 = row["Delay_Supplier_2"].ToString(),
-                            Stock = row["Stock"].ToString(),
-                            Type = row["Type"].ToString()
+                            Stock = row["stock"].ToString(),
+                            Reserve = row["reserve"].ToString(),
+                            Await = row["await"].ToString(),
+                            Type = row["type"].ToString(),
+                            Selling_price = row["selling_price"].ToString()                            
                         });
                     }
                 }
