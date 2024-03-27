@@ -56,7 +56,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Payement" Clicked="OnPayementClicked" Grid.Column="3" />
+                                <Button Text="Deposit" Clicked="OnPayementClicked" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
