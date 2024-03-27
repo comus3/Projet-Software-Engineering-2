@@ -39,7 +39,7 @@
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                                     <Button Text="Details" Clicked="Details" CommandParameter="{Binding .}" Style="{StaticResource DetailButton}" />
                                     <Button Text="Supprimer" Clicked="Supprimer_Clicked" CommandParameter="{Binding .}" Style="{StaticResource DetailButton}" />
-                                </StackLayout>
+</StackLayout>
                             </StackLayout>
                         </Frame>
                     </ViewCell>
@@ -48,6 +48,6 @@
         </ListView>
 
         <!-- Bouton "Finalisation" -->
-        <Button Text="Finalisation" Clicked="Acheter_Clicked" HorizontalOptions="End" Style="{StaticResource DetailButton}"/>
+        <Button Text="Finalisation" Clicked="Acheter_Clicked" HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
