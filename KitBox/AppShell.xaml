@@ -14,11 +14,17 @@
                 Title="ChoicePage"
                 ContentTemplate="{DataTemplate views:ChoicebtwPage}"/>
         </Tab>
+        <Tab Title="Stockma">
+            <ShellContent
+                Title="Stockma"
+                ContentTemplate="{DataTemplate views:StockManagerPage}"/>
+        </Tab>
         
         <Tab Title="Panier">
             <ShellContent
                 Title="Panier"
                 ContentTemplate="{DataTemplate views:Panier}"/>
+            
         </Tab>
        
     </TabBar>
