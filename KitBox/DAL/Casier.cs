@@ -21,6 +21,7 @@ public class Casier : Model
             this.Load(Convert.ToInt32(casierPk));
             if (LinkingServices.CreateAllCasierLinks(this.connection, this))
             {
+                PricingServices.PriceObject(this, this.connection);
                 return result;
             }
             else
