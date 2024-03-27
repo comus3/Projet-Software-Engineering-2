@@ -48,10 +48,10 @@
                 <Picker x:Name="Locker_Color_Picker" VerticalOptions="Center" WidthRequest="400"> 
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Black</x:String>
-                            <x:String>White</x:String>
-                            <x:String>Brown</x:String>
-                            <x:String>Galva</x:String>
+                            <x:String>black</x:String>
+                            <x:String>white</x:String>
+                            <x:String>marron</x:String>
+                            <x:String>galva</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
