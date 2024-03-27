@@ -10,18 +10,23 @@ namespace KitBox.Views
     public partial class Panier : ContentPage
     {
         private Connection con;
+        private DataTable data; // Déclaration de la DataTable
 
         internal class ArmoireAttributes
         {
             public string Longueur { get; set; }
             public string Profondeur { get; set; }
             public string Price { get; set; }
+            public string Number { get; set; }
+            public object ArmoirePk { get; set; }
 
-            public ArmoireAttributes(string longueur, string profondeur, string price)
+            public ArmoireAttributes(string longueur, string profondeur, string price, string number, object armoirePk)
             {
                 Longueur = longueur;
                 Profondeur = profondeur;
                 Price = price;
+                Number = number;
+                ArmoirePk = armoirePk;
             }
         }
 
@@ -30,6 +35,7 @@ namespace KitBox.Views
             InitializeComponent();
             Connection.TestConnection();
             con = new Connection();
+            data = new DataTable(); // Initialisation de la DataTable
         }
 
         protected override void OnAppearing()
@@ -43,19 +49,23 @@ namespace KitBox.Views
             Armoire armoire = new Armoire(con);
             Dictionary<string, object> arm = new Dictionary<string, object>();
             arm["commande"] = FetchingServices.CurrentCommand;
-            DataTable data = armoire.LoadAll(arm);
+            data = armoire.LoadAll(arm);
             List<ArmoireAttributes> lstArmoireItems = new List<ArmoireAttributes>();
+            int numeroArmoire = 1;
+
             foreach (DataRow row in data.Rows)
             {
+                string Number = $"Cabinet number: {numeroArmoire}";
+                string Longueur = $"The length of the cabinet is: {row.ItemArray[1].ToString()}";
+                string Profondeur = $"The depth of the cabinet is: {row.ItemArray[2].ToString()}";
+                string Price = $"The total price is: {row.ItemArray[3].ToString()}";
+                //string Color = $"The color of the cabinet is: {row.ItemArray[5].ToString()}";
 
-
-                string Longueur = $" La longueur de l'armoire est de: {row.ItemArray[1].ToString()}";
-                string Profondeur = $" La profondeur de l'armoire est de: {row.ItemArray[2].ToString()}";
-                string Price = $"Le prix total est de:{row.ItemArray[3].ToString()} ";
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Longueur, Profondeur, Price);
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price, row.ItemArray[0]);
                 lstArmoireItems.Add(armoireAttributes);
+                numeroArmoire++;
             }
             lstArmoire.ItemsSource = lstArmoireItems;
         }
@@ -66,11 +76,38 @@ namespace KitBox.Views
             Navigation.PushAsync(new CustomerRegisterForm());
         }
 
-        private void Supprimer_Clicked(object sender, EventArgs e)
+        private async void Supprimer_Clicked(object sender, EventArgs e)
         {
             var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
 
-            DisplayAlert("Supprimer", $"L'armoire avec longueur {armoire.Longueur}, profondeur {armoire.Profondeur} et prix {armoire.Price} a été supprimée avec succès.", "OK");
+
+            bool result = await DisplayAlert("Confirmation", $"Are you sure you want to delete this cabinet ?", "Oui", "Annuler");
+
+            if (result)
+            {
+                SupprimerArmoire(armoire);
+            }
         }
+
+        private void SupprimerArmoire(ArmoireAttributes armoire)
+        {
+
+
+            Armoire armoireDAL = new Armoire(con);
+            armoireDAL.Load(armoire.ArmoirePk);
+            armoireDAL.Delete();
+            ChargerDonnees();
+        }
+
+        private void Details(object sender, EventArgs e)
+        {
+            var armoire = (sender as Button).CommandParameter as ArmoireAttributes;
+
+           
+            DisplayAlert($"Details of the cabinet number: {armoire.Number} ", $"{armoire.Longueur}\n {armoire.Profondeur}\n  {armoire.Price} euros", "OK");
+
+
+        }
+
     }
 }
