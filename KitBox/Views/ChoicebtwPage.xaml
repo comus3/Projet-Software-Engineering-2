@@ -11,12 +11,19 @@
                 HorizontalOptions="Center" 
                 FontSize="24" />
             
-            <Button   Text="Ordermaker/Shopkeeper" 
+            <Button   Text="Ordermaker" 
                       Clicked="OnredirectionOrdermaker" 
                       TextColor="White"
                       CornerRadius="8"
                       HeightRequest="50"
                       BackgroundColor="#007ACC"
+                      HorizontalOptions="FillAndExpand"/>
+
+            <Button   Text="Shopkeeper" 
+                      Clicked="OnredirectionShopKeeper" 
+                      TextColor="White"
+                      CornerRadius="8"
+                      HeightRequest="50"
                       HorizontalOptions="FillAndExpand"/>
         
             <Button Text="Customer" 

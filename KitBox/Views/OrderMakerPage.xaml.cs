@@ -64,11 +64,12 @@ public partial class OrderMakerPage : ContentPage
             colomns.Add("id_commande");
             colomns.Add("completed");
             colomns.Add("instock");
+            colomns.Add("payement");
             DataTable data = commande.LoadAll(com,colomns);
             //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
-                if (row["completed"].ToString() == "False" && row["instock"].ToString() == "True")
+                if (row["completed"].ToString() == "False" && row["instock"].ToString() == "True" && row["payement"].ToString()=="True")
                 {
                     Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
                 }
