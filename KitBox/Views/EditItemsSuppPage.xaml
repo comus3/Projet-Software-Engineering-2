@@ -1,19 +1,19 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="KitBox.Views.Modify_Price_Page"
-             Title="Modify the Selling Price">
-    
+             x:Class="KitBox.Views.EditItemsSuppPage"
+             Title="Modify the Price and the Delay">
     <ContentPage.Content>
-        
         <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
-            
-            <!-- Entry for Selling Price -->
+            <!-- Entry for Price -->
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Price:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDselling_price" Placeholder="Enter Price" 
-                       HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDPrice" Placeholder="Enter Price" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-            
+            <!-- Entry for Delay -->
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Delay:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDDelay" Placeholder="Enter Delay" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
             <!-- Confirm Button -->
             <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
         </StackLayout>
