@@ -18,24 +18,6 @@ namespace AppServices;
 
 static class LinkingServices
 {
-    private class RtCasier : Model
-    {
-
-        public RtCasier(Connection connection) : base(connection)
-        {
-            tableName = "rt_casier";
-            primaryKey = "id_relation";
-        }
-    }
-    private class RtArmoire : Model
-    {
-
-        public RtArmoire(Connection connection) : base(connection)
-        {
-            tableName = "rt_armoire";
-            primaryKey = "id_relation";
-        }
-    }
     private class ArmoireAttributes
     {
         string PrimaryKey { get; set; }
