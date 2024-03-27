@@ -37,13 +37,13 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        <!--Label 
+        <Label 
                 Text="Not in Stock"
                 HorizontalOptions="Center" 
                 FontAttributes="Bold"
                 VerticalOptions="Start"
                 FontSize="24" />
-        <ListView ItemsSource="{Binding depositC}">
+        <ListView ItemsSource="{Binding deposit}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -61,7 +61,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView-->
+            </ListView>
         </StackLayout>
     </ScrollView>
 </ContentPage>
