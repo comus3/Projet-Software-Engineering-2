@@ -24,6 +24,7 @@ public partial class ShopKeeperPage : ContentPage
         conn = new Connection();
 
         LoadCommandesInstock();
+		LoadCommandesNotStock();
 	}
 	private void BackMenu(object sender, EventArgs e)
     {
