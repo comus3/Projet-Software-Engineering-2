@@ -8,6 +8,9 @@ using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using Mysqlx.Cursor;
+using KitBox.AppServices;
+using MySqlX.XDevAPI.Relational;
 namespace AppServices;
 
 class StockServices
@@ -207,7 +210,57 @@ class StockServices
             }
         }
     }
+  public static void ExecuteReserveCommande(Connection connection, Object CommandePk)
+    {
+        Armoire armoire = new Armoire(connection);
+        Dictionary<string, object> cond = new Dictionary<string, object>();
+        cond["commande"] = CommandePk;
+        List<string> colomn = new List<string>();
+        colomn.Add(armoire.PrimaryKey.ToString());
+        DataTable ArmoirePk = armoire.LoadAll(cond, colomn);
+        List<string> listArmoirePk = new List<string>();
+        Casier casier = new Casier(connection);
+        List<string> listCasierPk = new List<string>();
+
+        foreach (DataRow row  in ArmoirePk.Rows)
+        {
+            string currentArmoirePk = row.ItemArray[0].ToString();
+            listArmoirePk.Add(currentArmoirePk);
+            
+            List<string> colomnsCasier = [casier.PrimaryKey.ToString()];
+            Dictionary<string, object> condCas = new Dictionary<string, object>();
+            condCas["armoire"] = row.ItemArray[0];
+            DataTable casierPk = casier.LoadAll(condCas, colomnsCasier);
+            foreach (DataRow row2 in casierPk.Rows)
+            {
+                listCasierPk.Add(row2.ItemArray[0].ToString());
+            }
+        }
+        RtCasier rtcasier= new RtCasier(connection);
+        RtArmoire rtarmoire = new RtArmoire(connection);
+        List<string> colomns = new List<string>();
+        cond = new Dictionary<string, object>();
+        colomns.Add("quantite");
+        colomns.Add("id_piece");
+        foreach(string armoirePkString in listArmoirePk)
+        {
+            cond["id_armoire"] = armoirePkString;
+            DataTable pieceRt = rtarmoire.LoadAll(cond, colomns);
+            StockServices.ExecuteReserve(pieceRt.Rows[0].ItemArray[1], Convert.ToInt32(pieceRt.Rows[0].ItemArray[0]),connection);
+        }
+        cond = new Dictionary<string, object>();
+        foreach (string casierPkString in listCasierPk)
+        {
+            cond["id_casier"] = casierPkString;
+            DataTable pieceRt = rtcasier.LoadAll(cond, colomns);
+            StockServices.ExecuteReserve(pieceRt.Rows[0].ItemArray[1], Convert.ToInt32(pieceRt.Rows[1].ItemArray[0]), connection);
+        }
+    }
 }
+  
+
+
+
 
 
 //code ecrit par comus3
