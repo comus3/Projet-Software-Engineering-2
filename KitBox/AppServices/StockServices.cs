@@ -277,6 +277,14 @@ class StockServices
                 
         }
     }
+    public static void AwaitAddQuantity(object code,int quantity,Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        int awaitQtt = Convert.ToInt32(piece.Load(code).Rows[0].ItemArray[9]);
+        int newQtt = quantity + awaitQtt;
+        piece.Attributes["await"] = newQtt;
+        piece.Save();
+    }
 }
   
 
