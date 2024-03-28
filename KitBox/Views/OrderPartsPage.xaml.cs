@@ -18,9 +18,10 @@ namespace KitBox.Views
         private Picker supplierPicker; 
         private Entry quantityEntry; 
         private string cle;
-        private DataTable data_2; 
+        private DataTable data_2;
+        private int Await_b; 
 
-        public OrderPartsPage(string code)
+        public OrderPartsPage(string code, string Await_a)
         {
             InitializeComponent();
             cle = code;
@@ -30,6 +31,7 @@ namespace KitBox.Views
 
             // Load suppliers
             LoadSuppliers();
+            int.TryParse(Await_a, out Await_b); 
         }
 
         private void InitializeUI()
@@ -131,12 +133,16 @@ namespace KitBox.Views
 
                     string quantityText = quantityEntry.Text;
                     int quantity;
+                    
+                    
                     if (!int.TryParse(quantityText, out quantity) || quantity <= 0)
                     {
                         throw new ArgumentException("Quantity must be a positive integer.");
                     }
 
-                    StockServices.ExecuteAutoCommand(cle, quantity, id_supp, con);
+                    quantity += Await_b; 
+                    StockServices.UpdateAwaitPiece(cle, FetchingServices.CurrentCommand,quantity, con);
+                  
                     Navigation.PushAsync(new StockManagerPage());
                 }
             }

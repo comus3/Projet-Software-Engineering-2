@@ -10,10 +10,16 @@
             <Label Text="Your order has been registered" VerticalOptions="Center" 
                    HorizontalOptions="Center" Margin="10,20,10,80" FontSize="24"/>
         </StackLayout>
-        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
-                    Margin="10,5,10,5"/>
+                    Margin="10,5,10,5"
+                    WidthRequest="500"/>
         </StackLayout>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Button Text="Basket" Clicked="BasketClicked" WidthRequest="500" Margin="0,0,0,10"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
+        </StackLayout>
+        
     </VerticalStackLayout>
 
 </ContentPage>

@@ -26,5 +26,9 @@ public partial class FinishPage : ContentPage
 
 
 	}
+	private void BasketClicked(object sender, EventArgs e)
+	{
+		Navigation.PushAsync(new Panier());
+	}
 
 }

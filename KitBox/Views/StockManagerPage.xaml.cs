@@ -1,102 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
-using AppServices;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using DAL;
-using DevTools;
-namespace KitBox.Views;
+using Microsoft.Maui.Controls;
 
-public partial class StockManagerPage : ContentPage
+namespace KitBox.Views
 {
-    private Connection con;
-    private DataTable data;
-    private ObservableCollection<PieceData> pieces;
-    
-    public ICommand SearchCommand { get; private set; }
-    public StockManagerPage()
+    public partial class StockManagerPage : ContentPage
     {
-        InitializeComponent();
-        Connection.TestConnection();
-        con = new Connection();
-        Piece affichage = new Piece(con);
-        List<string> colonnes = new List<string>
-        {
-            "reference",
-            "code",
-            "stock",
-            "reserve",
-            "await",
-            
-               
-               
-        };
-        data = affichage.LoadAll(null, colonnes);
+        private Connection con;
+        private DataTable data;
+        private ObservableCollection<PieceData> pieces;
+        
+        public ICommand SearchCommand { get; private set; }
 
-            
-        pieces = new ObservableCollection<PieceData>(); 
-        foreach (DataRow row in data.Rows)
+        public StockManagerPage()
         {
-            pieces.Add(new PieceData
-            {
-                Reference = row["reference"].ToString(),
-                Code = row["code"].ToString(),
-                Stock = row["stock"].ToString(),
-               
-                Reserve = row["reserve"].ToString(),
-                Await = row["await"].ToString(),
-                   
-                  
-            });
+            InitializeComponent();
+            RefreshData();
+            SearchCommand = new Command<string>(Search);
         }
 
-
-        myListView.ItemsSource = pieces;
-
-
-        SearchCommand = new Command<string>(Search);
-        
-    }
-    private void Search(string query)
-    {
-        if (string.IsNullOrWhiteSpace(query))
+        private void RefreshData()
         {
-               
+            Connection.TestConnection();
+            con = new Connection();
+            Piece affichage = new Piece(con);
+            List<string> colonnes = new List<string>
+            {
+                "reference",
+                "code",
+                "stock",
+                "reserve",
+                "await"
+            };
+            data = affichage.LoadAll(null, colonnes);
+            pieces = new ObservableCollection<PieceData>();
+            foreach (DataRow row in data.Rows)
+            {
+                pieces.Add(new PieceData
+                {
+                    Reference = row["reference"].ToString(),
+                    Code = row["code"].ToString(),
+                    Stock = row["stock"].ToString(),
+                    Reserve = row["reserve"].ToString(),
+                    Await = row["await"].ToString()
+                });
+            }
             myListView.ItemsSource = pieces;
         }
-        else
+
+        private void Search(string query)
         {
-                
-            var filteredItems = pieces.Where(p =>
-                p.Reference.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                p.Code.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                p.Await.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                p.Reserve.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase)) ;
-            myListView.ItemsSource = filteredItems;
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                myListView.ItemsSource = pieces;
+            }
+            else
+            {
+                var filteredItems = pieces.Where(p =>
+                    p.Reference.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Code.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Await.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Reserve.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase));
+                myListView.ItemsSource = filteredItems;
+            }
         }
-    }
 
-    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        Search(e.NewTextValue);
-    }
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search(e.NewTextValue);
+        }
 
-    private void OnorderClicked(object sender, EventArgs e)
-    {
-        var piece = (PieceData)((Button)sender).BindingContext;
-        Navigation.PushAsync(new OrderPartsPage( piece.Code));
+        private void OnorderClicked(object sender, EventArgs e)
+        {
+            var piece = (PieceData)((Button)sender).BindingContext;
+            Navigation.PushAsync(new OrderPartsPage(piece.Code, piece.Await));
+        }
+
+        private void OnInputClicked(object sender, EventArgs e)
+        {
+            var piece = (PieceData)((Button)sender).BindingContext;
+            Navigation.PushAsync(new InputArrivalPage(piece.Code));
+        }
         
-
     }
-
 }
