@@ -56,6 +56,13 @@ namespace KitBox.Views
             // Initialize search command
             SearchCommand = new Command<string>(Search);
         }
+
+        private void onInsight(object sender, EventArgs e)
+        {
+
+            Navigation.PushAsync(new InsightPage()); 
+        }
+
         private async void onsupplier(object sender, EventArgs e)
         {
 
@@ -117,6 +124,9 @@ namespace KitBox.Views
         public string Stock { get; set; }
         
         public string selling_price { get; set; }
+        public string Reserve { get; set; }
+        public string Await { get; set; }
+        
         
        
     }

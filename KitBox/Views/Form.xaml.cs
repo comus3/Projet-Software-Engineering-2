@@ -60,7 +60,7 @@ namespace KitBox.Views
             cancel.Text = "cancel locker number " + count.ToString();
             cancel.BackgroundColor = Color.FromHex("#007ACC");
             HorizontalStackLayout locker_i = new HorizontalStackLayout();
-            locker_i.Spacing = 500; 
+            locker_i.Spacing = 650; 
             cancel.HorizontalOptions = LayoutOptions.End;
             locker_i.Children.Add(newLabel);
             locker_i.Children.Add(cancel);

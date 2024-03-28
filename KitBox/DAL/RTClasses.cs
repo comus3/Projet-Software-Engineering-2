@@ -22,3 +22,12 @@ public class RtArmoire : Model
         primaryKey = "id_relation";
     }
 }
+public class RtSupplier : Model
+{
+
+    public RtSupplier(Connection connection) : base(connection)
+    {
+        tableName = "rt_supplier";
+        primaryKey = "id_relation";
+    }
+}
