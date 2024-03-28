@@ -260,15 +260,30 @@ class StockServices
         {
             cond["id_armoire"] = armoirePkString;
             DataTable pieceRt = rtarmoire.LoadAll(cond, colomns);
-            StockServices.ExecuteReserve(pieceRt.Rows[0].ItemArray[1], Convert.ToInt32(pieceRt.Rows[0].ItemArray[0]),connection);
+            foreach (DataRow rowPiece in pieceRt.Rows)
+            { 
+                StockServices.ExecuteReserve(rowPiece.ItemArray[1], Convert.ToInt32(rowPiece.ItemArray[0]), connection); 
+            }
         }
         cond = new Dictionary<string, object>();
         foreach (string casierPkString in listCasierPk)
         {
             cond["id_casier"] = casierPkString;
             DataTable pieceRt = rtcasier.LoadAll(cond, colomns);
-            StockServices.ExecuteReserve(pieceRt.Rows[0].ItemArray[1], Convert.ToInt32(pieceRt.Rows[1].ItemArray[0]), connection);
+            foreach (DataRow rowPiece in pieceRt.Rows)
+            {
+                StockServices.ExecuteReserve(rowPiece.ItemArray[1], Convert.ToInt32(rowPiece.ItemArray[0]), connection);
+            }
+                
         }
+    }
+    public static void AwaitAddQuantity(object code,int quantity,Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        int awaitQtt = Convert.ToInt32(piece.Load(code).Rows[0].ItemArray[9]);
+        int newQtt = quantity + awaitQtt;
+        piece.Attributes["await"] = newQtt;
+        piece.Save();
     }
 }
   
