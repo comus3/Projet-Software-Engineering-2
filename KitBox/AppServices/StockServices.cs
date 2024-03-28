@@ -218,6 +218,7 @@ class StockServices
             Piece pieceObj = new Piece(connection);
             Dictionary<string, object> update = new Dictionary<string, object>();
             update.Add("stock", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[8]) + quantiteLeft);
+            update.Add("await", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[10]) - quantite);
             pieceObj.Update(update);
             pieceObj.Load(code);
             pieceObj.Save();
