@@ -79,7 +79,7 @@ namespace KitBox.Views
         private void OnorderClicked(object sender, EventArgs e)
         {
             var piece = (PieceData)((Button)sender).BindingContext;
-            Navigation.PushAsync(new OrderPartsPage(piece.Code, piece.Await));
+            Navigation.PushAsync(new OrderPartsPage(piece.Code));
         }
 
         private void OnInputClicked(object sender, EventArgs e)
