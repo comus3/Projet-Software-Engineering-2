@@ -18,7 +18,8 @@ namespace KitBox.Views
         private Picker supplierPicker; 
         private Entry quantityEntry; 
         private string cle;
-        private DataTable data_2; 
+        private DataTable data_2;
+        
 
         public OrderPartsPage(string code)
         {
@@ -30,6 +31,7 @@ namespace KitBox.Views
 
             // Load suppliers
             LoadSuppliers();
+            
         }
 
         private void InitializeUI()
@@ -131,12 +133,16 @@ namespace KitBox.Views
 
                     string quantityText = quantityEntry.Text;
                     int quantity;
+                    
+                    
                     if (!int.TryParse(quantityText, out quantity) || quantity <= 0)
                     {
                         throw new ArgumentException("Quantity must be a positive integer.");
                     }
 
-                    StockServices.ExecuteAutoCommand(cle, quantity, id_supp, con);
+                    
+                   
+                    StockServices.AwaitAddQuantity(cle,quantity,con);
                     Navigation.PushAsync(new StockManagerPage());
                 }
             }

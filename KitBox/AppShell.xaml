@@ -18,12 +18,7 @@
        
         
         
-        <Tab Title="Panier">
-            <ShellContent
-                Title="Panier"
-                ContentTemplate="{DataTemplate views:Panier}"/>
-            
-        </Tab>
+       
        
     </TabBar>
 </Shell>

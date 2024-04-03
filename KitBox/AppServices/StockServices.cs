@@ -218,6 +218,7 @@ class StockServices
             Piece pieceObj = new Piece(connection);
             Dictionary<string, object> update = new Dictionary<string, object>();
             update.Add("stock", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[8]) + quantiteLeft);
+            update.Add("await", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[10]) - quantite);
             pieceObj.Update(update);
             pieceObj.Load(code);
             pieceObj.Save();
@@ -276,6 +277,14 @@ class StockServices
             }
                 
         }
+    }
+    public static void AwaitAddQuantity(object code,int quantity,Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        int awaitQtt = Convert.ToInt32(piece.Load(code).Rows[0].ItemArray[10]);
+        int newQtt = quantity + awaitQtt;
+        piece.Attributes["await"] = newQtt;
+        piece.Save();
     }
 }
   

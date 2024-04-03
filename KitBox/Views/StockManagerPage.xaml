@@ -41,7 +41,7 @@
                                 <Label Text="{Binding Await}" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
                                 <StackLayout Grid.Column="5" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                                     <Button Text="Order" Clicked="OnorderClicked" HorizontalOptions="StartAndExpand"/>
-                                    <Button Text="Input Arrival" HorizontalOptions="StartAndExpand"/>
+                                    <Button Text="Input Arrival" Clicked="OnInputClicked"  HorizontalOptions="StartAndExpand"/>
                                 </StackLayout>
                             </Grid>
                         </ViewCell>
