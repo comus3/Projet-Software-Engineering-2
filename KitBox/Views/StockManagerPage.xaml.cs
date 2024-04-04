@@ -82,13 +82,13 @@ namespace KitBox.Views
             Navigation.PushAsync(new OrderPartsPage(piece.Code));
         }
 
-        private void input_clicked(object sender, EventArgs e)
+        private void edit_clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new InputArrivalPage());
+            Navigation.PushAsync(new EditStockManager());
             
         }
 
-        private void OnInputClicked(object sender, EventArgs e)
+        private void OnEditClicked(object sender, EventArgs e)
         {
             var piece = (PieceData)((Button)sender).BindingContext;
             
