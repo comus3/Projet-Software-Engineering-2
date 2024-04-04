@@ -143,6 +143,7 @@ namespace KitBox.Views
                     
                    
                     StockServices.AwaitAddQuantity(cle,quantity,con);
+                    StockServices.ExecuteAutoCommand(cle,quantity,id_supp ,con);
                     Navigation.PushAsync(new StockManagerPage());
                 }
             }
