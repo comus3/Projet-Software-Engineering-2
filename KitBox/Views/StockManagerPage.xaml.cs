@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Input;
 using DAL;
+using MauiApp1;
 using Microsoft.Maui.Controls;
 
 namespace KitBox.Views
@@ -87,9 +88,10 @@ namespace KitBox.Views
             var piece = (PieceData)((Button)sender).BindingContext;
         }
 
-        private void OnInputClicked(object sender, EventArgs e)
+        private void OnEditClicked(object sender, EventArgs e)
         {
             var piece = (PieceData)((Button)sender).BindingContext;
+            Navigation.PushAsync(new EditStockManager());
            
         }
         
