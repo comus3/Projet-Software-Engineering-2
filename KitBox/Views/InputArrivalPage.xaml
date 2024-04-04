@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="Input Arrival"
              x:Class="KitBox.Views.InputArrivalPage">
     <ContentPage.Content>
         <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-             <StackLayout Padding="10">
+           
             <Grid BackgroundColor="#E0E0E0" Padding="5" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" /> 
@@ -40,14 +39,17 @@
                                 <Label Text="{Binding Price_piece}" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
                                 <Label Text="{Binding Price_total}" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
                                 <Label Text="{Binding Quantity}" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Completed}" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
+                                <CheckBox IsChecked="{Binding Completed, Mode=TwoWay}"
+                                          IsEnabled="{Binding CheckBoxEnabled}"
+                                          Grid.Column="5"
+                                          HorizontalOptions="CenterAndExpand"
+                                          CheckedChanged="CheckBox_CheckedChanged"
+                                />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -91,7 +91,7 @@ namespace KitBox.Views
         private void OnEditClicked(object sender, EventArgs e)
         {
             var piece = (PieceData)((Button)sender).BindingContext;
-            Navigation.PushAsync(new EditStockManager());
+            Navigation.PushAsync(new EditStockManager(piece.Code , piece.Stock));
            
         }
         
