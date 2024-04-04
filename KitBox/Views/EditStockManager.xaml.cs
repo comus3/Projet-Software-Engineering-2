@@ -1,41 +1,53 @@
-using Microsoft.Maui.Controls;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Windows.Input;
+using Microsoft.Maui.Controls;
 using DAL;
 using DevTools;
+using System.Data;
 using KitBox.Views;
+using System.Data.OleDb;
 
-namespace KitBox.Views
+namespace MauiApp1
 {
-	public partial class EditStockManager : ContentPage
-	{
-		private Connection con;
+    public partial class EditStockManager : ContentPage
+    {
+        private Connection con;
+        private object cle;
 
-		private DataTable data;
+		//private object OLDstock;
 
-		private ObservableCollection<EditData> editData;
+        public EditStockManager( string Reference, string stock)
+        {
+            InitializeComponent();
+            con = new Connection();
+            Connection.TestConnection();
+             cle = Reference;
+			 OLDstock.Text = stock;
 
-		public EditStockManager()
-		{
-			InitializeComponent();
+        }
 
-			Connection.TestConnection();
+        private void ConfirmButton_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                
 
-			con = new Connection();
+				string newStockQuantity = OLDstock.Text;
 
+				Piece piece = new Piece(con);
 
-		}
+                DataTable result = piece.Load(cle);
 
+                Dictionary<string, object> valuesToUpdate = new Dictionary<string, object>();
+                valuesToUpdate["stock"] = newStockQuantity;
+                piece.Update(valuesToUpdate);
+                piece.Save();
 
-		public class EditData
-		{
-
-			public string Stock { get; set; }
-
-		}
-	}
+                Navigation.PushAsync(new StockManagerPage());;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteToFile($"Error occurred while updating stock quantity: {ex.Message}");
+            }
+        }
+    }
 }
