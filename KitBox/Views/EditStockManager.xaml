@@ -5,17 +5,10 @@
              Title="Edit Stock">
     <ContentPage.Content>
         <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
-            <!-- Entry for Item Name -->
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Stock:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDstock" Placeholder="Enter " HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDstock" Placeholder="Enter New Stock Quantity " HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-            <!-- Entry for New Stock Quantity -->
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Text="New Stock Quantity:" VerticalOptions="Center"/>
-                <Entry x:Name="NewStockEntry" Placeholder="Enter New Stock Quantity" HorizontalOptions="FillAndExpand"/>
-            </StackLayout>
-            <!-- Confirm Button -->
             <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
         </StackLayout>
     </ContentPage.Content>
