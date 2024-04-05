@@ -120,6 +120,7 @@ namespace KitBox.Views
 
                 historiques.Add(historiqueItem);
             }
+            historiques = new ObservableCollection<HistoriqueData>(historiques.OrderBy(h => h.Completed));
 
             myListView2.ItemsSource = historiques; // Affectation de la variable historiques
         }

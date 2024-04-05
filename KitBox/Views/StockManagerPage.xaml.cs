@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Input;
+using AppServices;
 using DAL;
 using MauiApp1;
 using Microsoft.Maui.Controls;
@@ -15,7 +16,7 @@ namespace KitBox.Views
         private Connection con;
         private DataTable data;
         private ObservableCollection<PieceData> pieces;
-        
+        private List<string> ToCommand; 
         public ICommand SearchCommand { get; private set; }
 
         public StockManagerPage()
@@ -85,7 +86,13 @@ namespace KitBox.Views
 
         private void input_clicked(object sender, EventArgs e)
         {
-            var piece = (PieceData)((Button)sender).BindingContext;
+            Navigation.PushAsync(new InputArrivalPage());
+            ToCommand = StockServices.CheckAllStockLow(con); 
+           // string message = string.Join("\n", ToCommand);
+            
+            // Display the alert
+           //DisplayAlert("List of Commands", message, "OK");
+
         }
 
         private void OnEditClicked(object sender, EventArgs e)

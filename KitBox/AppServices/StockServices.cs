@@ -72,7 +72,7 @@ class StockServices
         {
             if (!IsStockLow(row.ItemArray[0], connection))
             {
-                list.Add($"Il faut commander {row.ItemArray[0]}");
+                list.Add($"Command {row.ItemArray[0]}");
             }
         }
         return list;
