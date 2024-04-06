@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using DAL;
 using DevTools;
-
+using System.ComponentModel;
 namespace KitBox.Views
 {
     public partial class SecretaryPage : ContentPage
@@ -52,8 +52,7 @@ namespace KitBox.Views
 
 
             myListView.ItemsSource = pieces;
-
-            // Initialize search command
+            
             SearchCommand = new Command<string>(Search);
         }
 
@@ -117,8 +116,21 @@ namespace KitBox.Views
 
     }
 
-    public class PieceData
+    public class PieceData 
     {
+       
+
+        
+
+        
+
+        private Color _minPieceBackgroundColor = Colors.White; 
+        
+        public Color MinPieceBackgroundColor 
+        { 
+            get { return _minPieceBackgroundColor; } 
+            set { _minPieceBackgroundColor = value; } 
+        }
         public string Reference { get; set; }
         public string Code { get; set; }
         public string Stock { get; set; }
@@ -126,6 +138,8 @@ namespace KitBox.Views
         public string selling_price { get; set; }
         public string Reserve { get; set; }
         public string Await { get; set; }
+       
+        public string MinPiece { get; set; }
         
         
        

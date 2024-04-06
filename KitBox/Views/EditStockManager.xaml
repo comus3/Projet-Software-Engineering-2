@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.EditStockManager"
+             Title="Edit Stock">
+    <ContentPage.Content>
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500">
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Text="Stock:" VerticalOptions="Center"/>
+                <Entry x:Name="OLDstock" Placeholder="Enter New Stock Quantity " WidthRequest="500" />
+            </StackLayout>
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

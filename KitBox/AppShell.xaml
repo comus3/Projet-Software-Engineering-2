@@ -13,12 +13,9 @@
             <ShellContent
                 Title="ChoicePage"
                 ContentTemplate="{DataTemplate views:ChoicebtwPage}"/>
+            
         </Tab>
         
-       
-        
-        
-       
        
     </TabBar>
 </Shell>
