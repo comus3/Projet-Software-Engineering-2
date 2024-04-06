@@ -17,26 +17,27 @@ namespace KitBox.Views
         private Connection con;
         private DataTable data;
         private ObservableCollection<PieceData> pieces;
-        private List<string> ToCommand; 
+        private List<string> ToCommand;
         public ICommand SearchCommand { get; private set; }
 
         public StockManagerPage()
         {
             InitializeComponent();
-            
-                RefreshData();
-            
-            
-            
+
+            con = new Connection();
+
             ToCommand = StockServices.GenerateAutoCommandMessage(con);
-           
+
+            RefreshData();
+
+            
+
             SearchCommand = new Command<string>(Search);
         }
 
         private void RefreshData()
         {
-            con = new Connection(); 
-            Connection.TestConnection(); 
+            
 
             Piece affichage = new Piece(con);
             List<string> colonnes = new List<string>
@@ -64,10 +65,11 @@ namespace KitBox.Views
 
                 try
                 {
-                    if (ToCommand.Contains(piece.Code)) 
+                    if (ToCommand.Contains(piece.Code))
                     {
                         // piece.MinPieceBackgroundColor = Colors.Red; 
-                        Logger.WriteToFile(piece.Code); }
+                        Logger.WriteToFile(piece.Code);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -77,7 +79,7 @@ namespace KitBox.Views
 
                 pieces.Add(piece);
             }
-    
+
             myListView.ItemsSource = pieces;
         }
 
@@ -96,7 +98,7 @@ namespace KitBox.Views
                     p.Await.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Reserve.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase));
-                    myListView.ItemsSource = filteredItems;
+                myListView.ItemsSource = filteredItems;
             }
         }
 
@@ -114,21 +116,21 @@ namespace KitBox.Views
         private void input_clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new InputArrivalPage());
-            
-            
-            
-            
-           
+
+
+
+
+
 
         }
 
         private void OnEditClicked(object sender, EventArgs e)
         {
             var piece = (PieceData)((Button)sender).BindingContext;
-            Navigation.PushAsync(new EditStockManager(piece.Code , piece.Stock));
-           
+            Navigation.PushAsync(new EditStockManager(piece.Code, piece.Stock));
+
         }
-        
+
 
         private void OnSaveClicked(object sender, EventArgs e)
         {
@@ -137,25 +139,25 @@ namespace KitBox.Views
             {
                 var button = (Button)sender;
                 var piece = (PieceData)button.BindingContext;
-                
+
                 Entry minPieceEntry = ((View)sender).FindByName<Entry>("minPieceEntry");
 
-                
+
                 string minStock = minPieceEntry.Text;
 
-                
+
                 piece.MinPiece = minStock;
 
-                
+
                 Piece Parts = new Piece(con);
                 DataTable result = Parts.Load(piece.Code);
                 Dictionary<string, object> updatedInfo = new Dictionary<string, object>();
-                updatedInfo["min_stock"] = minStock; 
-                
-                
-               
+                updatedInfo["min_stock"] = minStock;
+
+
+
                 Parts.Update(updatedInfo);
-                Parts.Save(); 
+                Parts.Save();
                 RefreshData();
             }
             catch (Exception exception)
@@ -163,13 +165,13 @@ namespace KitBox.Views
                 Logger.WriteToFile(exception);
                 throw;
             }
-            
+
         }
 
 
 
 
 
-        
+
     }
 }
