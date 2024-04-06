@@ -115,7 +115,7 @@ class StockServices
         colomns.Add("await");
         colomns.Add("min_stock");
         List<string> aCommander = new List<string>();
-        DataTable pieces = piece.LoadAll(conditions);
+        DataTable pieces = piece.LoadAll(conditions,colomns);
         foreach (DataRow row in pieces.Rows)
         {
             if ((Convert.ToInt32(row.ItemArray[1]) + Convert.ToInt32(row.ItemArray[2])) < Convert.ToInt32(row.ItemArray[3]))
