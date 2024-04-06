@@ -14,14 +14,19 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    
                     <ColumnDefinition Width="4*" />
+                   
                 </Grid.ColumnDefinitions>
                 <Label Text="Reference" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="StartAndExpand"/>
                 <Label Text="Code" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Stock" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Reserve" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Await" FontAttributes="Bold" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Action" FontAttributes="Bold" Grid.Column="5" HorizontalOptions="StartAndExpand"/>
+                <Label Text="MinStock" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="StartAndExpand"/> 
+                <Label Text="Stock" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Reserve" FontAttributes="Bold" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Await" FontAttributes="Bold" Grid.Column="5" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Action" FontAttributes="Bold" Grid.Column="6" HorizontalOptions="StartAndExpand"/>
+               
             </Grid>
             <ListView x:Name="myListView">
                 <ListView.ItemTemplate>
@@ -34,22 +39,31 @@
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="4*" />
+                                    
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Reference}" Grid.Column="0" HorizontalOptions="StartAndExpand"/>
                                 <Label Text="{Binding Code}" Grid.Column="1" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Stock}" Grid.Column="2" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Reserve}" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Await}" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
-                                <StackLayout Grid.Column="5" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                
+                                <Entry Text="{Binding MinPiece, Mode=TwoWay}" Grid.Column="2" HorizontalOptions="StartAndExpand" Placeholder="{Binding MinPiece}" x:Name="minPieceEntry"  />
+
+                                <!-- BackgroundColor="{Binding MinPieceBackgroundColor -->
+
+                                <Label Text="{Binding Stock}" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Reserve}" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Await}" Grid.Column="5" HorizontalOptions="StartAndExpand"/>
+                                <StackLayout Grid.Column="6" Orientation="Horizontal" HorizontalOptions="StartAndExpand" Spacing="10">
                                     <Button Text="Order" Clicked="OnorderClicked" BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand"/>
                                     <Button Text="Edit" Clicked="OnEditClicked" BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand"/>
+                                    <Button Text="Save" Clicked="OnSaveClicked"   BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand" />
                                 </StackLayout>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

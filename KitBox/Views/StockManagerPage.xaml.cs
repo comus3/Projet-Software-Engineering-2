@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using AppServices;
 using DAL;
+using DevTools;
 using MauiApp1;
 using Microsoft.Maui.Controls;
 
@@ -22,14 +23,21 @@ namespace KitBox.Views
         public StockManagerPage()
         {
             InitializeComponent();
-            RefreshData();
+            
+                RefreshData();
+            
+            
+            
+            ToCommand = StockServices.GenerateAutoCommandMessage(con);
+           
             SearchCommand = new Command<string>(Search);
         }
 
         private void RefreshData()
         {
-            Connection.TestConnection();
-            con = new Connection();
+            con = new Connection(); 
+            Connection.TestConnection(); 
+
             Piece affichage = new Piece(con);
             List<string> colonnes = new List<string>
             {
@@ -37,23 +45,42 @@ namespace KitBox.Views
                 "code",
                 "stock",
                 "reserve",
-                "await"
+                "await",
+                "min_stock"
             };
             data = affichage.LoadAll(null, colonnes);
             pieces = new ObservableCollection<PieceData>();
             foreach (DataRow row in data.Rows)
             {
-                pieces.Add(new PieceData
+                var piece = new PieceData
                 {
                     Reference = row["reference"].ToString(),
                     Code = row["code"].ToString(),
                     Stock = row["stock"].ToString(),
                     Reserve = row["reserve"].ToString(),
-                    Await = row["await"].ToString()
-                });
+                    Await = row["await"].ToString(),
+                    MinPiece = row["min_stock"].ToString(),
+                };
+
+                try
+                {
+                    if (ToCommand.Contains(piece.Code)) 
+                    {
+                        // piece.MinPieceBackgroundColor = Colors.Red; 
+                        Logger.WriteToFile(piece.Code); }
+                }
+                catch (Exception e)
+                {
+                    Logger.WriteToFile(e);
+                    throw;
+                }
+
+                pieces.Add(piece);
             }
+    
             myListView.ItemsSource = pieces;
         }
+
 
         private void Search(string query)
         {
@@ -69,7 +96,7 @@ namespace KitBox.Views
                     p.Await.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Reserve.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                     p.Stock.Contains(query, StringComparison.OrdinalIgnoreCase));
-                myListView.ItemsSource = filteredItems;
+                    myListView.ItemsSource = filteredItems;
             }
         }
 
@@ -87,11 +114,11 @@ namespace KitBox.Views
         private void input_clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new InputArrivalPage());
-            ToCommand = StockServices.CheckAllStockLow(con); 
-           // string message = string.Join("\n", ToCommand);
             
-            // Display the alert
-           //DisplayAlert("List of Commands", message, "OK");
+            
+            
+            
+           
 
         }
 
@@ -101,6 +128,48 @@ namespace KitBox.Views
             Navigation.PushAsync(new EditStockManager(piece.Code , piece.Stock));
            
         }
+        
+
+        private void OnSaveClicked(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var button = (Button)sender;
+                var piece = (PieceData)button.BindingContext;
+                
+                Entry minPieceEntry = ((View)sender).FindByName<Entry>("minPieceEntry");
+
+                
+                string minStock = minPieceEntry.Text;
+
+                
+                piece.MinPiece = minStock;
+
+                
+                Piece Parts = new Piece(con);
+                DataTable result = Parts.Load(piece.Code);
+                Dictionary<string, object> updatedInfo = new Dictionary<string, object>();
+                updatedInfo["min_stock"] = minStock; 
+                
+                
+               
+                Parts.Update(updatedInfo);
+                Parts.Save(); 
+                RefreshData();
+            }
+            catch (Exception exception)
+            {
+                Logger.WriteToFile(exception);
+                throw;
+            }
+            
+        }
+
+
+
+
+
         
     }
 }

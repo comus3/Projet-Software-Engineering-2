@@ -72,11 +72,12 @@ namespace KitBox.Views
                 {
                     initiallyUncheckedItems.Add(historiqueItem);
                 }
-
+                
                 historiques.Add(historiqueItem);
             }
 
             myListView2.ItemsSource = historiques; // Affectation de la variable historiques
+            RefreshData();
         }
         private void RefreshData()
         {
@@ -104,13 +105,13 @@ namespace KitBox.Views
                 {
                     Code_supp = row["id_supplier"].ToString(),
                     Date = row["date"].ToString(),
-                    Quantity =Convert.ToInt32( row["quantite"]) ,
+                    Quantity = Convert.ToInt32(row["quantite"]),
                     Price_piece = row["prix_piece"].ToString(),
                     Price_total = row["prix_total"].ToString(),
-                    CommandeID = row["id_commande"].ToString(), 
+                    CommandeID = row["id_commande"].ToString(),
                     PieceID = row["piece"].ToString(),
                     Completed = Convert.ToBoolean(row["completed"]),
-                   
+                    
                 };
 
                 if (!historiqueItem.Completed) // Si l'élément n'est pas déjà cochée, ajoutez-le à la liste
@@ -122,8 +123,10 @@ namespace KitBox.Views
             }
             historiques = new ObservableCollection<HistoriqueData>(historiques.OrderBy(h => h.Completed));
 
-            myListView2.ItemsSource = historiques; // Affectation de la variable historiques
+            myListView2.ItemsSource = historiques; 
+           
         }
+
 
         private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
