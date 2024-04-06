@@ -124,13 +124,13 @@ namespace KitBox.Views
 
         
 
-        // private Color _minPieceBackgroundColor = Colors.White; 
-        //
-        // public Color MinPieceBackgroundColor 
-        // { 
-        //     get { return _minPieceBackgroundColor; } 
-        //     set { _minPieceBackgroundColor = value; } 
-        // }
+        private Color _minPieceBackgroundColor = Colors.White; 
+        
+        public Color MinPieceBackgroundColor 
+        { 
+            get { return _minPieceBackgroundColor; } 
+            set { _minPieceBackgroundColor = value; } 
+        }
         public string Reference { get; set; }
         public string Code { get; set; }
         public string Stock { get; set; }

@@ -37,8 +37,6 @@ namespace KitBox.Views
 
         private void RefreshData()
         {
-            
-
             Piece affichage = new Piece(con);
             List<string> colonnes = new List<string>
             {
@@ -51,6 +49,7 @@ namespace KitBox.Views
             };
             data = affichage.LoadAll(null, colonnes);
             pieces = new ObservableCollection<PieceData>();
+            List<PieceData> redPieces = new List<PieceData>(); // Liste pour stocker les pièces en rouge
             foreach (DataRow row in data.Rows)
             {
                 var piece = new PieceData
@@ -63,25 +62,27 @@ namespace KitBox.Views
                     MinPiece = row["min_stock"].ToString(),
                 };
 
-                try
+                if (ToCommand.Contains(piece.Code))
                 {
-                    if (ToCommand.Contains(piece.Code))
-                    {
-                        // piece.MinPieceBackgroundColor = Colors.Red; 
-                        Logger.WriteToFile(piece.Code);
-                    }
+                    piece.MinPieceBackgroundColor = Colors.Red;
+                    redPieces.Add(piece); 
                 }
-                catch (Exception e)
+                else
                 {
-                    Logger.WriteToFile(e);
-                    throw;
+                    pieces.Add(piece); 
                 }
+            }
 
-                pieces.Add(piece);
+            
+            foreach (var redPiece in redPieces)
+            {
+                pieces.Insert(0, redPiece);
             }
 
             myListView.ItemsSource = pieces;
         }
+
+
 
 
         private void Search(string query)
@@ -116,12 +117,6 @@ namespace KitBox.Views
         private void input_clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new InputArrivalPage());
-
-
-
-
-
-
         }
 
         private void OnEditClicked(object sender, EventArgs e)

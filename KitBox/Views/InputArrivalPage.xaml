@@ -3,8 +3,10 @@
              Title="Input Arrival"
              x:Class="KitBox.Views.InputArrivalPage">
     <ContentPage.Content>
+        
         <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-           
+            <Button Text="Go Back" Clicked="Back_Clicked" WidthRequest="300" Margin="0,0,0,10"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
             <Grid BackgroundColor="#E0E0E0" Padding="5" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" /> 

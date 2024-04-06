@@ -4,10 +4,10 @@
              x:Class="MauiApp1.EditStockManager"
              Title="Edit Stock">
     <ContentPage.Content>
-        <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500">
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Stock:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDstock" Placeholder="Enter New Stock Quantity " HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDstock" Placeholder="Enter New Stock Quantity " WidthRequest="500" />
             </StackLayout>
             <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
         </StackLayout>

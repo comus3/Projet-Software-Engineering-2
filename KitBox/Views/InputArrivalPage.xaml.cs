@@ -156,6 +156,11 @@ namespace KitBox.Views
             }
         }
 
+        public void Back_Clicked(object sender, EventArgs e)
+        {
+
+            Navigation.PushAsync(new StockManagerPage()); 
+        }
 
         public class HistoriqueData
         {

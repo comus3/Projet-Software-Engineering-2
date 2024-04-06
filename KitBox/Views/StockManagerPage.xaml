@@ -46,9 +46,9 @@
                                 <Label Text="{Binding Reference}" Grid.Column="0" HorizontalOptions="StartAndExpand"/>
                                 <Label Text="{Binding Code}" Grid.Column="1" HorizontalOptions="StartAndExpand"/>
                                 
-                                <Entry Text="{Binding MinPiece, Mode=TwoWay}" Grid.Column="2" HorizontalOptions="StartAndExpand" Placeholder="{Binding MinPiece}" x:Name="minPieceEntry"  />
+                                <Entry Text="{Binding MinPiece, Mode=TwoWay}" Grid.Column="2" HorizontalOptions="StartAndExpand" Placeholder="{Binding MinPiece}" x:Name="minPieceEntry" BackgroundColor="{Binding MinPieceBackgroundColor}" />
 
-                                <!-- BackgroundColor="{Binding MinPieceBackgroundColor -->
+                               
 
                                 <Label Text="{Binding Stock}" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
                                 <Label Text="{Binding Reserve}" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
