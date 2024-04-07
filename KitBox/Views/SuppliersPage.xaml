@@ -1,15 +1,35 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.SuppliersPage"
-             Title="Suppliers' Page">
+             Title="Suppliers' Page"
+             BackgroundColor="#FFFFFF"> <!-- Ajout du fond blanc -->
+    <ContentPage.Resources>
+        <Style TargetType="Label"> <!-- Style pour les Labels -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="FontSize" Value="16"/> <!-- Taille de la police -->
+        </Style>
+        <Style TargetType="Button"> <!-- Style pour les Buttons -->
+            <Setter Property="TextColor" Value="White"/> <!-- Couleur du texte -->
+            <Setter Property="BackgroundColor" Value="#007ACC"/> <!-- Couleur de fond -->
+            <Setter Property="CornerRadius" Value="5"/> <!-- Rayon des coins -->
+            <Setter Property="WidthRequest" Value="200"/> <!-- Largeur -->
+            <Setter Property="HeightRequest" Value="40"/> <!-- Hauteur -->
+        </Style>
+        <Style TargetType="Entry"> <!-- Style pour les Entries -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="BackgroundColor" Value="#F2F2F2"/> <!-- Couleur de fond -->
+            <Setter Property="PlaceholderColor" Value="#AAAAAA"/> <!-- Couleur du texte d'espacement -->
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Button Text="Add a Supplier" Clicked="Add_clicked" HorizontalOptions="FillAndExpand" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5" Margin="0,0,0,10"/>
+            <Button Text="Add a Supplier" Clicked="Add_clicked" HorizontalOptions="Center" WidthRequest="400" x:Name="ButtonAdd" TextColor="White" CornerRadius="5" Margin="0,0,0,10" IsVisible="True"/>
             <Label Text="Click on a supplier to see more details about him" TextColor="Red" HorizontalOptions="Center" Margin="0,0,0,10"/>
-            <StackLayout x:Name="addSupplierLayout" IsVisible="False">
+            <StackLayout x:Name="addSupplierLayout" IsVisible="False" WidthRequest="500">
                 <Entry Placeholder="Supplier Name" x:Name="nomEntry" />
                 <Entry Placeholder="Telephone" x:Name="telephoneEntry" />
                 <Entry Placeholder="Address" x:Name="adresseEntry" />
+                <Button Text="Cancel" Clicked="Cancel_Clicked" Margin="0,10,0,0"/>
                 <Button Text="Save" Clicked="Save_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5" Margin="0,10,0,0"/>
             </StackLayout>
             <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" Margin="0,0,0,10" />

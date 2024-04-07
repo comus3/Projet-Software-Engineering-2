@@ -19,7 +19,6 @@ namespace KitBox.Views
         private Entry quantityEntry; 
         private string cle;
         private DataTable data_2;
-        
 
         public OrderPartsPage(string code)
         {
@@ -31,20 +30,18 @@ namespace KitBox.Views
 
             // Load suppliers
             LoadSuppliers();
-            
         }
 
         private void InitializeUI()
         {
             Title = "Order Parts";
-            
 
             supplierPicker = new Picker 
             {
                 Title = "Select Supplier",
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                WidthRequest = 300 // Augmenter la largeur
+                WidthRequest = 300
             };
 
             quantityEntry = new Entry 
@@ -52,7 +49,7 @@ namespace KitBox.Views
                 Placeholder = "Enter Quantity",
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                WidthRequest = 300 // Augmenter la largeur
+                WidthRequest = 300
             };
 
             Button confirmButton = new Button
@@ -60,7 +57,7 @@ namespace KitBox.Views
                 Text = "Confirm",
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                WidthRequest = 200 // Augmenter la largeur
+                WidthRequest = 200
             };
             confirmButton.Clicked += ConfirmButton_Clicked;
 
@@ -134,14 +131,11 @@ namespace KitBox.Views
                     string quantityText = quantityEntry.Text;
                     int quantity;
                     
-                    
                     if (!int.TryParse(quantityText, out quantity) || quantity <= 0)
                     {
                         throw new ArgumentException("Quantity must be a positive integer.");
                     }
 
-                    
-                   
                     StockServices.AwaitAddQuantity(cle,quantity,con);
                     StockServices.ExecuteAutoCommand(cle,quantity,id_supp ,con);
                     Navigation.PushAsync(new StockManagerPage());

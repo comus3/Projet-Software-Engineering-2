@@ -1,23 +1,43 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.EditItemsSuppPage"
-             Title="Modify the Price and the Delay">
-    <ContentPage.Content>
-        <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
-            <!-- Entry for Price -->
-
+             Title="Modify the Price and the Delay"
+             BackgroundColor="#FFFFFF"> <!-- Ajout du fond blanc -->
+    <ContentPage.Resources>
+        <Style TargetType="Label"> <!-- Style pour les Labels -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="FontSize" Value="16"/> <!-- Taille de la police -->
+        </Style>
+        <Style TargetType="Entry"> <!-- Style pour les Entries -->
+            <Setter Property="BackgroundColor" Value="#F2F2F2"/> <!-- Couleur de fond -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="PlaceholderColor" Value="#999999"/> <!-- Couleur du placeholder -->
             
+            <Setter Property="WidthRequest" Value="300"/> <!-- Largeur -->
+            <Setter Property="HeightRequest" Value="40"/> <!-- Hauteur -->
+        </Style>
+        <Style TargetType="Button"> <!-- Style pour les Buttons -->
+            <Setter Property="TextColor" Value="White"/> <!-- Couleur du texte -->
+            <Setter Property="BackgroundColor" Value="#007ACC"/> <!-- Couleur de fond -->
+            
+            <Setter Property="WidthRequest" Value="200"/> <!-- Largeur -->
+            <Setter Property="HeightRequest" Value="40"/> <!-- Hauteur -->
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500">
+            <!-- Entry for Price -->
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Price:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDPrice" Placeholder="Enter Price" HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDPrice" Placeholder="Enter Price"/>
             </StackLayout>
             <!-- Entry for Delay -->
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Delay:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDDelay" Placeholder="Enter Delay" HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDDelay" Placeholder="Enter Delay"/>
             </StackLayout>
             <!-- Confirm Button -->
-            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" Margin="0,10,0,0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

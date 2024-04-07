@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KitBox.Views.OrderPartsPage">
     <ContentPage.Content>
-         <StackLayout x:Name="labelContainer"  />
+         <StackLayout WidthRequest="500" x:Name="labelContainer"  />
          
     </ContentPage.Content>
 </ContentPage>
