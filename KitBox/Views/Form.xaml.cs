@@ -36,12 +36,13 @@ namespace KitBox.Views
             con = new Connection();
             Button CreateanewLocker = new Button()
             {
-                Text = "Create a new Locker"
+                Text = "Create a new Locker",
+                WidthRequest = 500 
             };
             CreateanewLocker.BackgroundColor = Color.FromHex("#007ACC");
             CreateanewLocker.Clicked += OnCreateNewLockerClicked; // Ajoutez un gestionnaire d'événements pour le clic
 
-          
+            CreateanewLocker.HorizontalOptions = LayoutOptions.Center;
             VerticalStackLayout stacklay = new VerticalStackLayout();
             stacklay.Children.Add(CreateanewLocker);
             labelContainer1.Children.Add(stacklay);

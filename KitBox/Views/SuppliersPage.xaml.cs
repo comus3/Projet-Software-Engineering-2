@@ -90,6 +90,18 @@ namespace KitBox.Views
             
             
             addSupplierLayout.IsVisible = true;
+            ButtonAdd.IsVisible = false; 
+        }
+        private void Cancel_Clicked(object sender, EventArgs e)
+        {
+            
+            
+            addSupplierLayout.IsVisible = false;
+            ButtonAdd.IsVisible = true; 
+            nomEntry.Text = ""; 
+            telephoneEntry.Text = "";
+            adresseEntry.Text = "";
+                
         }
 
             private void Save_Clicked(object sender, EventArgs e)
@@ -130,7 +142,8 @@ namespace KitBox.Views
 
        
         addSupplierLayout.IsVisible = false;
-    }
+        ButtonAdd.IsVisible = true; 
+        }
 
     private void RefreshPage() //en gros ça reactualise la page et en refastant de quoi faire la liste view 
     {

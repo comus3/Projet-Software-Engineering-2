@@ -1,39 +1,48 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="KitBox.Views.SelectPartPage">
+             x:Class="KitBox.Views.SelectPartPage"
+             BackgroundColor="#FFFFFF"> <!-- Ajout du fond blanc -->
+    <ContentPage.Resources>
+        <Style TargetType="Label"> <!-- Style pour les Labels -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="FontSize" Value="16"/> <!-- Taille de la police -->
+        </Style>
+        <Style TargetType="SearchBar"> <!-- Style pour les SearchBars -->
+            <Setter Property="BackgroundColor" Value="#F2F2F2"/> <!-- Couleur de fond -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-           <Label Text="Click on a part to modify its price" TextColor="Red"/>
-            <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" />
-            <Grid>
+            <Label Text="Click on a part to modify its price" TextColor="Red" Margin="0,10,0,0"/> <!-- Ajout de la marge supérieure -->
+            <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" Margin="0,10,0,0"/> <!-- Ajout de la marge supérieure -->
+            <Grid BackgroundColor="#E0E0E0" Margin="0,10,0,0"> <!-- Ajout de la marge supérieure -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /> 
                     <ColumnDefinition Width="*" /> 
                     <ColumnDefinition Width="*" /> 
                     <ColumnDefinition Width="Auto" /> 
                 </Grid.ColumnDefinitions>
-                <Label Text="Reference" FontAttributes="Bold" Grid.Column="0" />
-                <Label Text="Code" FontAttributes="Bold" Grid.Column="1" />
-                <Label Text="Stock" FontAttributes="Bold" Grid.Column="2" />
-                <Label Text="actual selling Price" FontAttributes="Bold" Grid.Column="3" /> 
+                <Label Text="Reference" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Code" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Stock" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Actual Selling Price" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="CenterAndExpand"/> <!-- Correction de la faute de frappe -->
             </Grid>
             <ListView x:Name="myListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="Select_Clicked">
-                            <Grid>
+                            <Grid BackgroundColor="{Binding BackgroundColor}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" /> 
                                     <ColumnDefinition Width="*" /> 
                                     <ColumnDefinition Width="*" /> 
                                     <ColumnDefinition Width="Auto" /> 
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Reference}" Grid.Column="0" />
-                                <Label Text="{Binding Code}" Grid.Column="1" />
-                                <Label Text="{Binding Stock}" Grid.Column="2" />
-                                <Label Text="{Binding selling_price}" Grid.Column="3"/>
+                                <Label Text="{Binding Reference}" Grid.Column="0" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Code}" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Stock}" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding selling_price}" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
