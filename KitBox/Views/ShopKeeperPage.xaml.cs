@@ -12,6 +12,7 @@ public partial class ShopKeeperPage : ContentPage
 	public class CommandeModel
     {
         public string IdCommande { get; set; }
+		public string Price { get; set; }
     }
 	public ObservableCollection<CommandeModel> Commandes { get; set; } = new ObservableCollection<CommandeModel>();
 	public ObservableCollection<CommandeModel> deposit { get; set; } = new ObservableCollection<CommandeModel>();
@@ -43,13 +44,14 @@ public partial class ShopKeeperPage : ContentPage
             colomns.Add("completed");
 			colomns.Add("payement");
             colomns.Add("instock");
+			colomns.Add("price");
             DataTable data = commande.LoadAll(com,colomns);
             //Displayer.DisplayData(data);
             foreach (DataRow row in data.Rows)
             {
                 if (row["completed"].ToString() == "False" && row["payement"].ToString() == "False" && row["instock"].ToString() == "True")
                 {
-                    Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() });
+                    Commandes.Add(new CommandeModel { IdCommande = row["id_commande"].ToString() , Price = row["price"].ToString()});
                 }
             }
         //update puis save pour completed (quand boutton complet)

@@ -231,7 +231,7 @@ namespace KitBox.Views
                     }
 
                     // Si la case "Include a door" est cochée mais aucune couleur de porte n'est sélectionnée
-                    if (casierData.CheckBox.IsChecked && casierData.DoorColor.SelectedItem == null)
+                    if (casierData.CheckBox.IsChecked && casierData.DoorColor.SelectedItem == null && !casierData.GlassCheckBox.IsChecked)
                     {
                         await DisplayAlert("Error", "Please select a color for the door", "OK");
                         return;

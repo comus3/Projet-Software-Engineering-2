@@ -28,10 +28,13 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Payement" Clicked="OnPayementClicked" Grid.Column="3" />
+                                <Label Text="Price :" Grid.Column="2" VerticalOptions="Center"/>
+                                <Label Text="{Binding Price}" Grid.Column="3" VerticalOptions="Center"/>
+                                <Button Text="Payement" Clicked="OnPayementClicked" Grid.Column="4" VerticalOptions="Center"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
