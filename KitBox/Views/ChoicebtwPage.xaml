@@ -24,6 +24,7 @@
                       TextColor="White"
                       CornerRadius="8"
                       HeightRequest="50"
+                      BackgroundColor="#007ACC"
                       HorizontalOptions="FillAndExpand"/>
         
             <Button Text="Customer" 

@@ -15,9 +15,9 @@
                 ContentTemplate="{DataTemplate views:ChoicebtwPage}"/>
         </Tab>
         
-        <Tab Title="Panier">
+        <Tab Title="Basket">
             <ShellContent
-                Title="Panier"
+                Title="Basket"
                 ContentTemplate="{DataTemplate views:Panier}"/>
         </Tab>
        
