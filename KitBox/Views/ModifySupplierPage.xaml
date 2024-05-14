@@ -3,44 +3,25 @@
              x:Class="KitBox.Views.ModifySupplierPage"
              Title="Modify Supplier's Details"
              BackgroundColor="#FFFFFF"> <!-- Ajout du fond blanc -->
-    <ContentPage.Resources>
-        <Style TargetType="Label"> <!-- Style pour les Labels -->
-            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
-            <Setter Property="FontSize" Value="16"/> <!-- Taille de la police -->
-        </Style>
-        <Style TargetType="Entry"> <!-- Style pour les Entries -->
-            <Setter Property="BackgroundColor" Value="#F2F2F2"/> <!-- Couleur de fond -->
-            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
-            <Setter Property="PlaceholderColor" Value="#999999"/> <!-- Couleur du placeholder -->
-           
-        </Style>
-        <Style TargetType="Button"> <!-- Style pour les Buttons -->
-            <Setter Property="TextColor" Value="White"/> <!-- Couleur du texte -->
-            <Setter Property="BackgroundColor" Value="#007ACC"/> <!-- Couleur de fond -->
-           
-            <Setter Property="WidthRequest" Value="200"/> <!-- Largeur -->
-            <Setter Property="HeightRequest" Value="40"/> <!-- Hauteur -->
-        </Style>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500">
-            <!-- Entry for Supplier Name -->
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+        <StackLayout  VerticalOptions="CenterAndExpand" WidthRequest="500" HorizontalOptions ="Center">
+          
+            <StackLayout Orientation="Horizontal" >
                 <Label Text="Name:" VerticalOptions="Center"/>
                 <Entry x:Name="OLDname" Placeholder="Enter Name" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
             <!-- Entry for Supplier Telephone Number -->
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+            <StackLayout Orientation="Horizontal" >
                 <Label Text="Telephone:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDtelephone" Placeholder="Enter Telephone Number" HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDtelephone" Placeholder="Enter Telephone Number" />
             </StackLayout>
             <!-- Entry for Supplier Address -->
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+            <StackLayout Orientation="Horizontal" >
                 <Label Text="Address:" VerticalOptions="Center"/>
-                <Entry x:Name="OLDadresse" Placeholder="Enter Address" HorizontalOptions="FillAndExpand"/>
+                <Entry x:Name="OLDadresse" Placeholder="Enter Address" />
             </StackLayout>
             <!-- Confirm Button -->
-            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" Margin="0,10,0,0"/>
+            <Button Text="Confirm" Clicked="ConfirmButton_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

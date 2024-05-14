@@ -26,6 +26,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500">
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500" HorizontalOptions ="Center" >
             <!-- Entry for Price -->
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Price:" VerticalOptions="Center"/>
