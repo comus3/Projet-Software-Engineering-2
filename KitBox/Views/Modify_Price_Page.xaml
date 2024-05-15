@@ -30,7 +30,7 @@
                 <!-- Entry for Selling Price -->
                 <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                     <Label Text="Price:" VerticalOptions="Center"/>
-                    <Entry x:Name="OLDselling_price" Placeholder="Enter Price" 
+                    <Entry x:Name="oldSellingPrice" Placeholder="Enter Price" 
                         HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
                 <!-- Confirm Button -->
