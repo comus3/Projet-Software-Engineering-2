@@ -24,6 +24,8 @@ namespace KitBox.Views
         private string selectedPartCode;
 
         public ICommand SearchCommand { get; private set; }
+        private Button selectButton; // Ajoutez cette ligne
+        private Button addButton; // Ajoutez cette ligne
 
         public Suppliersitems(object code, object name, string select = null)
         {
@@ -32,6 +34,8 @@ namespace KitBox.Views
 
             con = new Connection();
             Connection.TestConnection();
+            selectButton = new Button(); // Ajoutez cette ligne
+            addButton = new Button();
             RtSupplier suppliersitems = new RtSupplier(con);
             Name = name.ToString();
             titre.Text = Name;
