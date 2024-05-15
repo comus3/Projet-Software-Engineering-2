@@ -16,6 +16,13 @@
             
         </Tab>
         
+
+        <Tab Title="Basket">
+            <ShellContent
+                Title="Basket"
+                ContentTemplate="{DataTemplate views:Panier}"/>
+        </Tab>
+
        
     </TabBar>
 </Shell>

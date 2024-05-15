@@ -25,7 +25,11 @@
                       CornerRadius="8"
                       HeightRequest="50"
                       BackgroundColor="#007ACC"
+
+                      HorizontalOptions="FillAndExpand"/>
+
                       WidthRequest="500"/>
+
         
             <Button Text="Customer" 
                     Clicked="OnredirectionCustomer" 

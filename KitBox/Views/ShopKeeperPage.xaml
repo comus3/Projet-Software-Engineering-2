@@ -4,8 +4,8 @@
              x:Class="MauiApp1.ShopKeeperPage"
              Title="ShopKeeperPage">
     <ScrollView>
-        <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
-            <Button Text="Back to Menu" Clicked="BackMenu"/>  
+        <StackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+            <Button Text="Back to Menu" Clicked="BackMenu" HorizontalOptions = "Center" Width="800"  BackgroundColor="#007ACC" />  
             <Label 
                 Text="List of orders to be paid"
                 HorizontalOptions="Center" 
@@ -28,22 +28,25 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="order n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Payement" Clicked="OnPayementClicked" Grid.Column="3" />
+                                <Label Text="Price :" Grid.Column="2" VerticalOptions="Center"/>
+                                <Label Text="{Binding Price}" Grid.Column="3" VerticalOptions="Center"/>
+                                <Button Text="Payment" Clicked="OnPayementClicked" Grid.Column="4" VerticalOptions="Center"  BackgroundColor="#007ACC" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        <!--Label 
+        <Label 
                 Text="Not in Stock"
                 HorizontalOptions="Center" 
                 FontAttributes="Bold"
                 VerticalOptions="Start"
                 FontSize="24" />
-        <ListView ItemsSource="{Binding depositC}">
+        <ListView ItemsSource="{Binding deposit}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -56,12 +59,38 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-                                <Button Text="Deposit" Clicked="OnPayementClicked" Grid.Column="3" />
+                                <Button Text="Deposit" Clicked="OnDepositClicked" Grid.Column="3"  BackgroundColor="#007ACC"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView-->
+            </ListView>
+            <Label 
+                Text="Finalize the payment of the order after a deposit"
+                HorizontalOptions="Center" 
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                FontSize="24" />
+            <ListView ItemsSource="{Binding depositf}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
+                                <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
+                                <Button Text="Finalize payement" Clicked="OnPayementClicked" Grid.Column="3"  BackgroundColor="#007ACC"  />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
