@@ -14,13 +14,13 @@ namespace KitBox.Views
 {
     private Connection con;
     private object cle;
-    private Entry oldSellingPrice; // Renommé le champ de classe
+     private Entry oldSellingPriceEntry; // Renommé le champ de classe
 
     public Modify_Price_Page(string oldselling_price, string code)
     {
         InitializeComponent();
 
-        oldSellingPrice = new Entry { Text = oldselling_price }; // Utilisation du nouveau nom
+       oldSellingPriceEntry.Text = oldselling_price; // Utilisation du nouveau nom
 
         Connection.TestConnection();
         con = new Connection();
@@ -31,7 +31,7 @@ namespace KitBox.Views
     {
         try
         {
-            string newselling_price = oldSellingPrice.Text; // Utilisation du nouveau nom
+            string newselling_price = oldSellingPrice.Text; 
 
             Piece piece_spec = new Piece(con);
 
