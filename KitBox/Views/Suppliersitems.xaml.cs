@@ -24,8 +24,6 @@ namespace KitBox.Views
         private string selectedPartCode;
 
         public ICommand SearchCommand { get; private set; }
-        private Button selectButton; // Ajoutez cette ligne
-        private Button addButton; // Ajoutez cette ligne
 
         public Suppliersitems(object code, object name, string select = null)
         {
@@ -34,8 +32,6 @@ namespace KitBox.Views
 
             con = new Connection();
             Connection.TestConnection();
-            selectButton = new Button(); // Ajoutez cette ligne
-            addButton = new Button();
             RtSupplier suppliersitems = new RtSupplier(con);
             Name = name.ToString();
             titre.Text = Name;
@@ -66,16 +62,16 @@ namespace KitBox.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-           
+            // Vérifie si une pièce a été sélectionnée
             if (!string.IsNullOrEmpty(FetchingServices.SelectedPartCode))
             {
-                selectButton.IsVisible = false; 
+                // Affiche le libellé de la pièce sélectionnée
                 selectedPieceLabel.Text = "Selected Piece: " + FetchingServices.SelectedPartCode;
                 selectStackLayout.IsVisible = true;
             }
             else
             {
-                selectButton.IsVisible = true; 
+                // Cache le libellé s'il n'y a pas de pièce sélectionnée
                 selectedPieceLabel.Text = string.Empty;
                 selectStackLayout.IsVisible = false;
             }
@@ -89,8 +85,6 @@ namespace KitBox.Views
         private void Add_Clicked(object sender, EventArgs e)
         {
             addSupplierLayout.IsVisible = true;
-            selectButton.IsVisible = true; 
-            ((Button)sender).IsVisible = false; // Cacher le bouton "Add"
         }
 
         private async void Save_Clicked(object sender, EventArgs e)
@@ -201,17 +195,6 @@ namespace KitBox.Views
             var button = (Button)sender;
             var supplier_items2 = (Suppitemsdata)button.CommandParameter;
             Navigation.PushAsync(new EditItemsSuppPage(supplier_items2.Reference, supplier_items2.Delay, supplier_items2.Price, Name));
-        }
-
-        private void Cancel_Clicked(object sender, EventArgs e)
-        {
-            addSupplierLayout.IsVisible = false;
-            selectStackLayout.IsVisible = false;
-            selectButton.IsVisible = false; 
-            addButton.IsVisible = true;
-            price.Text = "";
-            delay.Text = ""; 
-
         }
 
         public class Suppitemsdata
