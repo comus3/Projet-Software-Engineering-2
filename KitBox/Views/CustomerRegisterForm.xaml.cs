@@ -51,28 +51,28 @@ public partial class CustomerRegisterForm : ContentPage
 		StackLayout stackLayout = new StackLayout();
 		stackLayout.Children.Add(new Label
 		{
-			Text = "Nom",
+			Text = "Last Name",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
 		stackLayout.Children.Add(customerData.Nom);
 		stackLayout.Children.Add(new Label
 		{
-			Text = "Prenom",
+			Text = "First Name",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
 		stackLayout.Children.Add(customerData.Prenom);
 		stackLayout.Children.Add(new Label
 		{
-			Text = "Telephone",
+			Text = "Phone Number",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
 		stackLayout.Children.Add(customerData.Telephone);
 		stackLayout.Children.Add(new Label
 		{
-			Text = "Email",
+			Text = "Email Address",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
 		});
@@ -95,6 +95,6 @@ public partial class CustomerRegisterForm : ContentPage
 		infoClient.Add("tel", customerData.Telephone.Text);
 		this.commande.Update(infoClient);
 		this.commande.Save();
-		DisplayAlert("Success", "Your order has been registered", "OK");
+		DisplayAlert("Success", "Your order has been successfully registered", "OK");
 	}
 }

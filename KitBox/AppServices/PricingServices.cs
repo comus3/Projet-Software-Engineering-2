@@ -37,7 +37,7 @@ class PricingServices
     }
     public static void PriceCommande(object pkCommande, Connection connection)
     {
-        double price = 0;
+        double price = 0.0;
 
         List<string> armoiresIDs = new List<string>();
 
@@ -55,7 +55,8 @@ class PricingServices
         DataTable armoireValues = armoire.LoadAll(conditionArmoire,colomnsArmoire);
         foreach (DataRow row in armoireValues.Rows)
         {
-            price += Convert.ToDouble(row.ItemArray[0]);
+            double priceToAdd = Convert.ToDouble(row.ItemArray[0]);
+            price = price + priceToAdd;
             armoiresIDs.Add(row.ItemArray[1].ToString());
         }
         foreach (string id in armoiresIDs)

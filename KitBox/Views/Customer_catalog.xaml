@@ -4,6 +4,8 @@
              Title="Cabinet Order">
     <ContentPage.Content>
         <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+            <Button Text="Basket" Clicked="BasketClicked" WidthRequest="500" Margin="0,0,0,10"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
             <Label 
                 Text="Cabinet Order Menu"
                 HorizontalOptions="Center" 
@@ -13,7 +15,7 @@
                 HorizontalOptions="Center"
                 TextColor="Red"
                 FontSize="14" />
-            <!-- Length Picker -->
+           
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Choose the Length:" VerticalOptions="Center" />
                 <Picker x:Name="lengthPicker" VerticalOptions="Center" WidthRequest="400"> 
@@ -29,7 +31,7 @@
                     </Picker.ItemsSource>
                 </Picker>
             </StackLayout>
-            <!-- Width Picker -->
+            
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Choose the Width:" VerticalOptions="Center" />
                 <Picker x:Name="widthPicker" VerticalOptions="Center" WidthRequest="400"> 
@@ -42,7 +44,7 @@
                     </Picker.ItemsSource>
                 </Picker>
             </StackLayout>
-            <!-- Color Picker -->
+           
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Choose the Color:" VerticalOptions="Center" />
                 <Picker x:Name="Locker_Color_Picker" VerticalOptions="Center" WidthRequest="400"> 
@@ -64,7 +66,7 @@
                 CornerRadius="8"
                 HeightRequest="50"
                 BackgroundColor="#007ACC"
-                HorizontalOptions="FillAndExpand"/>
+                HorizontalOptions="CenterAndExpand"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

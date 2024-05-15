@@ -17,7 +17,7 @@
                       CornerRadius="8"
                       HeightRequest="50"
                       BackgroundColor="#007ACC"
-                      HorizontalOptions="FillAndExpand"/>
+                      WidthRequest="500"/>
 
             <Button   Text="Shopkeeper" 
                       Clicked="OnredirectionShopKeeper" 
@@ -25,7 +25,11 @@
                       CornerRadius="8"
                       HeightRequest="50"
                       BackgroundColor="#007ACC"
+
                       HorizontalOptions="FillAndExpand"/>
+
+                      WidthRequest="500"/>
+
         
             <Button Text="Customer" 
                     Clicked="OnredirectionCustomer" 
@@ -33,14 +37,21 @@
                     CornerRadius="8"
                     HeightRequest="50"
                     BackgroundColor="#007ACC"
-                    HorizontalOptions="FillAndExpand"/>
+                    WidthRequest="500"/>
             <Button Text="Secretary" 
                     Clicked="SecretaryClicked" 
                     TextColor="White"
                     CornerRadius="8"
                     HeightRequest="50"
                     BackgroundColor="#007ACC"
-                    HorizontalOptions="FillAndExpand"/>
+                    WidthRequest="500"/>
+            <Button Text="Stockmanager" 
+                    Clicked="StockClicked" 
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    BackgroundColor="#007ACC"
+                    WidthRequest="500"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

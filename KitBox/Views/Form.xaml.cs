@@ -36,12 +36,13 @@ namespace KitBox.Views
             con = new Connection();
             Button CreateanewLocker = new Button()
             {
-                Text = "Create a new Locker"
+                Text = "Create a new Locker",
+                WidthRequest = 500 
             };
             CreateanewLocker.BackgroundColor = Color.FromHex("#007ACC");
             CreateanewLocker.Clicked += OnCreateNewLockerClicked; // Ajoutez un gestionnaire d'événements pour le clic
 
-          
+            CreateanewLocker.HorizontalOptions = LayoutOptions.Center;
             VerticalStackLayout stacklay = new VerticalStackLayout();
             stacklay.Children.Add(CreateanewLocker);
             labelContainer1.Children.Add(stacklay);
@@ -60,7 +61,7 @@ namespace KitBox.Views
             cancel.Text = "cancel locker number " + count.ToString();
             cancel.BackgroundColor = Color.FromHex("#007ACC");
             HorizontalStackLayout locker_i = new HorizontalStackLayout();
-            locker_i.Spacing = 500; 
+            locker_i.Spacing = 650; 
             cancel.HorizontalOptions = LayoutOptions.End;
             locker_i.Children.Add(newLabel);
             locker_i.Children.Add(cancel);

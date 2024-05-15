@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DevTools;
-using System.Data ; 
-namespace KitBox.Views;
 
-public partial class Modify_Price_Page : ContentPage
+
+namespace KitBox.Views
 {
-    private Connection con; 
+   public partial class Modify_Price_Page : ContentPage
+{
+    private Connection con;
     private object cle;
+     private Entry oldSellingPriceEntry; // Renommé le champ de classe
+
     public Modify_Price_Page(string oldselling_price, string code)
     {
         InitializeComponent();
 
-        OLDselling_price.Text = oldselling_price;
-        
+       oldSellingPriceEntry.Text = oldselling_price; // Utilisation du nouveau nom
+
         Connection.TestConnection();
         con = new Connection();
         cle = code;
@@ -27,37 +31,26 @@ public partial class Modify_Price_Page : ContentPage
     {
         try
         {
-            
-            string newselling_price = OLDselling_price.Text;
-        
+            string newselling_price = oldSellingPrice.Text; 
 
             Piece piece_spec = new Piece(con);
-           
+
             DataTable result = piece_spec.Load(cle);
-           
-               
-                Dictionary<string, object> valuesToUpdate = new Dictionary<string, object>();
-                valuesToUpdate["selling_price"] = newselling_price;
-                
-                piece_spec.Update(valuesToUpdate);
 
-               
-                piece_spec.Save();
+            Dictionary<string, object> valuesToUpdate = new Dictionary<string, object>();
+            valuesToUpdate["selling_price"] = newselling_price;
 
-                Navigation.PushAsync(new SecretaryPage()); 
-            
-            
+            piece_spec.Update(valuesToUpdate);
+            piece_spec.Save();
+
+            Navigation.PushAsync(new SecretaryPage());
         }
         catch (Exception ex)
         {
-            
             Logger.WriteToFile($"Error occurred while updating price: {ex.Message}");
-           
         }
     }
-
-
 }
 
 
-    
+}

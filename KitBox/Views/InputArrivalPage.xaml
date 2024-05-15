@@ -1,0 +1,62 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Input Arrival"
+             x:Class="KitBox.Views.InputArrivalPage">
+    <ContentPage.Content>
+        
+        <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <Button Text="Go Back" Clicked="Back_Clicked" WidthRequest="300" Margin="0,0,0,10"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
+            <Grid BackgroundColor="#E0E0E0" Padding="5" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" /> 
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="SupplierID" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Date" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="PartID" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Price/Part" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Total price" FontAttributes="Bold" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Quantity" FontAttributes="Bold" Grid.Column="5" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Completed" FontAttributes="Bold" Grid.Column="6" HorizontalOptions="CenterAndExpand"/>
+            </Grid>
+
+            <ListView x:Name="myListView2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" BackgroundColor="{Binding BackgroundColor}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                    <ColumnDefinition Width="2*" /> 
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Code_supp}" Grid.Column="0" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Date}" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding PieceID}" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Price_piece}" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Price_total}" Grid.Column="4" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Quantity}" Grid.Column="5" HorizontalOptions="CenterAndExpand"/>
+                                <CheckBox IsChecked="{Binding Completed, Mode=TwoWay}"
+                                          IsEnabled="{Binding CheckBoxEnabled}"
+                                          Grid.Column="6"
+                                          HorizontalOptions="CenterAndExpand"
+                                          CheckedChanged="CheckBox_CheckedChanged"
+                                />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

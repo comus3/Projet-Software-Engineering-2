@@ -13,13 +13,16 @@
             <ShellContent
                 Title="ChoicePage"
                 ContentTemplate="{DataTemplate views:ChoicebtwPage}"/>
+            
         </Tab>
         
+
         <Tab Title="Basket">
             <ShellContent
                 Title="Basket"
                 ContentTemplate="{DataTemplate views:Panier}"/>
         </Tab>
+
        
     </TabBar>
 </Shell>

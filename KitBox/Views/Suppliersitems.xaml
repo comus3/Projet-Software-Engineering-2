@@ -11,7 +11,7 @@
 
             <Button Text="Add a Part" Clicked="Add_Clicked" HorizontalOptions="Center" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5" Margin="0,0,0,10"/>
 
-            <StackLayout x:Name="addSupplierLayout" IsVisible="False" Margin="0,0,0,10">
+            <StackLayout x:Name="addSupplierLayout" IsVisible="False" Margin="0,0,0,10" HorizontalOptions = "center" WidthRequest="500">
                 <Entry Placeholder="Delay" x:Name="delay" Text=""/>
                 <Entry Placeholder="Price" x:Name="price" Text=""/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" IsVisible="False" x:Name="selectStackLayout">

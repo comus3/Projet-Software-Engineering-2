@@ -3,8 +3,10 @@
              x:Class="KitBox.Views.EditItemsSuppPage"
              Title="Modify the Price and the Delay">
     <ContentPage.Content>
-        <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+        <StackLayout Padding="20" VerticalOptions="CenterAndExpand" WidthRequest="500" HorizontalOptions ="Center" >
             <!-- Entry for Price -->
+
+            
             <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Text="Price:" VerticalOptions="Center"/>
                 <Entry x:Name="OLDPrice" Placeholder="Enter Price" HorizontalOptions="FillAndExpand"/>

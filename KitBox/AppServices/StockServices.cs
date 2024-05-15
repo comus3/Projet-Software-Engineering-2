@@ -72,7 +72,7 @@ class StockServices
         {
             if (!IsStockLow(row.ItemArray[0], connection))
             {
-                list.Add($"Il faut commander {row.ItemArray[0]}");
+                list.Add($"Command {row.ItemArray[0]}");
             }
         }
         return list;
@@ -113,11 +113,12 @@ class StockServices
         colomns.Add("code");
         colomns.Add("stock");
         colomns.Add("await");
+        colomns.Add("min_stock");
         List<string> aCommander = new List<string>();
-        DataTable pieces = piece.LoadAll(conditions);
+        DataTable pieces = piece.LoadAll(conditions,colomns);
         foreach (DataRow row in pieces.Rows)
         {
-            if ((Convert.ToInt32(row.ItemArray[1]) + Convert.ToInt32(row.ItemArray[2])) < 3)
+            if ((Convert.ToInt32(row.ItemArray[1]) + Convert.ToInt32(row.ItemArray[2])) < Convert.ToInt32(row.ItemArray[3]))
             {
                 aCommander.Add(row.ItemArray[0].ToString());
             }
@@ -218,6 +219,7 @@ class StockServices
             Piece pieceObj = new Piece(connection);
             Dictionary<string, object> update = new Dictionary<string, object>();
             update.Add("stock", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[8]) + quantiteLeft);
+            update.Add("await", Convert.ToInt32(pieceObj.Load(code).Rows[0].ItemArray[10]) - quantite);
             pieceObj.Update(update);
             pieceObj.Load(code);
             pieceObj.Save();
@@ -276,6 +278,14 @@ class StockServices
             }
                 
         }
+    }
+    public static void AwaitAddQuantity(object code,int quantity,Connection connection)
+    {
+        Piece piece = new Piece(connection);
+        int awaitQtt = Convert.ToInt32(piece.Load(code).Rows[0].ItemArray[10]);
+        int newQtt = quantity + awaitQtt;
+        piece.Attributes["await"] = newQtt;
+        piece.Save();
     }
 }
   

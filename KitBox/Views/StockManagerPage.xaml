@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitBox.Views.StockManagerPage"
+             BackgroundColor="#FFFFFF"
+             Title="Stockmanager's Page"> <!-- Ajout du fond blanc -->
+    <ContentPage.Resources>
+        <Style TargetType="Label"> <!-- Style pour les Labels -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="FontSize" Value="16"/> <!-- Taille de la police -->
+        </Style>
+        <Style TargetType="Entry"> <!-- Style pour les Entries -->
+            <Setter Property="TextColor" Value="#333333"/> <!-- Couleur du texte -->
+            <Setter Property="BackgroundColor" Value="#F2F2F2"/> <!-- Couleur de fond -->
+            <Setter Property="PlaceholderColor" Value="#AAAAAA"/> <!-- Couleur du texte d'espacement -->
+        </Style>
+        <Style TargetType="Button"> <!-- Style pour les Buttons -->
+            <Setter Property="TextColor" Value="White"/> <!-- Couleur du texte -->
+            <Setter Property="BackgroundColor" Value="#007ACC"/> <!-- Couleur de fond -->
+            <Setter Property="CornerRadius" Value="5"/> <!-- Rayon des coins -->
+            <Setter Property="WidthRequest" Value="100"/> <!-- Largeur -->
+            <Setter Property="HeightRequest" Value="40"/> <!-- Hauteur -->
+        </Style>
+        <Style TargetType="StackLayout"> <!-- Style pour les StackLayouts -->
+            <Setter Property="Padding" Value="10"/> <!-- Espacement interne -->
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Button Text="Input stock arrival" Clicked="input_clicked" WidthRequest="300" Margin="0,0,0,10"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"/>
+            <SearchBar x:Name="searchBar" Placeholder="Search..." TextChanged="SearchBar_TextChanged" Margin="0,0,0,10" />
+            <Grid BackgroundColor="#E0E0E0" Padding="5" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Reference" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Code" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="StartAndExpand"/>
+                <Label Text="MinStock" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="StartAndExpand"/> 
+                <Label Text="Stock" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Reserve" FontAttributes="Bold" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Await" FontAttributes="Bold" Grid.Column="5" HorizontalOptions="StartAndExpand"/>
+                <Label Text="Action" FontAttributes="Bold" Grid.Column="6" HorizontalOptions="StartAndExpand"/>
+            </Grid>
+            <ListView x:Name="myListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" BackgroundColor="{Binding BackgroundColor}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Reference}" Grid.Column="0" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Code}" Grid.Column="1" HorizontalOptions="StartAndExpand"/>
+                                <Entry Text="{Binding MinPiece, Mode=TwoWay}" Grid.Column="2" HorizontalOptions="StartAndExpand" Placeholder="{Binding MinPiece}" x:Name="minPieceEntry" BackgroundColor="{Binding MinPieceBackgroundColor}" />
+                                <Label Text="{Binding Stock}" Grid.Column="3" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Reserve}" Grid.Column="4" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Await}" Grid.Column="5" HorizontalOptions="StartAndExpand"/>
+                                <StackLayout Grid.Column="6" Orientation="Horizontal" HorizontalOptions="StartAndExpand" Spacing="10">
+                                    <Button Text="Order" Clicked="OnorderClicked" BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand"/>
+                                    <Button Text="Edit" Clicked="OnEditClicked" BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand"/>
+                                    <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#007ACC" HorizontalOptions="StartAndExpand" />
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

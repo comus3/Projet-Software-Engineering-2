@@ -32,6 +32,12 @@ public partial class ChoicebtwPage : ContentPage
         
         
     }
+
+    private async void StockClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new StockManagerPage());
+    }
+
     private async void SecretaryClicked(object sender, EventArgs e)
     {
 
