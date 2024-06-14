@@ -81,13 +81,15 @@ public partial class CustomerRegisterForm : ContentPage
 			FontAttributes = FontAttributes.Bold
 		});
 		stackLayout.Children.Add(customerData.Email);
-		Button submit = new Button
-		{
-			Text = "Submit",
-			FontSize = 20,
-			FontAttributes = FontAttributes.Bold
+        Button submit = new Button
+        {
+            Text = "Submit",
+            FontSize = 20,
+            FontAttributes = FontAttributes.Bold,
+            WidthRequest = 500,
+            BackgroundColor = Color.FromArgb("#007ACC") // Utilisation de la couleur hexadécimale
         };
-		submit.Clicked += OnSubmitClicked;
+        submit.Clicked += OnSubmitClicked;
 		stackLayout.Children.Add(submit);
 		Content = stackLayout;
         if (StockServices.CheckAvailability(FetchingServices.CurrentCommand, con) == false)
@@ -99,15 +101,28 @@ public partial class CustomerRegisterForm : ContentPage
             this.commande.Save();
         }
     }
-	private void OnSubmitClicked(object sender, EventArgs e)
-	{
-		Dictionary<string, object> infoClient = new Dictionary<string, object>();
-		infoClient.Add("nom", customerData.Nom.Text);
-		infoClient.Add("prenom", customerData.Prenom.Text);
-		infoClient.Add("tel", customerData.Telephone.Text);
-		this.commande.Update(infoClient);
-		this.commande.Save();
-		DisplayAlert("Success", "Your order has been successfully registered", "OK");
-		Navigation.PushAsync(new ChoicebtwPage());
-	}
+    private async void OnSubmitClicked(object sender, EventArgs e)
+    {
+        Dictionary<string, object> infoClient = new Dictionary<string, object>();
+        string nom = customerData.Nom.Text;
+        string prenom = customerData.Prenom.Text;
+        string tel = customerData.Telephone.Text;
+
+        if (string.IsNullOrWhiteSpace(nom) || string.IsNullOrWhiteSpace(prenom) || string.IsNullOrWhiteSpace(tel))
+        {
+            await DisplayAlert("Error", "All fields must be filled out.", "OK");
+            return;
+        }
+
+        infoClient.Add("nom", nom);
+        infoClient.Add("prenom", prenom);
+        infoClient.Add("tel", tel);
+
+        this.commande.Update(infoClient);
+        this.commande.Save();
+
+        await DisplayAlert("Success", "Your order has been successfully registered", "OK");
+        await Navigation.PushAsync(new ChoicebtwPage());
+    }
+
 }

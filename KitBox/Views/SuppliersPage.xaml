@@ -63,7 +63,7 @@
                                 <Label Text="{Binding nom}" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
                                 <Label Text="{Binding telephone}" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
                                 <Label Text="{Binding adresse}" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
-                                <Button Text="Edit" Clicked="edit_price_Clicked" CommandParameter="{Binding .}"  Grid.Column="4" BackgroundColor="#007ACC" TextColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand"/>
+                                <Button Text="Edit" Clicked="edit_price_Clicked" CommandParameter="{Binding .}"  Grid.Column="4" BackgroundColor="#007ACC" TextColor="Black" CornerRadius="5" HorizontalOptions="CenterAndExpand"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
