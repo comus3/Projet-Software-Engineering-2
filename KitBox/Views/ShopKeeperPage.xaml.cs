@@ -122,7 +122,6 @@ public partial class ShopKeeperPage : ContentPage
                 }
             }
 	}
-
 	private void OnDepositClicked(object sender, EventArgs e)
 	{
 		if(sender is Button button)
@@ -131,8 +130,8 @@ public partial class ShopKeeperPage : ContentPage
                 var commandeModel = (CommandeModel)button.BindingContext;
                 var idCommande = commandeModel.IdCommande;
 
-                if(commandeModel != null)
-                {
+                //if(commandeModel != null)
+                //{
                     var updateValues = new Dictionary<string, object>
                     {
                         { "deposit", true } 
@@ -143,8 +142,8 @@ public partial class ShopKeeperPage : ContentPage
                     commande.Update(updateValues);
                     commande.Save();
                     // Supprimez l'élément de la collection
-                    Commandes.Remove(commandeModel);
-                }
+                    deposit.Remove(commandeModel);
+                //}
             }
 	}
 }
