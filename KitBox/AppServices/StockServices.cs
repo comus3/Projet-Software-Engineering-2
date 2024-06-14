@@ -287,6 +287,21 @@ class StockServices
         piece.Attributes["await"] = newQtt;
         piece.Save();
     }
+    public static bool CheckAvailability(object code,Connection connection)
+    {
+        AwaitPiece awaitPiece = new AwaitPiece(connection);
+        Dictionary<string, object> condition = new Dictionary<string, object>();
+        condition["commande"] = code;
+        DataTable data = awaitPiece.LoadAll(condition);
+        if (data.Rows.Count == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
   
 
