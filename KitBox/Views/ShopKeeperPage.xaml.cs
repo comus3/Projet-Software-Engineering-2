@@ -136,7 +136,6 @@ public partial class ShopKeeperPage : ContentPage
                     {
                         { "deposit", true } 
                     };
-
                     Commande commande = new Commande(conn);
                     commande.Load(idCommande);
                     commande.Update(updateValues);

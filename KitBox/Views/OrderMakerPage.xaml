@@ -26,7 +26,6 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Commande n°" Grid.Column="0" VerticalOptions="Center"/>
                                 <Label Text="{Binding IdCommande}" Grid.Column="1" VerticalOptions="Center"/>
-
                                 <Button Text="Details" Clicked="Details" Grid.Column="2" />
                                 <Button Text="Completed" Clicked="OnCompletedClicked" Grid.Column="3" />
                             </Grid>
@@ -96,7 +95,7 @@
                             <Label Text="{Binding Await}" Grid.Column="5"/>
                             <!--Label Text="{Binding Type}" Grid.Column="6"/-->
                             <Label Text="{Binding Selling_price}" Grid.Column="6"/>
-                            <Button Text="Completed piece" Grid.Column="7" />
+                            <CheckBox Grid.Column="7"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
