@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using DevTools;
 using KitBox.AppServices;
+using AppServices;
 
 namespace KitBox.Views;
 // A implémenter : Visibilité des données de la commande (Date de la commande; Prix de la commande)
@@ -37,7 +38,10 @@ public partial class CustomerRegisterForm : ContentPage
 		Displayer.DisplayData(res);
 		this.date = res.Rows[0].ItemArray[1];
 		this.price = res.Rows[0].ItemArray[5];
+		
 		BuildUI();
+
+
 	}
 	class CustomerData
 	{
@@ -82,11 +86,19 @@ public partial class CustomerRegisterForm : ContentPage
 			Text = "Submit",
 			FontSize = 20,
 			FontAttributes = FontAttributes.Bold
-		};
+        };
 		submit.Clicked += OnSubmitClicked;
 		stackLayout.Children.Add(submit);
 		Content = stackLayout;
-	}
+        if (StockServices.CheckAvailability(FetchingServices.CurrentCommand, con) == false)
+        {
+            DisplayAlert("Error", "Some items are not available, please put in your info and place a deposit.", "OK");
+            Dictionary<string, object> updateInStock = new Dictionary<string, object>();
+            updateInStock.Add("instock", "0");
+            this.commande.Update(updateInStock);
+            this.commande.Save();
+        }
+    }
 	private void OnSubmitClicked(object sender, EventArgs e)
 	{
 		Dictionary<string, object> infoClient = new Dictionary<string, object>();
@@ -96,5 +108,6 @@ public partial class CustomerRegisterForm : ContentPage
 		this.commande.Update(infoClient);
 		this.commande.Save();
 		DisplayAlert("Success", "Your order has been successfully registered", "OK");
+		Navigation.PushAsync(new ChoicebtwPage());
 	}
 }

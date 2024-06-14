@@ -59,11 +59,11 @@ namespace KitBox.Views
                 string Longueur = $"The length of the cabinet is: {row.ItemArray[1].ToString()}";
                 string Profondeur = $"The depth of the cabinet is: {row.ItemArray[2].ToString()}";
                 string Price = $"The total price is: {row.ItemArray[3].ToString()}";
-                //string Color = $"The color of the cabinet is: {row.ItemArray[5].ToString()}";
+                //string Colour = $"The color of the cabinet is: {row.ItemArray[5].ToString()}";
 
                 Logger.WriteToFile(Longueur + "  " + Profondeur + "  " + Price);
 
-                ArmoireAttributes armoireAttributes = new ArmoireAttributes(Number, Longueur, Profondeur, Price, row.ItemArray[0]);
+                ArmoireAttributes armoireAttributes = new ArmoireAttributes( Longueur, Profondeur, Price, Number,   row.ItemArray[0]);
                 lstArmoireItems.Add(armoireAttributes);
                 numeroArmoire++;
             }

@@ -13,6 +13,7 @@
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <Button Text="Return to Cabinet Order Menu" Clicked="OnClicked" 
                     Margin="10,5,10,5"
+                    BackgroundColor="#007ACC" TextColor="White" CornerRadius="5"
                     WidthRequest="500"/>
         </StackLayout>
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">

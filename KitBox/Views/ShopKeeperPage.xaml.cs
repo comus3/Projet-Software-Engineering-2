@@ -131,7 +131,7 @@ public partial class ShopKeeperPage : ContentPage
                 var commandeModel = (CommandeModel)button.BindingContext;
                 var idCommande = commandeModel.IdCommande;
 
-                if(commandeModel != null && Commandes.Contains(commandeModel))
+                if(commandeModel != null)
                 {
                     var updateValues = new Dictionary<string, object>
                     {

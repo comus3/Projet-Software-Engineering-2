@@ -11,7 +11,7 @@
                 FontAttributes="Bold"
                 VerticalOptions="Start"
                 FontSize="24" /> 
-            <Button Text="Back to Menu" Clicked="BackMenu"/>                                
+            <Button Text="Back to Menu" Clicked="BackMenu" WidthRequest="500"/>                                
             
             <ListView ItemsSource="{Binding Commandes}">
                 <ListView.ItemTemplate>
