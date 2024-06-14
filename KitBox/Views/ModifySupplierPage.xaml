@@ -5,7 +5,7 @@
              BackgroundColor="#FFFFFF"> <!-- Ajout du fond blanc -->
      <ContentPage.Content>
         <!-- Utilisation d'un Grid pour limiter la largeur du contenu -->
-        <Grid Padding="20" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" MaxWidth="500">
+        <Grid Padding="20" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
