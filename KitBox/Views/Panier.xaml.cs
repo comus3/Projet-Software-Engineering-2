@@ -72,7 +72,7 @@ namespace KitBox.Views
 
         private void Acheter_Clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Acheter", "L'armoire a été achetée avec succès.", "OK");
+            DisplayAlert("Buy", "Cabinet successfully baught.", "OK");
             Navigation.PushAsync(new CustomerRegisterForm());
         }
 
