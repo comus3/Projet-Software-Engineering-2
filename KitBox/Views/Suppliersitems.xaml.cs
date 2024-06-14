@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -16,16 +16,16 @@ namespace KitBox.Views
     public partial class Suppliersitems : ContentPage
     {
         private Connection con;
-        private object cle;
+        private string cle;
         private ObservableCollection<Suppitemsdata> suppliers_items;
         private DataTable data;
         private string Name;
 
         private string selectedPartCode;
-
+        private double referenceid ; 
         public ICommand SearchCommand { get; private set; }
 
-        public Suppliersitems(object code, object name, string select = null)
+        public Suppliersitems(string code, object name, string select = null)
         {
             InitializeComponent();
             cle = code;
@@ -46,6 +46,7 @@ namespace KitBox.Views
             valuestoload["id_supplier"] = code;
             data = suppliersitems.LoadAll(valuestoload, colonnes);
             suppliers_items = new ObservableCollection<Suppitemsdata>();
+
             foreach (DataRow row in data.Rows)
             {
                 suppliers_items.Add(new Suppitemsdata()
@@ -53,6 +54,7 @@ namespace KitBox.Views
                     Reference = row["id_piece"].ToString(),
                     Delay = row["delay_supplier"].ToString(),
                     Price = row["price_supplier"].ToString(),
+                    relation = row["id_relation"].ToString(),
                 });
             }
             myListView.ItemsSource = suppliers_items;
@@ -194,7 +196,8 @@ namespace KitBox.Views
         {
             var button = (Button)sender;
             var supplier_items2 = (Suppitemsdata)button.CommandParameter;
-            Navigation.PushAsync(new EditItemsSuppPage(supplier_items2.Reference, supplier_items2.Delay, supplier_items2.Price, Name));
+            
+            Navigation.PushAsync(new EditItemsSuppPage(supplier_items2.relation,supplier_items2.Reference, supplier_items2.Delay, supplier_items2.Price, Name, cle ));
         }
 
         public class Suppitemsdata
@@ -202,6 +205,8 @@ namespace KitBox.Views
             public string Reference { get; set; }
             public string Delay { get; set; }
             public string Price { get; set; }
+
+            public string relation { get; set; }
         }
 
         public class RtSupplier : Model

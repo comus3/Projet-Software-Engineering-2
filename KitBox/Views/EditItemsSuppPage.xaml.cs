@@ -21,8 +21,9 @@ public partial class EditItemsSuppPage : ContentPage
     private object cle; 
     private DataTable data;
     private string supplier_name; 
-   
-    public EditItemsSuppPage(string reference, string delay, string price, string name)
+    private string suppID ; 
+    private string relid ; 
+    public EditItemsSuppPage(string relation , string reference, string delay, string price, string name, string id_supplier)
     {
         InitializeComponent();
         con = new Connection();
@@ -31,7 +32,8 @@ public partial class EditItemsSuppPage : ContentPage
         OLDDelay.Text = delay;
         OLDPrice.Text = price;
         supplier_name = name; 
-
+        suppID = id_supplier;
+        relid = relation ;  
     }
     private void ConfirmButton_Clicked(object sender, EventArgs e)
     {
@@ -42,7 +44,7 @@ public partial class EditItemsSuppPage : ContentPage
         
             RtSupplier rt_supplier = new RtSupplier(con);
        
-            DataTable result = rt_supplier.Load(cle);
+            DataTable result = rt_supplier.Load(relid);
        
             Dictionary<string, object> valuesToUpdate = new Dictionary<string, object>();
             valuesToUpdate["delay_supplier"] = newdelay;
@@ -55,7 +57,7 @@ public partial class EditItemsSuppPage : ContentPage
            
             
             // Navigate to Suppliersitems page with necessary parameters
-            Navigation.PushAsync(new Suppliersitems(cle, supplier_name));
+            Navigation.PushAsync(new Suppliersitems(suppID, supplier_name));
         }
         catch (Exception ex)
         {

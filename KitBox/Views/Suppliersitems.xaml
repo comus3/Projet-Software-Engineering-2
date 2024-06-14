@@ -32,8 +32,8 @@
                     <ColumnDefinition Width="3*" /> 
                 </Grid.ColumnDefinitions>
                 <Label Text="Part's ID" FontAttributes="Bold" Grid.Column="0" HorizontalOptions="CenterAndExpand"/>
-                <Label Text="Price" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
-                <Label Text="Delay" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Delay" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Price" FontAttributes="Bold" Grid.Column="2" HorizontalOptions="CenterAndExpand"/>
                 <Label Text="Action" FontAttributes="Bold" Grid.Column="3" HorizontalOptions="CenterAndExpand"/>
             </Grid>
 
