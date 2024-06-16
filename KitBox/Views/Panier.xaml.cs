@@ -36,6 +36,7 @@ namespace KitBox.Views
             Connection.TestConnection();
             con = new Connection();
             data = new DataTable(); // Initialisation de la DataTable
+            lblBasket.Text = $"Basket for order number {FetchingServices.CurrentCommand}";
         }
 
         protected override void OnAppearing()

@@ -100,6 +100,11 @@ public partial class CustomerRegisterForm : ContentPage
             this.commande.Update(updateInStock);
             this.commande.Save();
         }
+		else
+		{
+			DisplayAlert("Success", "All items are available", "OK");
+			Navigation.PushAsync(new ChoicebtwPage());
+		}
     }
     private async void OnSubmitClicked(object sender, EventArgs e)
     {

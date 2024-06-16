@@ -22,9 +22,9 @@
     </ContentPage.Resources>
     <StackLayout Padding="20" Spacing="20" VerticalOptions="FillAndExpand">
         <Label 
-            Text="Basket"
-            HorizontalOptions="Center" 
-            FontSize="24" />
+        x:Name="lblBasket"
+        HorizontalOptions="Center" 
+        FontSize="24" />
 
         <!-- Liste des armoires -->
         <ListView x:Name="lstArmoire" VerticalOptions="FillAndExpand" BackgroundColor="#f0f0f0">
